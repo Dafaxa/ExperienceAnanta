@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><script src="./image-slot.js"></script><style>html,body{margin:0;height:100%;background:#050a0b;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#B89A68}a:hover{color:#F3F0E9}input,button{font-family:Montserrat,sans-serif}input:focus{outline:none}input[type=range]{accent-color:#B89A68}@keyframes anSlide{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes anRise{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}@keyframes anFade{from{opacity:0}to{opacity:1}}@keyframes anPop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}::placeholder{color:rgba(243,240,233,.35)}</style></helmet>
+<div style="position:fixed;inset:0;background:#050a0b;overflow:hidden">
+<div ref="{{ stageRef }}" style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;overflow:hidden;background:#0B1518;color:#F3F0E9;transform:{{ stageTransform }};transform-origin:center center">
+<div style="position:absolute;inset:0;opacity:{{ fade }};transform:{{ fadeT }};filter:{{ fadeF }};transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),filter .5s ease;transform-origin:50% 50%">
+
+<sc-if value="{{ showHeader }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;top:0;height:110px;z-index:20;display:flex;align-items:center;padding:0 72px;gap:64px;background:linear-gradient(180deg,rgba(11,21,24,.96),rgba(11,21,24,.86));border-bottom:1px solid rgba(243,240,233,.1)">
+<div onClick="{{ goWelcome }}" style="cursor:pointer;display:flex;flex-direction:column;gap:6px"><div style="font:400 28px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 12px/1 Montserrat;letter-spacing:.62em;padding-left:30px;opacity:.85">PROPERTY™</div></div>
+<div style="display:flex;gap:44px;align-items:center">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="5"><div onClick="{{ s.go }}" style="cursor:pointer;display:flex;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid {{ s.bc }};color:{{ s.color }}"><span style="font:400 18px 'Cormorant Garamond',serif;color:#B89A68">{{ s.n }}</span><span style="font:500 15px Montserrat;letter-spacing:.22em;text-transform:uppercase">{{ s.label }}</span></div></sc-for>
+</div>
+<div style="margin-left:auto;display:flex;gap:18px;align-items:center">
+<div style="display:flex;border:1px solid rgba(243,240,233,.3)"><div onClick="{{ setEn }}" style="cursor:pointer;padding:10px 14px;font:600 14px Montserrat;letter-spacing:.2em;background:{{ enBg }};color:{{ enFg }}">EN</div><div onClick="{{ setId }}" style="cursor:pointer;padding:10px 14px;font:600 14px Montserrat;letter-spacing:.2em;background:{{ idBg }};color:{{ idFg }}">ID</div></div>
+<div onClick="{{ goLead }}" style="cursor:pointer;border:1px solid #B89A68;color:#B89A68;padding:13px 22px;font:600 14px Montserrat;letter-spacing:.24em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#B89A68;color:#0B1518">{{ t.talk }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
+<div onClick="{{ goProjects }}" style="position:absolute;inset:0;cursor:pointer">
+<img src="img/villa_wide.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04)">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,21,24,.94) 0%,rgba(11,21,24,.72) 34%,rgba(11,21,24,.1) 70%),linear-gradient(0deg,rgba(11,21,24,.9) 0%,transparent 30%)"></div>
+<div style="position:absolute;left:96px;top:72px;display:flex;flex-direction:column;gap:8px"><div style="font:400 40px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 15px/1 Montserrat;letter-spacing:.66em;padding-left:44px">PROPERTY™</div><div style="width:64px;height:1px;background:#B89A68;margin-top:14px"></div></div>
+<div style="position:absolute;right:96px;top:84px;font:500 15px/2.1 Montserrat;letter-spacing:.34em;text-align:right;color:rgba(243,240,233,.85)">REAL ESTATE<br>HOSPITALITY<br>LIFESTYLE DESTINATIONS</div>
+<div style="position:absolute;left:96px;top:300px;width:820px;display:flex;flex-direction:column;gap:28px">
+<div style="font:500 15px Montserrat;letter-spacing:.34em;color:#B89A68">PROPERTY EXPERIENCE™</div>
+<div style="font:300 124px/.96 'Cormorant Garamond',serif;letter-spacing:-.01em">{{ t.wH1 }}<br><span style="font-style:italic;color:#B89A68">{{ t.wH2 }}</span></div>
+<div style="width:80px;height:1px;background:#B89A68"></div>
+<div style="font:300 22px/1.6 Montserrat;color:rgba(243,240,233,.88);max-width:640px;text-wrap:pretty">{{ t.wSub }}</div>
+<div style="display:flex;gap:18px;align-items:center;margin-top:10px">
+<div style="background:#B89A68;color:#0B1518;padding:24px 40px;font:600 15px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.enter }} →</div>
+<div style="display:flex;border:1px solid rgba(243,240,233,.45)"><div onClick="{{ setEnStop }}" style="padding:22px 22px;font:600 15px Montserrat;letter-spacing:.2em;background:{{ enBg }};color:{{ enFg }}">ENGLISH</div><div onClick="{{ setIdStop }}" style="padding:22px 22px;font:600 15px Montserrat;letter-spacing:.2em;background:{{ idBg }};color:{{ idFg }}">BAHASA</div></div>
+</div>
+</div>
+<div style="position:absolute;left:96px;right:96px;bottom:56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(243,240,233,.22);padding-top:26px;font:500 15px Montserrat;letter-spacing:.34em;color:rgba(243,240,233,.8)"><span>PEOPLE · PLACES · A BRIGHTER TOMORROW</span><span style="display:flex;gap:14px;align-items:center"><span style="width:10px;height:10px;border-radius:50%;background:#B89A68;box-shadow:0 0 0 6px rgba(184,154,104,.25)"></span>{{ t.touch }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;padding:170px 96px 64px;display:flex;flex-direction:column;gap:44px;background:#0B1518">
+<div style="display:flex;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:18px"><div style="font:500 14px Montserrat;letter-spacing:.34em;color:#B89A68">01 — {{ t.projectsEyebrow }}</div><div style="font:300 84px/1 'Cormorant Garamond',serif">{{ t.selA }} <span style="font-style:italic;color:#B89A68">{{ t.selB }}</span></div></div>
+<div style="font:300 20px/1.6 Montserrat;color:rgba(243,240,233,.75);max-width:520px;text-align:right">{{ t.projectsSub }}</div>
+</div>
+<div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;min-height:0">
+<sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+<div onClick="{{ p.open }}" style="position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(243,240,233,.12);transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68">
+<img src="{{ p.img }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,21,24,.96) 0%,rgba(11,21,24,.4) 45%,rgba(11,21,24,.05) 75%)"></div>
+<div style="position:absolute;left:36px;top:32px;font:400 22px 'Cormorant Garamond',serif;color:#B89A68">{{ p.n }}</div>
+<div style="position:absolute;right:32px;top:32px;background:rgba(11,21,24,.75);border:1px solid rgba(243,240,233,.3);padding:9px 14px;font:600 13px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ p.status }}</div>
+<div style="position:absolute;left:36px;right:36px;bottom:36px;display:flex;flex-direction:column;gap:14px">
+<div style="font:400 50px/1 'Cormorant Garamond',serif">{{ p.name }}</div>
+<div style="font:500 15px Montserrat;letter-spacing:.3em;text-transform:uppercase;color:rgba(243,240,233,.85)">{{ p.type }} · {{ p.loc }}</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid rgba(243,240,233,.3);padding-top:18px;margin-top:6px"><span style="font:500 15px Montserrat">{{ t.from }} <span style="font:400 26px 'Cormorant Garamond',serif;color:#B89A68">{{ p.fromTxt }}</span></span><span style="font:600 14px Montserrat;letter-spacing:.24em;color:#B89A68">{{ t.explore }} →</span></div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOverview }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0;display:grid;grid-template-columns:1040px 1fr">
+<div style="position:relative;overflow:hidden"><img src="{{ proj.img }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 70%,rgba(11,21,24,.9))"></div><div style="position:absolute;left:56px;bottom:48px;font:500 15px/2.1 Montserrat;letter-spacing:.34em;color:rgba(243,240,233,.9);white-space:pre-line">{{ t.ovSide }}</div></div>
+<div style="padding:72px 96px 56px 64px;display:flex;flex-direction:column;gap:26px">
+<div style="font:500 14px Montserrat;letter-spacing:.34em;color:#B89A68;text-transform:uppercase">{{ proj.type }} · {{ proj.loc }}</div>
+<div style="font:300 86px/.98 'Cormorant Garamond',serif">{{ proj.name }}</div>
+<div style="font:300 21px/1.6 Montserrat;color:rgba(243,240,233,.82);text-wrap:pretty">{{ proj.desc }}</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(243,240,233,.18);border-bottom:1px solid rgba(243,240,233,.18);padding:24px 0">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.65;text-transform:uppercase">{{ t.from }}</span><span style="font:400 34px 'Cormorant Garamond',serif;color:#B89A68">{{ proj.fromTxt }}</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.65;text-transform:uppercase">{{ t.area }}</span><span style="font:400 34px 'Cormorant Garamond',serif">{{ proj.area }}</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.65;text-transform:uppercase">{{ t.bedrooms }}</span><span style="font:400 34px 'Cormorant Garamond',serif">{{ proj.beds }}</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.65;text-transform:uppercase">{{ t.completion }}</span><span style="font:400 34px 'Cormorant Garamond',serif">{{ proj.done }}</span></div>
+</div>
+<div style="display:flex;gap:36px;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase">
+<sc-for list="{{ ovTabs }}" as="tb" hint-placeholder-count="3"><div onClick="{{ tb.pick }}" style="cursor:pointer;padding-bottom:10px;border-bottom:1px solid {{ tb.bc }};color:{{ tb.color }}">{{ tb.label }}</div></sc-for>
+</div>
+<div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px 40px;align-content:start">
+<sc-for list="{{ ovItems }}" as="it" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(243,240,233,.1);padding:12px 0;font:400 18px Montserrat"><span>{{ it.a }}</span><span style="font:400 22px 'Cormorant Garamond',serif;color:#B89A68">{{ it.b }}</span></div></sc-for>
+</div>
+<div style="display:flex;gap:18px">
+<div onClick="{{ goUnits }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:24px 40px;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.exploreUnits }} →</div>
+<div onClick="{{ goMasterplan }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.5);padding:24px 40px;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68;color:#B89A68">{{ t.viewMasterplan }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMasterplan }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0">
+<img src="img/masterplan.jpg" style="position:absolute;inset:0 520px 0 0;width:1400px;height:970px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1400px;height:970px;background:linear-gradient(0deg,rgba(11,21,24,.5),transparent 30%)"></div>
+<div style="position:absolute;left:56px;top:40px;display:flex;gap:14px;align-items:center;background:rgba(11,21,24,.8);border:1px solid rgba(243,240,233,.2);padding:14px 22px;font:600 14px Montserrat;letter-spacing:.24em">
+<sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="5"><span style="color:{{ c.color }}">{{ c.label }}</span><span style="opacity:.4">{{ c.sep }}</span></sc-for>
+</div>
+<sc-for list="{{ clusters }}" as="c" hint-placeholder-count="6">
+<div onClick="{{ c.pick }}" style="position:absolute;left:{{ c.x }};top:{{ c.y }};transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font:400 26px 'Cormorant Garamond',serif;background:{{ c.bg }};color:{{ c.fg }};border:1.5px solid #B89A68;box-shadow:0 0 0 10px {{ c.ring }}">{{ c.n }}</div>
+</sc-for>
+<div style="position:absolute;left:{{ mpCard.x }};top:{{ mpCard.y }};transform:translate(44px,-50%);transition:left .6s cubic-bezier(.2,.7,.2,1),top .6s cubic-bezier(.2,.7,.2,1);width:360px;background:rgba(11,21,24,.94);border:1px solid rgba(184,154,104,.6);padding:26px 28px;display:flex;flex-direction:column;gap:12px">
+<div style="font:500 14px Montserrat;letter-spacing:.3em;color:#B89A68">{{ mpCard.kind }}</div>
+<div style="font:400 36px/1 'Cormorant Garamond',serif">{{ mpCard.name }}</div>
+<div style="font:400 16px/1.5 Montserrat;opacity:.8">{{ mpCard.info }}</div>
+<div onClick="{{ goUnits }}" style="cursor:pointer;margin-top:6px;font:600 14px Montserrat;letter-spacing:.24em;color:#B89A68;text-transform:uppercase">{{ t.zoomIn }} →</div>
+</div>
+<div style="position:absolute;right:0;top:0;bottom:0;width:520px;padding:56px 56px;display:flex;flex-direction:column;gap:22px;border-left:1px solid rgba(243,240,233,.1);background:#0B1518">
+<div style="font:500 14px Montserrat;letter-spacing:.34em;color:#B89A68">{{ proj.loc }}</div>
+<div style="font:300 64px/1 'Cormorant Garamond',serif">Master<span style="font-style:italic;color:#B89A68">plan</span></div>
+<div style="display:flex;flex-direction:column;margin-top:10px">
+<sc-for list="{{ clusters }}" as="c" hint-placeholder-count="6"><div onClick="{{ c.pick }}" style="cursor:pointer;display:flex;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);color:{{ c.listColor }}"><span style="font:400 24px 'Cormorant Garamond',serif;color:#B89A68;width:30px">0{{ c.n }}</span><span style="font:500 15px Montserrat;letter-spacing:.14em;text-transform:uppercase">{{ c.name }}</span></div></sc-for>
+</div>
+<div style="margin-top:auto;display:flex;gap:10px;font:600 14px Montserrat;letter-spacing:.2em">
+<div onClick="{{ goUnits }}" style="cursor:pointer;flex:1;text-align:center;background:#B89A68;color:#0B1518;padding:22px;text-transform:uppercase;letter-spacing:.26em;font-size:13px">{{ t.exploreUnits }} →</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isUnits }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0;display:grid;grid-template-columns:1140px 1fr">
+<div style="position:relative;overflow:hidden">
+<img src="img/building.jpg" style="position:absolute;left:0;top:0;width:1140px;height:970px;object-fit:cover;object-position:center">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 75%,#0B1518)"></div>
+<sc-for list="{{ unitHits }}" as="h" hint-placeholder-count="4">
+<div onClick="{{ h.pick }}" style="position:absolute;left:{{ h.x }};top:{{ h.y }};width:190px;height:86px;transform:translate(-50%,-50%);cursor:pointer;border:2px solid {{ h.bc }};box-shadow:0 0 30px {{ h.glow }};transition:all .3s"></div>
+</sc-for>
+<div style="position:absolute;left:64px;bottom:48px;display:flex;gap:26px;font:500 15px Montserrat;letter-spacing:.14em"><span style="display:flex;gap:10px;align-items:center"><span style="width:10px;height:10px;border-radius:50%;background:#6f9a7c"></span>{{ t.available }}</span><span style="display:flex;gap:10px;align-items:center"><span style="width:10px;height:10px;border-radius:50%;background:#B89A68"></span>{{ t.reserved }}</span><span style="display:flex;gap:10px;align-items:center"><span style="width:10px;height:10px;border-radius:50%;background:#7b7f80"></span>{{ t.sold }}</span></div>
+</div>
+<div style="padding:48px 72px 48px 24px;display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="font:300 64px/1 'Cormorant Garamond',serif">{{ t.uxA }} <span style="font-style:italic;color:#B89A68">{{ t.uxB }}</span></div><div style="font:400 15px Montserrat;opacity:.7">{{ t.unitSub }}</div></div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{ unitFilters }}" as="f" hint-placeholder-count="5"><div onClick="{{ f.pick }}" style="cursor:pointer;padding:12px 18px;font:500 14px Montserrat;background:{{ f.bg }};color:{{ f.fg }};border:1px solid {{ f.bc }}">{{ f.label }}</div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ unitRows }}" as="u" hint-placeholder-count="4"><div onClick="{{ u.pick }}" style="cursor:pointer;display:grid;grid-template-columns:120px 1fr 120px 150px;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(243,240,233,.1);background:{{ u.bg }};opacity:{{ u.op }};transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:rgba(243,240,233,.05)"><span style="font:500 17px Montserrat;letter-spacing:.08em">{{ u.code }}</span><span style="font:400 16px Montserrat;opacity:.85">{{ u.type }} · {{ u.indoor }} m²</span><span style="display:flex;gap:8px;align-items:center;font:500 14px Montserrat;letter-spacing:.14em;text-transform:uppercase"><span style="width:8px;height:8px;border-radius:50%;background:{{ u.dot }}"></span>{{ u.status }}</span><span style="font:400 22px 'Cormorant Garamond',serif;text-align:right;color:#B89A68">{{ u.price }}</span></div></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:260px 1fr;gap:26px;margin-top:6px">
+<img src="img/living2.jpg" style="width:260px;height:180px;object-fit:cover">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:center"><span style="font:500 28px Montserrat;letter-spacing:.06em">{{ unit.code }}</span><span style="background:{{ unit.dot }};color:#0B1518;font:600 13px Montserrat;letter-spacing:.2em;padding:6px 10px;text-transform:uppercase">{{ unit.status }}</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font:400 26px 'Cormorant Garamond',serif">{{ unit.indoor }} m²</span><span style="font:500 13px Montserrat;letter-spacing:.16em;opacity:.65;text-transform:uppercase">{{ t.indoor }}</span></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font:400 26px 'Cormorant Garamond',serif">{{ unit.terr }} m²</span><span style="font:500 13px Montserrat;letter-spacing:.16em;opacity:.65;text-transform:uppercase">{{ t.terrace }}</span></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font:400 26px 'Cormorant Garamond',serif">{{ unit.beds }}</span><span style="font:500 13px Montserrat;letter-spacing:.16em;opacity:.65;text-transform:uppercase">{{ t.bedrooms }}</span></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font:400 26px 'Cormorant Garamond',serif">{{ unit.baths }}</span><span style="font:500 13px Montserrat;letter-spacing:.16em;opacity:.65;text-transform:uppercase">{{ t.baths }}</span></div>
+</div>
+<div style="font:300 15px/1.55 Montserrat;opacity:.8">{{ unit.desc }}</div>
+</div>
+</div>
+<div style="margin-top:auto;display:grid;grid-template-columns:2fr 1fr;gap:12px">
+<div onClick="{{ goFloorplan }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:24px;text-align:center;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.viewPlan }} →</div>
+<div onClick="{{ goCompare }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.5);padding:24px;text-align:center;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68;color:#B89A68">{{ t.compare }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFloorplan }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0;display:grid;grid-template-columns:1fr 560px">
+<div style="position:relative;background:#F3F0E9;color:#0B1518;overflow:hidden">
+<div style="position:absolute;left:110px;right:80px;top:44px;display:flex;align-items:center;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 15px Montserrat;letter-spacing:.3em;color:#8a6f45">{{ unit.code }} · {{ unitTypeTxt }}</span><span style="font:400 44px/1 'Cormorant Garamond',serif">{{ t.floorPlan }}</span></div>
+<div style="margin-left:auto;display:flex;border:1px solid #0B1518;font:600 14px Montserrat;letter-spacing:.2em">
+<div onClick="{{ set2d }}" style="cursor:pointer;padding:12px 20px;background:{{ p2dBg }};color:{{ p2dFg }}">2D</div>
+<div onClick="{{ setDoll }}" style="cursor:pointer;padding:12px 20px;background:{{ pDollBg }};color:{{ pDollFg }}">DOLLHOUSE</div>
+</div>
+<div style="width:52px;height:52px;border-radius:50%;border:1px solid #0B1518;display:flex;align-items:center;justify-content:center;font:600 15px Montserrat">N↑</div>
+</div>
+<div style="position:absolute;left:110px;top:150px;width:1035px;height:713px;transform:{{ planTransform }};transition:transform .9s cubic-bezier(.2,.7,.2,1);transform-origin:50% 50%;box-shadow:{{ planShadow }}">
+<div style="position:absolute;inset:-7px;border:7px solid #0B1518"></div>
+<sc-for list="{{ planRooms }}" as="r" hint-placeholder-count="8">
+<div onClick="{{ r.pick }}" style="position:absolute;left:{{ r.l }};top:{{ r.t }};width:{{ r.w }};height:{{ r.h }};box-sizing:border-box;border:2px solid #0B1518;background:{{ r.bg }};cursor:pointer;padding:16px 18px;display:flex;flex-direction:column;gap:6px;transition:background .3s" style-hover="background:rgba(184,154,104,.22)">
+<span style="font:600 15px Montserrat;letter-spacing:.2em;text-transform:uppercase">{{ r.name }}</span><span style="font:400 15px Montserrat;opacity:.6">{{ r.dims }} · {{ r.area }} m²</span>
+<span style="position:absolute;left:50%;top:58%;width:18px;height:18px;border-radius:50%;background:{{ r.dot }};border:2px solid #B89A68;transform:translate(-50%,-50%);box-shadow:0 0 0 8px rgba(184,154,104,.2)"></span>
+</div>
+</sc-for>
+<sc-if value="{{ hasPlanPop }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:{{ planPop.x }};top:{{ planPop.y }};transform:translate(-50%,calc(-100% - 26px));animation:anFade .35s ease;background:#0B1518;color:#F3F0E9;padding:22px 26px;display:flex;flex-direction:column;gap:8px;min-width:240px;box-shadow:0 20px 40px rgba(11,21,24,.3)">
+<span style="font:400 30px/1 'Cormorant Garamond',serif">{{ planPop.name }}</span><span style="font:400 14px Montserrat;opacity:.75">{{ planPop.area }} m² · {{ planPop.dims }}</span>
+<div onClick="{{ planPop.enter }}" style="cursor:pointer;margin-top:8px;background:#B89A68;color:#0B1518;padding:14px 18px;font:600 14px Montserrat;letter-spacing:.24em;text-align:center;text-transform:uppercase">{{ t.enterRoom }} →</div>
+</div>
+</sc-if>
+</div>
+<div style="position:absolute;left:110px;bottom:40px;font:400 16px Montserrat;opacity:.65">{{ t.tapRoom }}</div>
+</div>
+<div style="background:#0B1518;padding:56px 64px;display:flex;flex-direction:column;gap:22px">
+<div style="font:500 15px Montserrat;letter-spacing:.34em;color:#B89A68">{{ t.property }}</div>
+<div style="font:300 88px/1 'Cormorant Garamond',serif">{{ unit.indoor }} m²</div>
+<div style="font:400 16px Montserrat;opacity:.75">+ {{ unit.terr }} m² {{ t.terrace }} · {{ t.facing }}</div>
+<div style="display:flex;flex-direction:column;border-top:1px solid rgba(243,240,233,.18)">
+<div style="display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);font:400 18px Montserrat"><span style="opacity:.7">{{ t.bedrooms }}</span><span>{{ unit.beds }}</span></div>
+<div style="display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);font:400 18px Montserrat"><span style="opacity:.7">{{ t.baths }}</span><span>{{ unit.baths }}</span></div>
+<div style="display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);font:400 18px Montserrat"><span style="opacity:.7">{{ t.parking }}</span><span>{{ unit.park }}</span></div>
+<div style="display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);font:400 18px Montserrat"><span style="opacity:.7">{{ t.from }}</span><span style="font:400 26px 'Cormorant Garamond',serif;color:#B89A68">{{ unit.priceTxt }}</span></div>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+<div onClick="{{ goLoading }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:26px;text-align:center;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.enter3d }} →</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div onClick="{{ goCompare }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.45);padding:20px;text-align:center;font:600 14px Montserrat;letter-spacing:.22em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68;color:#B89A68">{{ t.compare }}</div>
+<div onClick="{{ goPrice }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.45);padding:20px;text-align:center;font:600 14px Montserrat;letter-spacing:.22em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68;color:#B89A68">{{ t.price }}</div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background:#0B1518">
+<div style="position:absolute;left:96px;top:72px;display:flex;flex-direction:column;gap:8px"><div style="font:400 32px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 13px/1 Montserrat;letter-spacing:.66em;padding-left:36px">PROPERTY™</div></div>
+<div style="position:absolute;left:96px;top:330px;width:620px;display:flex;flex-direction:column;gap:24px">
+<div style="font:500 14px Montserrat;letter-spacing:.34em;color:#B89A68">{{ t.preparing }}</div>
+<div style="font:300 84px/1 'Cormorant Garamond',serif">{{ projName }}<br><span style="font-style:italic;color:#B89A68">{{ unit.code }} · {{ unitTypeTxt }}</span></div>
+<div style="border-top:1px solid rgba(243,240,233,.2);padding-top:20px;font:400 18px/2 Montserrat;opacity:.85">{{ t.roomsPoi }}<br>{{ t.startAt }}</div>
+</div>
+<div style="position:absolute;left:1000px;top:250px;width:776px;height:535px">
+<div style="position:absolute;inset:-5px;border:5px solid rgba(243,240,233,.8)"></div>
+<sc-for list="{{ loadRooms }}" as="r" hint-placeholder-count="8">
+<div style="position:absolute;left:{{ r.l }};top:{{ r.t }};width:{{ r.w }};height:{{ r.h }};box-sizing:border-box;border:1.5px solid rgba(243,240,233,.55);background:{{ r.bg }};transition:background .5s;padding:12px;font:600 13px Montserrat;letter-spacing:.2em;text-transform:uppercase;color:rgba(243,240,233,.7)">{{ r.name }}</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:96px;right:96px;bottom:92px;height:2px;background:rgba(243,240,233,.14)"><div style="width:{{ loadPct }};height:2px;background:#B89A68;transition:width .12s linear"></div></div>
+<div style="position:absolute;left:96px;right:96px;bottom:52px;display:flex;justify-content:space-between;font:500 15px Montserrat;letter-spacing:.26em;color:rgba(243,240,233,.75)"><span>{{ loadLabel }}</span><span>{{ t.loadingTip }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTour }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow:hidden;background:#000">
+<div onPointerDown="{{ scDown }}" onPointerMove="{{ scMove }}" onPointerUp="{{ scUp }}" onPointerLeave="{{ scUp }}" style="position:absolute;inset:0;cursor:{{ sceneCursor }};touch-action:none">
+<div style="position:absolute;inset:0;transform:{{ sceneTransform }};transition:transform 1.4s cubic-bezier(.16,.8,.24,1),filter 1.2s ease;filter:{{ sceneFilter }}">
+<sc-for list="{{ sceneLayers }}" as="L" hint-placeholder-count="1">
+<div style="position:absolute;inset:0;opacity:{{ L.op }};transition:opacity 1.2s cubic-bezier(.4,0,.2,1);pointer-events:{{ L.pe }}">
+<sc-if value="{{ L.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ L.img }}" draggable="false" style="width:100%;height:100%;object-fit:cover;user-select:none"></sc-if>
+<sc-if value="{{ L.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:#1a2629"><image-slot id="{{ L.slot }}" shape="rect" placeholder="{{ L.ph }}"></image-slot></div></sc-if>
+</div>
+</sc-for>
+<div style="position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(0deg,{{ floorC }} 0%,{{ floorC }} 55%,transparent 100%);mix-blend-mode:color;opacity:{{ floorOp }};transition:all .8s;pointer-events:none"></div>
+<div style="position:absolute;left:0;right:0;top:0;height:58%;background:linear-gradient(180deg,{{ wallC }} 0%,{{ wallC }} 70%,transparent 100%);mix-blend-mode:soft-light;opacity:{{ wallOp }};transition:all .8s;pointer-events:none"></div>
+</div>
+<div style="position:absolute;inset:0;background:{{ grade.tint }};opacity:{{ grade.op }};mix-blend-mode:multiply;transition:all 1.2s;pointer-events:none"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 58% 42%,rgba(255,196,120,.9),transparent 55%);opacity:{{ grade.glow }};mix-blend-mode:screen;transition:opacity 1.2s;pointer-events:none"></div>
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(104deg,rgba(220,230,240,.22) 0 1px,transparent 1px 14px);opacity:{{ rainOp }};transition:opacity .8s;pointer-events:none"></div>
+<sc-for list="{{ hotspots }}" as="h" hint-placeholder-count="2">
+<div onPointerDown="{{ stop }}" onClick="{{ h.act }}" style="position:absolute;left:{{ h.x }};top:{{ h.y }};transform:translate(-50%,-50%);display:flex;align-items:center;gap:14px;cursor:pointer">
+<div style="width:46px;height:46px;border-radius:50%;border:2px solid #F3F0E9;background:rgba(11,21,24,.45);box-shadow:0 0 0 10px rgba(243,240,233,.14);display:flex;align-items:center;justify-content:center;font:500 20px 'Cormorant Garamond',serif;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#B89A68;color:#0B1518">{{ h.glyph }}</div>
+<div style="background:rgba(11,21,24,.72);padding:9px 14px;font:600 14px Montserrat;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">{{ h.label }}</div>
+</div>
+</sc-for>
+<sc-for list="{{ mPoints }}" as="m" hint-placeholder-count="0"><div style="position:absolute;left:{{ m.x }};top:{{ m.y }};width:22px;height:22px;border-radius:50%;background:#B89A68;border:3px solid #F3F0E9;transform:translate(-50%,-50%);pointer-events:none"></div></sc-for>
+<sc-if value="{{ hasMLine }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:{{ mLine.x }};top:{{ mLine.y }};width:{{ mLine.w }};border-top:3px dashed #B89A68;transform-origin:0 0;transform:{{ mLine.rot }};pointer-events:none"></div>
+<div style="position:absolute;left:{{ mLine.mx }};top:{{ mLine.my }};transform:translate(-50%,-150%);background:#B89A68;color:#0B1518;padding:10px 18px;font:600 22px Montserrat;pointer-events:none">{{ mLine.txt }}</div>
+</sc-if>
+</div>
+<div style="position:absolute;left:0;right:0;top:0;height:300px;background:linear-gradient(180deg,rgba(11,21,24,.85),transparent);pointer-events:none"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(0deg,rgba(11,21,24,.88),transparent);pointer-events:none"></div>
+
+<sc-if value="{{ showHud }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:56px;top:48px;display:flex;flex-direction:column;gap:6px;cursor:pointer" onClick="{{ goFloorplan }}"><div style="font:400 26px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 11px/1 Montserrat;letter-spacing:.62em;padding-left:28px">PROPERTY™</div></div>
+<div style="position:absolute;left:56px;top:118px;display:flex;flex-direction:column;gap:6px"><div style="font:300 56px/1 'Cormorant Garamond',serif;text-shadow:0 2px 18px rgba(0,0,0,.7)">{{ t.vtA }} <span style="color:#B89A68">{{ t.vtB }}</span></div><div style="font:500 14px Montserrat;letter-spacing:.26em;text-shadow:0 1px 10px rgba(0,0,0,.9)">{{ projNameUp }} · {{ unit.code }}</div></div>
+<div style="position:absolute;left:56px;top:236px;width:330px;background:rgba(11,21,24,.62);border:1px solid rgba(243,240,233,.12);padding:8px;display:flex;flex-direction:column;gap:4px">
+<sc-for list="{{ railRooms }}" as="r" hint-placeholder-count="8">
+<div onClick="{{ r.go }}" style="cursor:pointer;display:flex;gap:14px;align-items:center;padding:6px;border:1px solid {{ r.bc }};background:{{ r.bg }};transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:rgba(243,240,233,.07)">
+<div style="width:84px;height:52px;flex:none;background:#223034;overflow:hidden;position:relative"><sc-if value="{{ r.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ r.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ r.noImg }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 11px Montserrat;letter-spacing:.2em;opacity:.45">IMAGE</span></sc-if></div>
+<div style="display:flex;flex-direction:column;gap:3px"><span style="font:500 15px Montserrat;color:{{ r.color }}">{{ r.name }}</span><span style="font:400 14px Montserrat;opacity:.55">{{ r.area }} m²</span></div>
+<span style="margin-left:auto;margin-right:6px;width:7px;height:7px;border-radius:50%;background:{{ r.seen }}"></span>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ showMini }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:1250px;top:48px;width:420px;box-sizing:border-box;background:rgba(11,21,24,.84);border:1px solid rgba(243,240,233,.18);border-radius:10px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:500 15px Montserrat;letter-spacing:.24em">{{ unit.code }} · {{ unitTypeUp }}</span><span style="font:500 13px Montserrat;letter-spacing:.2em;opacity:.6">N↑</span></div>
+<div style="position:relative;width:372px;height:256px">
+<div style="position:absolute;inset:-3px;border:3px solid rgba(243,240,233,.75)"></div>
+<sc-for list="{{ miniRooms }}" as="r" hint-placeholder-count="8"><div onClick="{{ r.go }}" style="position:absolute;left:{{ r.l }};top:{{ r.t }};width:{{ r.w }};height:{{ r.h }};box-sizing:border-box;border:1px solid rgba(243,240,233,.45);background:{{ r.bg }};cursor:pointer;transition:background .4s" style-hover="background:rgba(184,154,104,.25)"></div></sc-for>
+<div style="position:absolute;left:{{ cone.x }};top:{{ cone.y }};width:0;height:0;transform:translate(-50%,-100%) rotate({{ cone.rot }});transform-origin:50% 100%;border-left:34px solid transparent;border-right:34px solid transparent;border-top:70px solid rgba(184,154,104,.45);transition:all .8s;pointer-events:none"></div>
+<div style="position:absolute;left:{{ cone.x }};top:{{ cone.y }};width:14px;height:14px;border-radius:50%;background:#B89A68;border:2px solid #F3F0E9;transform:translate(-50%,-50%);transition:all .8s;pointer-events:none"></div>
+</div>
+<div style="display:flex;gap:10px;align-items:center;font:500 14px Montserrat"><span style="color:#B89A68">◉</span>{{ room.name }}<span style="margin-left:auto;font:400 14px Montserrat;opacity:.6">{{ t.tapPlan }}</span></div>
+</div>
+</sc-if>
+<div style="position:absolute;right:48px;top:48px;display:flex;flex-direction:column;gap:10px;align-items:flex-end">
+<div onClick="{{ goFloorplan }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:12px 18px;font:600 13px Montserrat;letter-spacing:.24em;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68;color:#B89A68">✕ {{ t.exit }}</div>
+<div style="display:flex;border:1px solid rgba(243,240,233,.3);margin-top:6px"><div onClick="{{ setEn }}" style="cursor:pointer;padding:9px 12px;font:600 13px Montserrat;letter-spacing:.2em;background:{{ enBg }};color:{{ enFg }}">EN</div><div onClick="{{ setId }}" style="cursor:pointer;padding:9px 12px;font:600 13px Montserrat;letter-spacing:.2em;background:{{ idBg }};color:{{ idFg }}">ID</div></div>
+</div>
+<div style="position:absolute;right:48px;top:250px;width:210px;display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{ tools }}" as="tl" hint-placeholder-count="9">
+<div onClick="{{ tl.act }}" style="cursor:pointer;display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:11px 0;border-bottom:1px solid rgba(243,240,233,.1);color:{{ tl.color }};transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="color:#B89A68"><span style="font:600 13px Montserrat;letter-spacing:.2em;text-transform:uppercase;text-align:right">{{ tl.label }}</span><span style="width:30px;height:30px;flex:none;border:1px solid {{ tl.bc }};border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 15px 'Cormorant Garamond',serif;background:{{ tl.bg }}">{{ tl.g }}</span></div>
+</sc-for>
+</div>
+<div style="position:absolute;left:56px;bottom:56px;display:flex;flex-direction:column;gap:10px">
+<div style="font:500 15px Montserrat;letter-spacing:.3em;color:#B89A68">{{ t.youAreIn }}</div>
+<div style="font:300 76px/1 'Cormorant Garamond',serif">{{ room.name }}</div>
+<div style="font:400 18px Montserrat;opacity:.85">{{ room.area }} m² · {{ room.dims }} · {{ clock }}</div>
+</div>
+<div style="position:absolute;left:50%;bottom:56px;transform:translateX(-50%);width:680px;display:flex;flex-direction:column;gap:10px">
+<sc-if value="{{ hasReply }}" hint-placeholder-val="{{ false }}"><div style="background:rgba(11,21,24,.94);border:1px solid rgba(184,154,104,.5);padding:18px 22px;display:flex;flex-direction:column;gap:8px"><span style="font:italic 400 20px 'Cormorant Garamond',serif;opacity:.75">“{{ askReply.q }}”</span><sc-for list="{{ askLines }}" as="l" hint-placeholder-count="1"><span style="font:500 15px Montserrat;display:flex;gap:10px"><span style="color:#B89A68">✦</span>{{ l.txt }}</span></sc-for></div></sc-if>
+<sc-if value="{{ hasSugg }}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><sc-for list="{{ suggestions }}" as="g" hint-placeholder-count="4"><div onClick="{{ g.pick }}" style="cursor:pointer;background:rgba(11,21,24,.7);border:1px solid rgba(243,240,233,.25);padding:9px 14px;font:500 15px Montserrat;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68;color:#B89A68">{{ g.q }}</div></sc-for></div></sc-if>
+<div style="display:flex;align-items:center;gap:10px;background:rgba(11,21,24,.9);border:1px solid rgba(184,154,104,.6);padding:8px 8px 8px 22px"><span style="font:400 22px 'Cormorant Garamond',serif;color:#B89A68">✦</span><input value="{{ ask }}" onChange="{{ onAsk }}" onKeyDown="{{ askKey }}" placeholder="{{ askPh }}" style="flex:1;background:transparent;border:0;color:#F3F0E9;font:400 17px Montserrat;padding:12px 4px"><div onClick="{{ micGo }}" style="cursor:pointer;width:48px;height:48px;border-radius:50%;border:1px solid #B89A68;background:{{ micBg }};color:{{ micFg }};display:flex;align-items:center;justify-content:center;font:500 18px Montserrat">●</div><div onClick="{{ askGo }}" style="cursor:pointer;height:48px;padding:0 20px;background:#B89A68;color:#0B1518;display:flex;align-items:center;font:600 15px Montserrat;letter-spacing:.2em">→</div></div>
+</div>
+<div style="position:absolute;left:50%;bottom:200px;transform:translateX(-50%);display:none;gap:18px;align-items:center;font:500 14px Montserrat;letter-spacing:.3em;color:rgba(243,240,233,.8)"><span onClick="{{ prevRoom }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);width:40px;height:40px;display:flex;align-items:center;justify-content:center;letter-spacing:0">←</span>{{ t.drag }}<span onClick="{{ nextRoom }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);width:40px;height:40px;display:flex;align-items:center;justify-content:center;letter-spacing:0">→</span></div>
+<div onClick="{{ goLead }}" style="position:absolute;right:48px;bottom:56px;cursor:pointer;background:#B89A68;color:#0B1518;padding:24px 36px;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.book }} →</div>
+</sc-if>
+
+<sc-if value="{{ pInfo }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:1250px;top:48px;bottom:150px;width:420px;box-sizing:border-box;animation:anSlide .5s cubic-bezier(.2,.7,.2,1);background:rgba(11,21,24,.94);border:1px solid rgba(184,154,104,.45);padding:34px 34px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;font:500 14px Montserrat;letter-spacing:.3em;color:#B89A68"><span>{{ t.room }} {{ room.n }}</span><span onClick="{{ closePanel }}" style="cursor:pointer;color:#F3F0E9">✕</span></div>
+<div style="font:300 54px/1 'Cormorant Garamond',serif">{{ room.name }}</div>
+<div style="font:400 30px 'Cormorant Garamond',serif;color:#B89A68">{{ room.area }} m² <span style="font:400 15px Montserrat;color:#F3F0E9;opacity:.7">· {{ room.dims }}</span></div>
+<div style="border-top:1px solid rgba(243,240,233,.2);padding-top:14px;display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ room.feats }}" as="f" hint-placeholder-count="4"><div style="display:flex;gap:14px;font:400 17px/1.4 Montserrat"><span style="color:#B89A68">—</span>{{ f.txt }}</div></sc-for>
+</div>
+<div style="font:300 15px/1.6 Montserrat;opacity:.75;text-wrap:pretty">{{ room.cap }}</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+<sc-if value="{{ room.hasView }}" hint-placeholder-val="{{ false }}"><div onClick="{{ openView }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:18px;text-align:center;font:600 14px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.windowView }} →</div></sc-if>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div onClick="{{ goFloorplan }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.45);padding:16px;text-align:center;font:600 13px Montserrat;letter-spacing:.2em;text-transform:uppercase">{{ t.floorPlan }}</div>
+<div onClick="{{ openConfig }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.45);padding:16px;text-align:center;font:600 13px Montserrat;letter-spacing:.2em;text-transform:uppercase">{{ t.configure }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ pConfig }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:1250px;top:48px;bottom:150px;width:420px;box-sizing:border-box;animation:anSlide .5s cubic-bezier(.2,.7,.2,1);background:rgba(11,21,24,.94);border:1px solid rgba(184,154,104,.45);padding:32px 32px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:300 46px/1 'Cormorant Garamond',serif">{{ t.customise }}</span><span onClick="{{ closePanel }}" style="cursor:pointer;font:500 14px Montserrat">✕</span></div>
+<div style="display:flex;border:1px solid rgba(243,240,233,.4);align-self:flex-start;font:600 13px Montserrat;letter-spacing:.2em;text-transform:uppercase"><div onClick="{{ showBefore }}" style="cursor:pointer;padding:10px 16px;background:{{ befBg }};color:{{ befFg }}">{{ t.before }}</div><div onClick="{{ showAfter }}" style="cursor:pointer;padding:10px 16px;background:{{ aftBg }};color:{{ aftFg }}">{{ t.after }}</div></div>
+<div style="display:flex;gap:22px;border-bottom:1px solid rgba(243,240,233,.15);font:600 14px Montserrat;letter-spacing:.2em;text-transform:uppercase">
+<sc-for list="{{ cfgTabs }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" style="cursor:pointer;padding-bottom:12px;border-bottom:2px solid {{ c.bc }};color:{{ c.color }};margin-bottom:-1px">{{ c.label }}</div></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<sc-for list="{{ cfgOpts }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.pick }}" style="cursor:pointer;display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid {{ o.bc }};background:{{ o.bg }};transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="border-color:#B89A68">
+<div style="height:74px;background:{{ o.c }};box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)"></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:500 14px Montserrat">{{ o.label }}</span><span style="font:400 14px Montserrat;color:#B89A68">{{ o.price }}</span></div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:auto;border-top:1px solid rgba(243,240,233,.2);padding-top:16px;display:flex;justify-content:space-between;align-items:baseline"><span style="font:500 14px Montserrat;letter-spacing:.24em;opacity:.7;text-transform:uppercase">{{ t.upgrade }}</span><span style="font:400 32px 'Cormorant Garamond',serif;color:#B89A68">+ {{ cfgTotalTxt }}</span></div>
+<div onClick="{{ saveConfig }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:20px;text-align:center;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.saveConfig }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ pTime }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:50%;bottom:170px;transform:translateX(-50%);animation:anRise .5s cubic-bezier(.2,.7,.2,1);width:980px;background:rgba(11,21,24,.92);border:1px solid rgba(243,240,233,.18);padding:30px 40px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 14px Montserrat;letter-spacing:.3em;color:#B89A68">{{ t.timeOfDay }} · {{ presetName }}</span><span style="font:300 64px/1 'Cormorant Garamond',serif">{{ clock }}</span></div><div style="display:flex;gap:14px;align-items:center"><span style="font:400 14px Montserrat;opacity:.7">{{ t.sunsetAt }}</span><span onClick="{{ closePanel }}" style="cursor:pointer;font:500 16px Montserrat;margin-left:18px">✕</span></div></div>
+<div style="position:relative;height:30px;display:flex;align-items:center"><div style="position:absolute;left:0;right:0;height:4px;background:linear-gradient(90deg,#526B78,#F3F0E9 35%,#e3c79a 62%,#B89A68 78%,#2a1f36 88%,#0B1518)"></div><input type="range" min="6" max="21" step="0.25" value="{{ hour }}" onChange="{{ setHour }}" style="position:relative;width:100%;margin:0;background:transparent"></div>
+<div style="display:flex;justify-content:space-between;font:500 15px Montserrat;opacity:.7"><span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(243,240,233,.14);padding-top:18px">
+<div style="display:flex;gap:8px"><sc-for list="{{ presets }}" as="p" hint-placeholder-count="5"><div onClick="{{ p.pick }}" style="cursor:pointer;padding:12px 16px;font:600 13px Montserrat;letter-spacing:.2em;text-transform:uppercase;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bc }}">{{ p.label }}</div></sc-for></div>
+<div style="display:flex;gap:8px;align-items:center"><span style="font:500 13px Montserrat;letter-spacing:.24em;opacity:.6;margin-right:6px">{{ t.weather }}</span><sc-for list="{{ weathers }}" as="w" hint-placeholder-count="3"><div onClick="{{ w.pick }}" style="cursor:pointer;padding:12px 14px;font:500 15px Montserrat;background:{{ w.bg }};color:{{ w.fg }};border:1px solid {{ w.bc }}">{{ w.label }}</div></sc-for></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ pMeasure }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:50%;top:48px;transform:translateX(-50%);background:rgba(11,21,24,.92);border:1px solid #B89A68;display:flex;gap:28px;align-items:center;padding:16px 28px;font:600 14px Montserrat;letter-spacing:.22em;text-transform:uppercase">
+<span style="color:#B89A68">{{ t.measure }}</span><span style="font:400 15px Montserrat;letter-spacing:0;text-transform:none;opacity:.85">{{ measureHint }}</span><span onClick="{{ clearMeasure }}" style="cursor:pointer">{{ t.clear }}</span><span onClick="{{ closePanel }}" style="cursor:pointer">✕</span>
+</div>
+<div style="position:absolute;left:50%;bottom:170px;transform:translateX(-50%);font:500 14px Montserrat;letter-spacing:.24em;background:rgba(11,21,24,.8);padding:12px 20px">✓ {{ t.verified }}</div>
+</sc-if>
+
+<sc-if value="{{ pView }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background:#0d1416;animation:anFade .6s ease">
+<div style="position:absolute;left:170px;right:170px;top:130px;bottom:190px;overflow:hidden;filter:{{ grade.filt }}">
+<img src="{{ viewImg }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s">
+<div style="position:absolute;inset:0;background:{{ grade.tint }};opacity:{{ grade.op }};mix-blend-mode:multiply;transition:all 1.2s"></div>
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(104deg,rgba(220,230,240,.25) 0 1px,transparent 1px 14px);opacity:{{ rainOp }}"></div>
+<div style="position:absolute;top:0;bottom:0;left:33.3%;width:14px;background:#0d1416"></div><div style="position:absolute;top:0;bottom:0;left:66.6%;width:14px;background:#0d1416"></div>
+</div>
+<div style="position:absolute;left:170px;right:170px;top:130px;bottom:190px;box-shadow:inset 0 0 0 18px #0d1416,inset 0 0 80px rgba(0,0,0,.6);pointer-events:none"></div>
+<div style="position:absolute;left:170px;top:40px;display:flex;flex-direction:column;gap:8px"><span style="font:500 14px Montserrat;letter-spacing:.3em;color:#B89A68">{{ t.viewFrom }}</span><span style="font:300 48px/1 'Cormorant Garamond',serif">{{ room.name }} · <span style="font-style:italic">{{ viewName }}</span></span></div>
+<div onClick="{{ closePanel }}" style="position:absolute;right:170px;top:56px;cursor:pointer;border:1px solid rgba(243,240,233,.45);padding:14px 22px;font:600 14px Montserrat;letter-spacing:.22em;text-transform:uppercase">← {{ t.backRoom }}</div>
+<div style="position:absolute;left:170px;right:170px;bottom:60px;display:flex;justify-content:space-between;align-items:center;background:rgba(11,21,24,.95);border:1px solid rgba(243,240,233,.14);padding:20px 26px">
+<div style="display:flex;gap:8px"><sc-for list="{{ views }}" as="v" hint-placeholder-count="3"><div onClick="{{ v.pick }}" style="cursor:pointer;padding:12px 18px;font:600 14px Montserrat;letter-spacing:.2em;text-transform:uppercase;background:{{ v.bg }};color:{{ v.fg }};border:1px solid {{ v.bc }}">{{ v.label }}</div></sc-for></div>
+<div style="display:flex;gap:8px"><sc-for list="{{ presets }}" as="p" hint-placeholder-count="5"><div onClick="{{ p.pick }}" style="cursor:pointer;padding:12px 14px;font:600 13px Montserrat;letter-spacing:.16em;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bc }}">{{ p.time }}</div></sc-for></div>
+<div style="font:500 15px Montserrat;opacity:.7">{{ t.simulation }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isGuided }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;top:0;height:96px;background:#000"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:96px;background:#000"></div>
+<div style="position:absolute;left:72px;top:34px;font:600 14px Montserrat;letter-spacing:.3em;color:rgba(243,240,233,.8)">{{ t.guidedTour }} · {{ guidedStep }}</div>
+<div style="position:absolute;right:72px;top:28px;display:flex;gap:12px;font:600 14px Montserrat;letter-spacing:.22em;text-transform:uppercase"><span onClick="{{ toggleGuidedPause }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:10px 16px">{{ pauseLabel }}</span><span onClick="{{ guidedNext }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:10px 16px">{{ t.skip }} ›</span></div>
+<div style="position:absolute;left:72px;top:150px;font:300 96px/1 'Cormorant Garamond',serif">{{ room.name }}</div>
+<div style="position:absolute;left:50%;bottom:170px;transform:translateX(-50%);width:1100px;text-align:center;font:italic 400 36px/1.35 'Cormorant Garamond',serif;background:rgba(11,21,24,.55);padding:22px 36px;text-wrap:pretty">“{{ room.cap }}”</div>
+<div onClick="{{ takeControl }}" style="position:absolute;right:72px;bottom:130px;cursor:pointer;border:1px solid #B89A68;color:#B89A68;padding:18px 26px;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#B89A68;color:#0B1518">{{ t.takeControl }}</div>
+<div style="position:absolute;left:72px;right:72px;bottom:44px;display:grid;grid-template-columns:repeat(8,1fr);gap:10px">
+<sc-for list="{{ guideBars }}" as="g" hint-placeholder-count="8"><div onClick="{{ g.go }}" style="cursor:pointer;display:flex;flex-direction:column;gap:10px"><div style="height:3px;background:rgba(243,240,233,.2)"><div style="height:3px;width:{{ g.w }};background:#B89A68;transition:width .25s linear"></div></div><span style="font:500 13px Montserrat;letter-spacing:.16em;text-transform:uppercase;color:{{ g.color }}">{{ g.name }}</span></div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:50%;top:48px;transform:translateX(-50%);background:#F3F0E9;color:#0B1518;padding:16px 26px;font:600 15px Montserrat;letter-spacing:.18em;display:flex;gap:12px;align-items:center;box-shadow:0 16px 40px rgba(0,0,0,.35)"><span style="color:#8a6f45">✓</span>{{ toast }}</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCompare }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0;background:#F3F0E9;color:#0B1518;padding:56px 110px 56px;display:flex;flex-direction:column;gap:30px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:14px"><span style="font:500 15px Montserrat;letter-spacing:.34em;color:#8a6f45">{{ projNameUp }}</span><span style="font:300 72px/1 'Cormorant Garamond',serif">{{ t.cmpA }} <span style="font-style:italic;color:#8a6f45">{{ t.cmpB }}</span></span></div>
+<div style="display:flex;gap:10px;align-items:center"><span style="font:500 14px Montserrat;letter-spacing:.24em;opacity:.6;margin-right:8px">{{ t.compareWith }}</span><sc-for list="{{ cmpChoices }}" as="c" hint-placeholder-count="3"><div onClick="{{ c.pick }}" style="cursor:pointer;padding:12px 18px;font:600 15px Montserrat;letter-spacing:.1em;background:{{ c.bg }};color:{{ c.fg }};border:1px solid #0B1518">{{ c.code }}</div></sc-for></div>
+</div>
+<div style="display:grid;grid-template-columns:300px 1fr 1fr;column-gap:40px;flex:1;min-height:0">
+<div></div>
+<div style="position:relative;height:230px;overflow:hidden"><img src="img/living2.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;padding:18px 22px;background:linear-gradient(0deg,rgba(11,21,24,.85),transparent);color:#F3F0E9;display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 34px 'Cormorant Garamond',serif">{{ cmpA.code }}</span><span style="font:500 14px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ cmpA.type }}</span></div></div>
+<div style="position:relative;height:230px;overflow:hidden"><img src="img/living.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;padding:18px 22px;background:linear-gradient(0deg,rgba(11,21,24,.85),transparent);color:#F3F0E9;display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 34px 'Cormorant Garamond',serif">{{ cmpB.code }}</span><span style="font:500 14px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ cmpB.type }}</span></div></div>
+<sc-for list="{{ cmpRows }}" as="r" hint-placeholder-count="7">
+<div style="padding:17px 0;border-bottom:1px solid rgba(11,21,24,.14);font:500 14px Montserrat;letter-spacing:.2em;text-transform:uppercase;opacity:.6">{{ r.label }}</div>
+<div style="padding:12px 0;border-bottom:1px solid rgba(11,21,24,.14);font:400 30px/1 'Cormorant Garamond',serif;color:{{ r.ac }}">{{ r.a }}</div>
+<div style="padding:12px 0;border-bottom:1px solid rgba(11,21,24,.14);font:400 30px/1 'Cormorant Garamond',serif;color:{{ r.bc }}">{{ r.b }}</div>
+</sc-for>
+<div></div>
+<div onClick="{{ exploreA }}" style="cursor:pointer;margin-top:24px;align-self:end;background:#0B1518;color:#F3F0E9;padding:24px;text-align:center;font:600 15px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#B89A68;color:#0B1518">{{ t.explore }} {{ cmpA.code }} →</div>
+<div onClick="{{ exploreB }}" style="cursor:pointer;margin-top:24px;align-self:end;background:#0B1518;color:#F3F0E9;padding:24px;text-align:center;font:600 15px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#B89A68;color:#0B1518">{{ t.explore }} {{ cmpB.code }} →</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPrice }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0;display:grid;grid-template-columns:1fr 1fr;background:#F3F0E9;color:#0B1518">
+<div style="padding:64px 96px 56px 110px;display:flex;flex-direction:column;gap:22px;border-right:1px solid rgba(11,21,24,.12)">
+<span style="font:500 15px Montserrat;letter-spacing:.34em;color:#8a6f45">{{ unit.code }} · {{ unitTypeUp }}</span>
+<span style="font:300 76px/1 'Cormorant Garamond',serif">{{ t.yourA }} <span style="font-style:italic;color:#8a6f45">{{ t.yourB }}</span></span>
+<div style="display:flex;flex-direction:column;margin-top:10px">
+<sc-for list="{{ priceRows }}" as="r" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(11,21,24,.12)"><span style="font:400 19px Montserrat;opacity:.75">{{ r.label }}</span><span style="font:400 30px 'Cormorant Garamond',serif;color:{{ r.color }}">{{ r.val }}</span></div></sc-for>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:26px 0;border-bottom:2px solid #0B1518"><span style="font:600 16px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.total }}</span><span style="font:400 54px 'Cormorant Garamond',serif">{{ totalTxt }}</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0"><span style="font:400 19px Montserrat;opacity:.75">{{ t.booking }}</span><span style="font:400 30px 'Cormorant Garamond',serif">{{ bookingTxt }}</span></div>
+</div>
+<div style="margin-top:auto;font:400 14px/1.6 Montserrat;opacity:.6">{{ t.indicative }}</div>
+</div>
+<div style="padding:64px 110px 56px 96px;display:flex;flex-direction:column;gap:22px">
+<span style="font:500 15px Montserrat;letter-spacing:.34em;opacity:.6">{{ t.paymentPlan }}</span>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #0B1518;font:600 15px Montserrat;letter-spacing:.2em;text-transform:uppercase;text-align:center">
+<sc-for list="{{ planTypes }}" as="p" hint-placeholder-count="3"><div onClick="{{ p.pick }}" style="cursor:pointer;padding:18px 0;background:{{ p.bg }};color:{{ p.fg }}">{{ p.label }}</div></sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px"><span style="font:500 15px Montserrat;letter-spacing:.26em;opacity:.6;text-transform:uppercase">{{ t.dp }}</span><span style="font:400 30px 'Cormorant Garamond',serif">{{ dpPct }}% · {{ dpTxt }}</span></div>
+<input type="range" min="10" max="100" step="5" value="{{ dpPct }}" onChange="{{ setDp }}" style="width:100%">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span style="font:500 15px Montserrat;letter-spacing:.26em;opacity:.6;text-transform:uppercase">{{ t.tenor }}</span>
+<div style="display:flex;gap:8px"><sc-for list="{{ tenors }}" as="n" hint-placeholder-count="4"><div onClick="{{ n.pick }}" style="cursor:pointer;padding:12px 18px;font:500 15px Montserrat;background:{{ n.bg }};border:1px solid {{ n.bc }};opacity:{{ n.op }}">{{ n.label }}</div></sc-for></div></div>
+<div style="margin-top:auto;background:#0B1518;color:#F3F0E9;padding:32px 36px;display:flex;justify-content:space-between;align-items:baseline"><span style="font:500 15px Montserrat;letter-spacing:.28em;opacity:.8;text-transform:uppercase">{{ monthlyLabel }}</span><span style="font:400 58px 'Cormorant Garamond',serif;color:#B89A68">{{ monthlyTxt }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1.4fr;gap:12px">
+<div onClick="{{ goCompare }}" style="cursor:pointer;border:1px solid #0B1518;padding:22px;text-align:center;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.compare }}</div>
+<div onClick="{{ goLead }}" style="cursor:pointer;background:#B89A68;padding:22px;text-align:center;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.book }} →</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLead }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:110px 0 0 0;display:grid;grid-template-columns:760px 1fr;background:#0B1518">
+<div style="position:relative;overflow:hidden"><img src="img/villa_wide.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,21,24,.95) 20%,rgba(11,21,24,.2) 70%)"></div>
+<div style="position:absolute;left:72px;right:72px;bottom:64px;display:flex;flex-direction:column;gap:24px">
+<div style="font:300 76px/1 'Cormorant Garamond',serif">{{ t.leadA }} <span style="font-style:italic;color:#B89A68">{{ t.leadB }}</span></div>
+<div style="border-top:1px solid rgba(243,240,233,.3);padding-top:20px;display:flex;flex-direction:column;gap:10px">
+<span style="font:500 14px Montserrat;letter-spacing:.3em;color:#B89A68">{{ t.shared }}</span>
+<sc-for list="{{ sessionLines }}" as="l" hint-placeholder-count="4"><span style="font:400 17px Montserrat;opacity:.9">{{ l.txt }}</span></sc-for>
+</div>
+</div>
+</div>
+<div style="padding:64px 110px 48px 96px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.7;text-transform:uppercase">{{ t.name }} *</label><input value="{{ f.name }}" onChange="{{ onName }}" placeholder="—" style="background:transparent;border:0;border-bottom:1px solid {{ e.nameBc }};color:#F3F0E9;font:400 24px Montserrat;padding:10px 0"><span style="font:500 15px Montserrat;color:#e39a7b;min-height:16px">{{ e.name }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:36px">
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.7;text-transform:uppercase">WhatsApp *</label><input value="{{ f.wa }}" onChange="{{ onWa }}" placeholder="+62 812 …" style="background:transparent;border:0;border-bottom:1px solid {{ e.waBc }};color:#F3F0E9;font:400 24px Montserrat;padding:10px 0"><span style="font:500 15px Montserrat;color:#e39a7b;min-height:16px">{{ e.wa }}</span></div>
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.7;text-transform:uppercase">Email *</label><input value="{{ f.email }}" onChange="{{ onEmail }}" placeholder="name@email.com" style="background:transparent;border:0;border-bottom:1px solid {{ e.emailBc }};color:#F3F0E9;font:400 24px Montserrat;padding:10px 0"><span style="font:500 15px Montserrat;color:#e39a7b;min-height:16px">{{ e.email }}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px"><label style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.7;text-transform:uppercase">{{ t.purpose }}</label><div style="display:flex;gap:10px;flex-wrap:wrap"><sc-for list="{{ purposes }}" as="p" hint-placeholder-count="4"><div onClick="{{ p.pick }}" style="cursor:pointer;padding:14px 20px;font:500 15px Montserrat;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bc }}">{{ p.label }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:12px"><label style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.7;text-transform:uppercase">{{ t.visitDate }}</label><div style="display:flex;gap:10px"><sc-for list="{{ dates }}" as="d" hint-placeholder-count="5"><div onClick="{{ d.pick }}" style="cursor:pointer;width:96px;padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:4px;background:{{ d.bg }};color:{{ d.fg }};border:1px solid {{ d.bc }}"><span style="font:500 13px Montserrat;letter-spacing:.2em">{{ d.dow }}</span><span style="font:400 28px/1 'Cormorant Garamond',serif">{{ d.day }}</span></div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:14px;border:1px solid {{ e.consentBc }};padding:20px 22px">
+<div onClick="{{ toggleC1 }}" style="cursor:pointer;display:flex;gap:14px;align-items:flex-start;font:400 15px/1.5 Montserrat"><span style="width:20px;height:20px;flex:none;border:1px solid #B89A68;background:{{ c1Bg }};color:#0B1518;display:flex;align-items:center;justify-content:center;font:700 15px Montserrat">{{ c1Mark }}</span><span>{{ t.consent1 }} *</span></div>
+<div onClick="{{ toggleC2 }}" style="cursor:pointer;display:flex;gap:14px;align-items:flex-start;font:400 15px/1.5 Montserrat;opacity:.85"><span style="width:20px;height:20px;flex:none;border:1px solid #B89A68;background:{{ c2Bg }};color:#0B1518;display:flex;align-items:center;justify-content:center;font:700 15px Montserrat">{{ c2Mark }}</span><span>{{ t.consent2 }}</span></div>
+</div>
+<div onClick="{{ submitLead }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;padding:26px;text-align:center;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.book }} →</div>
+<div style="display:flex;justify-content:center;gap:36px;font:600 13px Montserrat;letter-spacing:.22em;opacity:.7;text-transform:uppercase"><span onClick="{{ toastBrochure }}" style="cursor:pointer">{{ t.brochure }}</span><span onClick="{{ toastWa }}" style="cursor:pointer">WhatsApp sales</span><span>{{ t.privacy }}</span></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background:#F3F0E9;color:#0B1518;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;text-align:center">
+<div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="font:400 30px/1 Montserrat;letter-spacing:.42em;padding-left:.42em">ANANTA</div><div style="font:500 12px/1 Montserrat;letter-spacing:.66em;padding-left:.66em">PROPERTY™</div></div>
+<div style="width:64px;height:1px;background:#B89A68"></div>
+<div style="font:300 132px/1 'Cormorant Garamond',serif">{{ t.thxA }} <span style="font-style:italic;color:#8a6f45">{{ t.thxB }}</span></div>
+<div style="display:flex;gap:40px;align-items:center;border:1px solid rgba(11,21,24,.15);padding:30px 36px;text-align:left;background:#fbf9f4">
+<div style="display:flex;gap:22px;align-items:center"><div style="width:88px;height:88px;border-radius:50%;overflow:hidden;background:#dcd6ca"><image-slot id="consultant-photo" shape="circle" placeholder="Photo"></image-slot></div><div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.6;text-transform:uppercase">{{ t.consultant }}</span><span style="font:400 36px/1 'Cormorant Garamond',serif">Ayu Pratiwi</span><span style="font:400 16px/1.5 Montserrat;opacity:.75">{{ t.willContact }} {{ visitTxt }}</span></div></div>
+<div style="width:1px;align-self:stretch;background:rgba(11,21,24,.12)"></div>
+<div style="display:flex;gap:18px;align-items:center"><div onClick="{{ openMobile }}" title="Open on phone" style="cursor:pointer;display:grid;grid-template-columns:repeat(21,6px);grid-auto-rows:6px;padding:10px;background:#fff;border:1px solid rgba(11,21,24,.1)"><sc-for list="{{ qr }}" as="q" hint-placeholder-count="0"><div style="background:{{ q.c }}"></div></sc-for></div><span style="font:500 15px/1.6 Montserrat;max-width:190px;opacity:.7">{{ t.scan }}</span></div>
+</div>
+<div style="display:flex;gap:14px">
+<div onClick="{{ continueExploring }}" style="cursor:pointer;background:#0B1518;color:#F3F0E9;padding:22px 34px;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.continueExp }}</div>
+<div onClick="{{ resetAll }}" style="cursor:pointer;border:1px solid #0B1518;padding:22px 34px;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.backProjects }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isIdle }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:60;animation:anFade .4s ease;background:rgba(5,10,11,.72);display:flex;align-items:center;justify-content:center">
+<div style="width:620px;animation:anPop .5s cubic-bezier(.2,.7,.2,1);background:#0B1518;border:1px solid rgba(184,154,104,.55);padding:48px 56px;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
+<div style="width:120px;height:120px;border-radius:50%;background:conic-gradient(#B89A68 {{ idleDeg }},rgba(243,240,233,.12) 0);display:flex;align-items:center;justify-content:center"><div style="width:106px;height:106px;border-radius:50%;background:#0B1518;display:flex;align-items:center;justify-content:center;font:300 52px 'Cormorant Garamond',serif">{{ idleLeft }}</div></div>
+<div style="font:300 56px/1 'Cormorant Garamond',serif">{{ t.stillA }} <span style="font-style:italic;color:#B89A68">{{ t.stillB }}</span></div>
+<div style="font:400 17px/1.6 Montserrat;opacity:.8">{{ t.stillSub }}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:6px">
+<div onClick="{{ idleContinue }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:22px;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.continueBtn }}</div>
+<div onClick="{{ idleSave }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.5);padding:22px;font:600 15px Montserrat;letter-spacing:.24em;text-transform:uppercase">{{ t.saveToPhone }}</div>
+</div>
+<div onClick="{{ resetAll }}" style="cursor:pointer;font:600 14px Montserrat;letter-spacing:.24em;opacity:.65;text-transform:uppercase">{{ t.endSession }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToastGlobal }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:50%;bottom:48px;transform:translateX(-50%);z-index:55;background:#F3F0E9;color:#0B1518;padding:16px 26px;font:600 15px Montserrat;letter-spacing:.18em;display:flex;gap:12px;align-items:center;box-shadow:0 16px 40px rgba(0,0,0,.35)"><span style="color:#8a6f45">✓</span>{{ toast }}</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+
+<div style="position:fixed;right:10px;top:10px;z-index:100;font:500 13px Montserrat;color:#F3F0E9;opacity:.35;display:flex;flex-direction:column-reverse;align-items:flex-end;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="opacity:1">
+<sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+<div style="background:rgba(11,21,24,.96);border:1px solid rgba(184,154,104,.5);padding:14px 16px;margin-top:8px;display:flex;flex-direction:column;gap:4px;width:210px">
+<span style="font:600 11px Montserrat;letter-spacing:.24em;color:#B89A68;margin-bottom:4px">CUSTOMER SCREENS</span>
+<sc-for list="{{ navScreens }}" as="n" hint-placeholder-count="12"><span onClick="{{ n.go }}" style="cursor:pointer;padding:3px 0;opacity:.85;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="color:#B89A68">{{ n.label }}</span></sc-for>
+<span onClick="{{ navIdle }}" style="cursor:pointer;padding:3px 0;opacity:.85;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="color:#B89A68">Idle timeout</span>
+<span style="font:600 11px Montserrat;letter-spacing:.24em;color:#B89A68;margin:8px 0 4px">OTHER APPS</span>
+<a href="Ananta Sales Console.dc.html" style="padding:3px 0;text-decoration:none;color:#F3F0E9">Sales console ↗</a>
+<a href="Ananta Showroom Setup.dc.html" style="padding:3px 0;text-decoration:none;color:#F3F0E9">Showroom setup ↗</a>
+<a href="Ananta Analytics.dc.html" style="padding:3px 0;text-decoration:none;color:#F3F0E9">Analytics ↗</a>
+<a href="Ananta Mobile Web.dc.html" style="padding:3px 0;text-decoration:none;color:#F3F0E9">Mobile web ↗</a>
+<a href="Ananta Admin CMS.dc.html" style="padding:3px 0;text-decoration:none;color:#F3F0E9">Admin CMS ↗</a>
+<a href="Ananta Demo Script.dc.html" style="padding:3px 0;text-decoration:none;color:#F3F0E9">Demo script ↗</a>
+</div>
+</sc-if>
+<div onClick="{{ toggleNav }}" style="cursor:pointer;display:inline-flex;gap:8px;align-items:center;background:rgba(11,21,24,.85);border:1px solid rgba(243,240,233,.25);padding:5px 9px;font-size:9px;letter-spacing:.18em">☰ SCREENS</div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;idleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:90,&quot;min&quot;:15,&quot;max&quot;:300,&quot;step&quot;:15,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Showroom&quot;}}">
+const T = {
+  en: {
+    talk:'Talk to sales', steps:['Project','Overview','Units','Floor plan','3D tour'],
+    wH1:'Experience your', wH2:'future home.', wSub:'Walk through the property before you visit it. Explore every room, change the finishes, and see the view at sunset.',
+    enter:'Enter experience', touch:'TOUCH ANYWHERE TO BEGIN',
+    projectsEyebrow:'THREE DEVELOPMENTS', selA:'Select a', selB:'project', projectsSub:'Choose a development to explore its homes, floor plans and interactive 3D walkthrough.',
+    from:'From', explore:'EXPLORE', exploreUnits:'Explore units', viewMasterplan:'View masterplan',
+    area:'Area', bedrooms:'Bedrooms', completion:'Completion', baths:'Bathrooms', indoor:'Indoor', terrace:'Terrace',
+    tabs:['Overview','Location','Facilities'], ovSide:'NATURE\nPRIVACY\nHARMONY', zoomIn:'Zoom in',
+    uxA:'Unit', uxB:'Explorer', unitSub:'Tap a floor on the building.', all:'All units',
+    available:'Available', reserved:'Reserved', sold:'Sold', viewPlan:'View floor plan', compare:'Compare',
+    crumbs:['City','Development','Cluster','Unit','Room'], bedWord:'Bedroom', bedsWord:'Bedrooms'
+  },
+  id: {
+    talk:'Hubungi sales', steps:['Proyek','Ringkasan','Unit','Denah','Tur 3D'],
+    wH1:'Rasakan rumah', wH2:'masa depan Anda.', wSub:'Jelajahi properti sebelum Anda mengunjunginya. Telusuri setiap ruangan, ganti material, dan lihat pemandangan saat senja.',
+    enter:'Mulai pengalaman', touch:'SENTUH DI MANA SAJA UNTUK MEMULAI',
+    projectsEyebrow:'TIGA PENGEMBANGAN', selA:'Pilih', selB:'proyek', projectsSub:'Pilih pengembangan untuk menjelajahi unit, denah, dan tur 3D interaktifnya.',
+    from:'Mulai', explore:'JELAJAHI', exploreUnits:'Lihat unit', viewMasterplan:'Lihat masterplan',
+    area:'Luas', bedrooms:'Kamar tidur', completion:'Serah terima', baths:'Kamar mandi', indoor:'Dalam', terrace:'Teras',
+    tabs:['Ringkasan','Lokasi','Fasilitas'], ovSide:'ALAM\nPRIVASI\nHARMONI', zoomIn:'Perbesar',
+    uxA:'Penjelajah', uxB:'Unit', unitSub:'Ketuk lantai pada bangunan.', all:'Semua unit',
+    available:'Tersedia', reserved:'Dipesan', sold:'Terjual', viewPlan:'Lihat denah', compare:'Bandingkan',
+    crumbs:['Kota','Kawasan','Klaster','Unit','Ruangan'], bedWord:'Kamar', bedsWord:'Kamar'
+  }
+};
+Object.assign(T.en, {
+  floorPlan:'Floor plan', enterRoom:'Enter room', tapRoom:'Tap a room to preview it, then step inside.', property:'PROPERTY', facing:'west-facing, sunset view', parking:'Parking', price:'Price',
+  enter3d:'Enter 3D walkthrough', preparing:'PREPARING YOUR WALKTHROUGH', roomsPoi:'8 rooms · 20 points of interest', startAt:'Starting at the entrance foyer', loadingTip:'DRAG TO LOOK · A / D TO MOVE BETWEEN ROOMS',
+  vtA:'Virtual', vtB:'Tour', tapPlan:'Tap plan to jump', exit:'EXIT TOUR', youAreIn:'YOU ARE IN', drag:'DRAG TO LOOK AROUND', book:'Book site visit', room:'ROOM',
+  windowView:'View from window', configure:'Configure', customise:'Customise', before:'Before', after:'After', upgrade:'Upgrade', saveConfig:'Save configuration',
+  timeOfDay:'TIME OF DAY', sunsetAt:'Sunset today at 18:12', weather:'WEATHER', measure:'Measure', clear:'Clear', verified:'VERIFIED AGAINST ARCHITECTURAL DRAWING · ±2 CM',
+  viewFrom:'VIEW FROM', backRoom:'Back to room', simulation:'Simulated view · Floor 2 · 8.4 m', guidedTour:'GUIDED TOUR', skip:'Skip', takeControl:'Take control',
+  cmpA:'Compare', cmpB:'units', compareWith:'COMPARE WITH', yourA:'Your', yourB:'price', total:'Total', booking:'Booking fee', indicative:'Indicative only. Final price and payment terms are confirmed by your consultant.',
+  paymentPlan:'PAYMENT PLAN', dp:'Down payment', tenor:'Tenor', leadA:'Ready to experience it', leadB:'in person?', shared:'SHARED WITH YOUR CONSULTANT', name:'Full name', purpose:'Buying purpose', visitDate:'Preferred visit date',
+  consent1:'I agree that Ananta Property may contact me about this property via WhatsApp and email.', consent2:'Share my walkthrough activity so my consultant can prepare.', brochure:'Request brochure', privacy:'Privacy policy',
+  thxA:'Thank', thxB:'you.', consultant:'Your property consultant', willContact:'will contact you on WhatsApp within 24 hours to confirm your visit on', scan:'Scan to keep your configuration on your phone',
+  continueExp:'Continue exploring', backProjects:'Back to projects', stillA:'Still', stillB:'exploring?', stillSub:'For your privacy, this session will close and your selections will be cleared.', continueBtn:'Continue', saveToPhone:'Save to phone', endSession:'End session',
+  tools:['Floor plan','Details','Configure','Light','Measure','Window view','Guided tour','Price','Compare'], cfgTabs:['Floor','Wall','Kitchen','Style'], presets:['Morning','Midday','Golden hour','Sunset','Night'], weathers:['Sunny','Cloudy','Rain'], viewsL:['Ocean','Garden','Pool'],
+  cmpRows:['Indoor','Terrace','Bedrooms','Bathrooms','Parking','Price'], planTypes:['Cash','Instalment','KPR'], mo:'mo', yr:'yr', monthly:'EST. MONTHLY', cashLbl:'CASH PRICE · 5% OFF', base:'Base price', cfgRow:'Configuration', promo:'Launch promo',
+  purposes:['Own stay','Investment','Holiday home','Business'], errName:'Please enter your name', errWa:'Enter a valid WhatsApp number', errEmail:'Enter a valid email address', saved:'Configuration saved to your session', mHint1:'Tap the first point', mHint2:'Tap the second point', mHint3:'Tap again to start a new measurement', roomsExplored:'rooms explored', viewedAt:'Viewed at', noView:'No window view in this room', brochureSent:'Brochure will be sent to your WhatsApp', waSent:'A consultant will message you shortly', pause:'Pause', play:'Play', savedPhone:'Scan the code to continue on your phone'
+});
+Object.assign(T.id, {
+  floorPlan:'Denah', enterRoom:'Masuk ruangan', tapRoom:'Ketuk ruangan untuk pratinjau, lalu masuk ke dalamnya.', property:'PROPERTI', facing:'menghadap barat, pemandangan senja', parking:'Parkir', price:'Harga',
+  enter3d:'Masuk tur 3D', preparing:'MENYIAPKAN TUR ANDA', roomsPoi:'8 ruangan · 20 titik informasi', startAt:'Dimulai dari foyer masuk', loadingTip:'GESER UNTUK MELIHAT · A / D UNTUK PINDAH RUANGAN',
+  vtA:'Tur', vtB:'Virtual', tapPlan:'Ketuk denah untuk pindah', exit:'KELUAR TUR', youAreIn:'ANDA BERADA DI', drag:'GESER UNTUK MELIHAT', book:'Jadwalkan kunjungan', room:'RUANG',
+  windowView:'Lihat dari jendela', configure:'Kustomisasi', customise:'Kustomisasi', before:'Sebelum', after:'Sesudah', upgrade:'Tambahan', saveConfig:'Simpan konfigurasi',
+  timeOfDay:'WAKTU', sunsetAt:'Matahari terbenam pukul 18.12', weather:'CUACA', measure:'Ukur', clear:'Hapus', verified:'TERVERIFIKASI DENGAN GAMBAR ARSITEKTUR · ±2 CM',
+  viewFrom:'PEMANDANGAN DARI', backRoom:'Kembali ke ruangan', simulation:'Simulasi pemandangan · Lantai 2 · 8,4 m', guidedTour:'TUR TERPANDU', skip:'Lewati', takeControl:'Ambil kendali',
+  cmpA:'Bandingkan', cmpB:'unit', compareWith:'BANDINGKAN DENGAN', yourA:'Harga', yourB:'Anda', total:'Total', booking:'Biaya booking', indicative:'Harga indikatif. Harga final dan skema pembayaran dikonfirmasi oleh konsultan Anda.',
+  paymentPlan:'SKEMA PEMBAYARAN', dp:'Uang muka', tenor:'Tenor', leadA:'Siap merasakannya', leadB:'secara langsung?', shared:'DIBAGIKAN KE KONSULTAN ANDA', name:'Nama lengkap', purpose:'Tujuan pembelian', visitDate:'Tanggal kunjungan',
+  consent1:'Saya setuju Ananta Property menghubungi saya terkait properti ini melalui WhatsApp dan email.', consent2:'Bagikan aktivitas tur saya agar konsultan dapat mempersiapkan.', brochure:'Minta brosur', privacy:'Kebijakan privasi',
+  thxA:'Terima', thxB:'kasih.', consultant:'Konsultan properti Anda', willContact:'akan menghubungi Anda via WhatsApp dalam 24 jam untuk konfirmasi kunjungan pada', scan:'Pindai untuk menyimpan konfigurasi di ponsel Anda',
+  continueExp:'Lanjut menjelajah', backProjects:'Kembali ke proyek', stillA:'Masih', stillB:'menjelajah?', stillSub:'Demi privasi Anda, sesi ini akan ditutup dan pilihan Anda dihapus.', continueBtn:'Lanjutkan', saveToPhone:'Simpan ke ponsel', endSession:'Akhiri sesi',
+  tools:['Denah','Detail','Kustomisasi','Cahaya','Ukur','Pemandangan','Tur terpandu','Harga','Bandingkan'], cfgTabs:['Lantai','Dinding','Dapur','Gaya'], presets:['Pagi','Siang','Golden hour','Senja','Malam'], weathers:['Cerah','Berawan','Hujan'], viewsL:['Laut','Taman','Kolam'],
+  cmpRows:['Dalam','Teras','Kamar tidur','Kamar mandi','Parkir','Harga'], planTypes:['Tunai','Cicilan','KPR'], mo:'bln', yr:'thn', monthly:'EST. PER BULAN', cashLbl:'HARGA TUNAI · DISKON 5%', base:'Harga dasar', cfgRow:'Konfigurasi', promo:'Promo peluncuran',
+  purposes:['Tinggal sendiri','Investasi','Rumah liburan','Bisnis'], errName:'Mohon isi nama Anda', errWa:'Masukkan nomor WhatsApp yang valid', errEmail:'Masukkan alamat email yang valid', saved:'Konfigurasi tersimpan di sesi Anda', mHint1:'Ketuk titik pertama', mHint2:'Ketuk titik kedua', mHint3:'Ketuk lagi untuk pengukuran baru', roomsExplored:'ruangan dijelajahi', viewedAt:'Dilihat pukul', noView:'Tidak ada jendela di ruangan ini', brochureSent:'Brosur akan dikirim ke WhatsApp Anda', waSent:'Konsultan akan segera menghubungi Anda', pause:'Jeda', play:'Putar', savedPhone:'Pindai kode untuk melanjutkan di ponsel'
+});
+const ROOMS = [
+  { k:'entrance', name:{en:'Entrance Foyer',id:'Foyer Masuk'}, area:7.2, dims:'2.4 × 3.0 m', img:'img/villa_hero.jpg', r:[380,0,120,300], rot:180, view:false,
+    feats:{en:['Double-height pivot door','Natural stone cladding','Concealed storage'],id:['Pintu pivot setinggi dua lantai','Pelapis batu alam','Penyimpanan tersembunyi']},
+    cap:{en:'Arrive through a pivot door into a double-height foyer framed in natural stone.',id:'Masuk melalui pintu pivot ke foyer setinggi dua lantai berbingkai batu alam.'}, hs:[{x:34,y:56,info:1},{x:62,y:62,go:1}] },
+  { k:'living', name:{en:'Living Room',id:'Ruang Keluarga'}, area:28.2, dims:'6.0 × 4.7 m', img:'img/living.jpg', r:[0,0,380,300], rot:180, view:'garden',
+    feats:{en:['Full-height sliding glass','Garden and sunset view','Concealed lighting and AC'],id:['Kaca geser setinggi plafon','Pemandangan taman dan senja','Lampu dan AC tersembunyi']},
+    cap:{en:'The living room spans six by four point seven metres and opens fully to the garden.',id:'Ruang keluarga berukuran enam kali empat koma tujuh meter dan terbuka penuh ke taman.'}, hs:[{x:47,y:64,info:1},{x:72,y:50,go:2},{x:30,y:44,go:7}] },
+  { k:'dining', name:{en:'Dining',id:'Ruang Makan'}, area:14.4, dims:'4.0 × 3.6 m', img:'img/living2.jpg', r:[0,300,300,170], rot:90, view:'ocean',
+    feats:{en:['Eight-seat dining table','Ocean-facing glazing','Open to the kitchen'],id:['Meja makan delapan kursi','Kaca menghadap laut','Terbuka ke dapur']},
+    cap:{en:'Dinner with the ocean in view, one step from the kitchen.',id:'Makan malam dengan pemandangan laut, selangkah dari dapur.'}, hs:[{x:62,y:66,info:1},{x:73,y:52,go:3},{x:30,y:58,go:1}] },
+  { k:'kitchen', name:{en:'Kitchen',id:'Dapur'}, area:12.6, dims:'3.6 × 3.5 m', img:null, r:[300,300,200,170], rot:270, view:false,
+    feats:{en:['Quartz countertop','Integrated appliances','Island with storage'],id:['Meja quartz','Peralatan terintegrasi','Island dengan penyimpanan']},
+    cap:{en:'The premium kitchen package adds quartz tops and fully integrated appliances.',id:'Paket dapur premium menambahkan meja quartz dan peralatan terintegrasi penuh.'}, hs:[{x:50,y:60,info:1},{x:72,y:48,go:4}] },
+  { k:'master', name:{en:'Master Bedroom',id:'Kamar Utama'}, area:24.5, dims:'4.5 × 4.0 m', img:null, r:[500,0,400,260], rot:200, view:'ocean',
+    feats:{en:['King-size configuration','Walk-in wardrobe','Ensuite bathroom','Ocean view'],id:['Konfigurasi king-size','Walk-in wardrobe','Kamar mandi dalam','Pemandangan laut']},
+    cap:{en:'The master suite faces the ocean, with a walk-in wardrobe and ensuite bath.',id:'Kamar utama menghadap laut, dengan walk-in wardrobe dan kamar mandi dalam.'}, hs:[{x:50,y:64,info:1},{x:32,y:38,view:1},{x:72,y:50,go:6}] },
+  { k:'bed2', name:{en:'Bedroom 2',id:'Kamar Tidur 2'}, area:13.5, dims:'3.6 × 3.75 m', img:null, r:[660,260,240,210], rot:180, view:'garden',
+    feats:{en:['Queen-size configuration','Built-in wardrobe','Garden view'],id:['Konfigurasi queen-size','Lemari tanam','Pemandangan taman']},
+    cap:{en:'A quiet second bedroom overlooking the garden.',id:'Kamar kedua yang tenang menghadap taman.'}, hs:[{x:50,y:64,info:1},{x:30,y:50,go:7}] },
+  { k:'bath', name:{en:'Bathroom',id:'Kamar Mandi'}, area:7.8, dims:'2.6 × 3.0 m', img:null, r:[500,260,160,210], rot:90, view:false,
+    feats:{en:['Freestanding stone bath','Rain shower','Double vanity'],id:['Bathtub batu','Rain shower','Wastafel ganda']},
+    cap:{en:'A stone bath and rain shower under a skylight.',id:'Bathtub batu dan rain shower di bawah skylight.'}, hs:[{x:50,y:60,info:1},{x:72,y:52,go:5}] },
+  { k:'terrace', name:{en:'Terrace & Pool',id:'Teras & Kolam'}, area:28, dims:'8.0 × 3.5 m', img:'img/villa_wide.jpg', r:[0,470,900,150], rot:180, view:'pool',
+    feats:{en:['Six-metre infinity pool','Sun loungers and daybed','Uninterrupted sunset view'],id:['Kolam infinity enam meter','Kursi santai dan daybed','Pemandangan senja tanpa halangan']},
+    cap:{en:'The terrace ends in a six-metre infinity pool facing the western sunset.',id:'Teras berakhir di kolam infinity enam meter menghadap senja di barat.'}, hs:[{x:40,y:66,info:1},{x:62,y:34,view:1},{x:74,y:45,go:1}] }
+];
+const CFG = {
+  floor:[{k:'oak',en:'Oak',id:'Kayu oak',c:'#8a6440',p:0},{k:'marble',en:'Marble',id:'Marmer',c:'#e6e1d8',p:45},{k:'stone',en:'Stone',id:'Batu alam',c:'#6f6a63',p:30},{k:'terrazzo',en:'Terrazzo',id:'Teraso',c:'#c9bfae',p:20}],
+  wall:[{k:'white',en:'Warm white',id:'Putih hangat',c:'#f1ece2',p:0},{k:'beige',en:'Beige',id:'Krem',c:'#c8b294',p:0},{k:'grey',en:'Grey',id:'Abu-abu',c:'#8c9196',p:0},{k:'texture',en:'Textured',id:'Tekstur',c:'#9b8466',p:15}],
+  kitchen:[{k:'standard',en:'Standard',id:'Standar',c:'#d8d2c6',p:0},{k:'modern',en:'Modern',id:'Modern',c:'#3d4447',p:35},{k:'premium',en:'Premium',id:'Premium',c:'#6b5641',p:85},{k:'luxury',en:'Luxury',id:'Mewah',c:'#1d1d1d',p:160}],
+  style:[{k:'modern',en:'Modern',id:'Modern',c:'#a59a8a',p:0,f:''},{k:'minimal',en:'Minimalist',id:'Minimalis',c:'#e4e0d8',p:0,f:' saturate(.8) brightness(1.05)'},{k:'japandi',en:'Japandi',id:'Japandi',c:'#b89d7c',p:60,f:' sepia(.2) saturate(.9)'},{k:'luxury',en:'Luxury',id:'Mewah',c:'#4a3a2a',p:180,f:' contrast(1.1) saturate(1.15)'}]
+};
+const CFG_KEYS = ['floor','wall','kitchen','style'];
+const PRESETS = [8,12,16.5,18,20.5];
+const VIEWS = [{k:'ocean',img:'img/ocean.jpg'},{k:'garden',img:'img/villa_hero.jpg'},{k:'pool',img:'img/villa_wide.jpg'}];
+const PROJECTS = [
+  { name:'Ananta Residences', type:{en:'Residences',id:'Hunian'}, loc:'Uluwatu, Bali', img:'img/villa_wide.jpg', from:2.95, area:'68–350 m²', beds:'1–4', done:'2027', status:{en:'Now selling',id:'Dipasarkan'},
+    desc:{en:'Cliffside residences above the Indian Ocean. Twenty-four homes across four types, every one facing the sunset.',id:'Hunian di tebing di atas Samudra Hindia. Dua puluh empat unit dalam empat tipe, semuanya menghadap matahari terbenam.'},
+    loc2:[['Bingin Beach','5 min'],['Uluwatu Temple','8 min'],['Pecatu Golf','12 min'],['International school','20 min'],['BIMC Hospital','30 min'],['Ngurah Rai Airport','35 min']] },
+  { name:'Ananta Sky Suites', type:{en:'Apartment',id:'Apartemen'}, loc:'SCBD, Jakarta', img:'img/sky.jpg', from:3.6, area:'72–240 m²', beds:'1–3', done:'2028', status:{en:'Launching',id:'Segera'},
+    desc:{en:'Elevated apartments in the heart of Jakarta, above a garden podium with a resort pool and clubhouse.',id:'Apartemen di jantung Jakarta, di atas podium taman dengan kolam resor dan clubhouse.'},
+    loc2:[['MRT Istora','4 min'],['Pacific Place','5 min'],['GBK','10 min'],['JIS school','25 min'],['MMC Hospital','12 min'],['Soekarno-Hatta','45 min']] },
+  { name:'Ananta Grand Masterplan', type:{en:'Masterplan',id:'Masterplan'}, loc:'Ubud, Bali', img:'img/masterplan.jpg', from:6.2, area:'180–520 m²', beds:'2–5', done:'2029', status:{en:'Masterplan',id:'Masterplan'},
+    desc:{en:'A destination of villas, a clubhouse and a wellness village set among the rice terraces north of Ubud.',id:'Destinasi villa, clubhouse, dan desa wellness di antara sawah terasering di utara Ubud.'},
+    loc2:[['Ubud Palace','15 min'],['Tegallalang','10 min'],['Green School','25 min'],['Ubud Hospital','18 min'],['Sanur Beach','50 min'],['Ngurah Rai Airport','75 min']] }
+];
+const FACILITIES = { en:[['Infinity pool','25 m'],['Clubhouse','Level 1'],['Gym & spa','24 h'],['Concierge','24 h'],['Private parking','2 / unit'],['Security','24 h']], id:[['Kolam infinity','25 m'],['Clubhouse','Lantai 1'],['Gym & spa','24 jam'],['Concierge','24 jam'],['Parkir pribadi','2 / unit'],['Keamanan','24 jam']] };
+const UNITS = [
+  { code:'PH-01', beds:4, baths:4, indoor:350, terr:120, park:3, price:14.5, status:'reserved', x:442, y:89 },
+  { code:'3A-02', beds:3, baths:3, indoor:210, terr:42, park:2, price:7.2, status:'available', x:439, y:283 },
+  { code:'2B-01', beds:2, baths:2, indoor:124, terr:28, park:2, price:4.85, status:'available', x:439, y:467 },
+  { code:'1A-03', beds:1, baths:1, indoor:68, terr:14, park:1, price:2.95, status:'sold', x:439, y:654 }
+];
+const UNIT_DESC = { en:'A refined residence with expansive living space and panoramic ocean views, designed for modern tropical living.', id:'Hunian elegan dengan ruang keluarga luas dan pemandangan laut panorama, dirancang untuk gaya hidup tropis modern.' };
+const CLUSTERS = [
+  { n:1, x:'36%', y:'42%', name:{en:'Villa Cluster A',id:'Klaster Villa A'}, kind:{en:'VILLAS',id:'VILLA'}, info:{en:'12 villas · 5 available · 3–4 bedrooms',id:'12 villa · 5 tersedia · 3–4 kamar'} },
+  { n:2, x:'52%', y:'30%', name:{en:'Clubhouse',id:'Clubhouse'}, kind:{en:'FACILITY',id:'FASILITAS'}, info:{en:'Restaurant, lap pool, co-working lounge',id:'Restoran, kolam renang, lounge co-working'} },
+  { n:3, x:'72%', y:'56%', name:{en:'Wellness Village',id:'Desa Wellness'}, kind:{en:'FACILITY',id:'FASILITAS'}, info:{en:'Spa, yoga pavilion, hot pools',id:'Spa, paviliun yoga, kolam air panas'} },
+  { n:4, x:'22%', y:'72%', name:{en:'Terrace Residences',id:'Hunian Teras'}, kind:{en:'RESIDENCES',id:'HUNIAN'}, info:{en:'28 homes · 11 available · 2–3 bedrooms',id:'28 unit · 11 tersedia · 2–3 kamar'} },
+  { n:5, x:'84%', y:'24%', name:{en:'Rice Terrace Park',id:'Taman Sawah'}, kind:{en:'LANDSCAPE',id:'LANSKAP'}, info:{en:'4 ha of preserved terraces and trails',id:'4 ha sawah dan jalur yang dilestarikan'} },
+  { n:6, x:'46%', y:'80%', name:{en:'Arrival & Retail',id:'Area Kedatangan'}, kind:{en:'COMMERCIAL',id:'KOMERSIAL'}, info:{en:'Gallery, café, market hall',id:'Galeri, kafe, pasar'} }
+];
+const SCREENS = ['welcome','projects','overview','masterplan','units','floorplan','loading','tour','compare','price','lead','success'];
+
+class Component extends DCLogic {
+  defaults() { return { screen:'welcome', proj:0, ovTab:0, cluster:0, unit:2, unitFilter:0, planSel:null, doll:false, load:0, room:0, arrive:false, lookX:0, panel:null, guided:false, gPaused:false, gT:0,
+    cfg:{floor:'oak',wall:'white',kitchen:'standard',style:'modern'}, cfgTab:0, before:false, hour:17, weather:0, view:0, mPts:[], seen:[true,false,false,false,false,false,false,false],
+    ask:'', askReply:null, listening:false, cmpB:1, planType:1, dpPct:30, tenor:24, f:{name:'',wa:'',email:''}, purpose:0, date:1, c1:false, c2:true, tried:false, idle:false, idleLeft:20, toast:null, visitTxt:'' }; }
+  state = Object.assign({ lang:'en', fade:1, scale:1 }, this.defaults());
+  init() {
+    if (window.BroadcastChannel) { this.bc = new BroadcastChannel('ananta-showroom'); this.bc.onmessage = (ev) => this.onCmd(ev.data); }
+    this.hb = setInterval(() => this.sendState(true), 2000);
+    this.loadCms = () => { try { this.cms = JSON.parse(localStorage.getItem('ananta.cms')||'{}'); } catch(e) { this.cms = {}; } (this.cms.units||[]).forEach(cu => { const u = UNITS.find(x=>x.code===cu.code); if (u) { u.price = cu.price/1000; u.status = cu.status==='soon' ? 'reserved' : cu.status; } }); this.forceUpdate(); };
+    this.loadCms(); this.onStorage = (e) => { if (e.key==='ananta.cms') { this.loadCms(); this.showToast(this.state.lang==='en'?'Content updated from CMS':'Konten diperbarui dari CMS'); } }; window.addEventListener('storage', this.onStorage);
+    this.last = Date.now();
+    this.onAct = () => { this.last = Date.now(); };
+    this.onKey = (e) => {
+      this.last = Date.now();
+      if (this.state.screen !== 'tour' || e.target.tagName === 'INPUT') return;
+      const k = e.key.toLowerCase();
+      if (k==='a' || k==='arrowleft') this.goRoom((this.state.room+7)%8);
+      if (k==='d' || k==='arrowright') this.goRoom((this.state.room+1)%8);
+      if (k==='escape') this.setState({ panel:null, guided:false });
+    };
+    document.addEventListener('pointerdown', this.onAct, true);
+    document.addEventListener('keydown', this.onKey);
+    this.tick = setInterval(() => {
+      const s = this.state, idleSec = this.props.idleSeconds ?? 90;
+      if (s.guided && !s.gPaused) this.last = Date.now();
+      if (s.idle) { if (s.idleLeft <= 1) this.resetAll(); else this.setState({ idleLeft: s.idleLeft - 1 }); }
+      else if (s.screen !== 'welcome' && Date.now() - this.last > idleSec*1000) this.setState({ idle:true, idleLeft:20 });
+    }, 1000);
+    this.gTick = setInterval(() => {
+      const s = this.state;
+      if (!s.guided || s.gPaused || s.screen!=='tour') return;
+      const nt = s.gT + 0.1/7;
+      if (nt >= 1) { if (s.room >= 7) this.setState({ guided:false, gT:0 }); else { this.goRoom(s.room+1); this.setState({ gT:0 }); } }
+      else this.setState({ gT: nt });
+    }, 100);
+  }
+  componentDidUpdate() { this.sendState(false); }
+  sendState(force) { if (!this.bc) return; const s = this.state; const msg = { type:'state', screen:s.screen, room:s.room, cfg:s.cfg, hour:s.hour, weather:s.weather, guided:s.guided, panel:s.panel, seen:s.seen, unit:UNITS[s.unit].code }; const key = JSON.stringify(msg); if (!force && key === this._lk) return; this._lk = key; this.bc.postMessage(msg); }
+  onCmd(d) {
+    if (!d || d.type !== 'cmd') return; this.last = Date.now();
+    const s = this.state, toTour = () => { if (s.screen !== 'tour') this.go('tour'); };
+    if (d.cmd==='OPEN_ROOM') { toTour(); this.goRoom(d.room); }
+    if (d.cmd==='CHANGE_MATERIAL') { this.setState({ cfg: Object.assign({}, this.state.cfg, {[d.key]: d.k}), before:false }); }
+    if (d.cmd==='CHANGE_TIME') this.setState({ hour: d.hour });
+    if (d.cmd==='GUIDED') { toTour(); this.setState({ guided: d.on, gPaused:false, gT:0, panel:null }); }
+    if (d.cmd==='OVERLAY') { const m = {'FLOOR PLAN':'floorplan','PRICE':'price','COMPARE':'compare','MASTERPLAN':'masterplan','LEAD FORM':'lead'}; if (m[d.name]) this.go(m[d.name]); else if (d.name==='WINDOW VIEW') { toTour(); this.setState({ panel:'view', view:this.defaultView(this.state.room) }); } else if (d.name==='CLEAR') { toTour(); this.setState({ panel:null }); } }
+  }
+  askRun(q) {
+    const s = this.state, L = s.lang, t = T[L], x = ' ' + q.toLowerCase() + ' ', has = (...w) => w.some(k => x.includes(k));
+    const out = [], st = {}; let screen = null;
+    const roomKeys = [['entrance','foyer','masuk','pintu'],['living','keluarga','ruang tamu','lounge'],['dining','makan'],['kitchen','dapur'],['master','largest bedroom','biggest bedroom','terbesar','kamar utama','main bedroom'],['bedroom 2','second bedroom','kamar 2','kamar tidur 2','kamar kedua','guest'],['bath','mandi','toilet'],['terrace','pool','kolam','teras','balcony','balkon']];
+    let room = null; roomKeys.forEach((ks,i) => { if (room===null && has(...ks)) room = i; });
+    if (room !== null) { st.room = room; out.push((L==='en'?'Moving to ':'Menuju ') + ROOMS[room].name[L]); }
+    const cfg = Object.assign({}, s.cfg); let cfgCh = false;
+    const isKitchen = has('kitchen','dapur');
+    [['marble','marmer','marble'],['oak','kayu','oak'],['stone','batu','stone'],['terrazzo','teraso','terrazzo']].forEach(([a,b,k]) => { if (has(a,b)) { cfg.floor = k; cfgCh = true; } });
+    if (isKitchen && room===null) { st.room = 3; }
+    const styleWords = [['japandi','japandi'],['minimal','minimal'],['luxury','luxury'],['mewah','luxury'],['modern','modern']];
+    const kitWords = [['premium','premium'],['luxury','luxury'],['mewah','luxury'],['modern','modern'],['standard','standard'],['standar','standard']];
+    if (isKitchen) kitWords.forEach(([w,k]) => { if (has(w)) { cfg.kitchen = k; cfgCh = true; } });
+    else styleWords.forEach(([w,k]) => { if (has(w)) { cfg.style = k; cfgCh = true; } });
+    if (cfgCh) { st.cfg = cfg; st.before = false; const f = CFG.floor.find(o=>o.k===cfg.floor)[L], y = CFG.style.find(o=>o.k===cfg.style)[L], kk = CFG.kitchen.find(o=>o.k===cfg.kitchen)[L]; out.push((L==='en'?'Applied: ':'Diterapkan: ') + f + ' · ' + y + ' · ' + kk); }
+    [[['sunset','senja','sore'],18],[['night','malam'],20.5],[['morning','pagi'],8],[['noon','midday','siang'],12],[['golden'],16.5]].forEach(([ws,hh]) => { if (has(...ws)) { st.hour = hh; out.push((L==='en'?'Lighting set to ':'Cahaya diatur ke ') + this.clock(hh)); } });
+    [[['rain','hujan'],2],[['cloud','berawan','mendung'],1],[['sunny','cerah'],0]].forEach(([ws,w]) => { if (has(...ws)) { st.weather = w; out.push((L==='en'?'Weather: ':'Cuaca: ') + t.weathers[w]); } });
+    if (has('view','pemandangan','window','jendela')) { const r = st.room!=null ? st.room : s.room; if (ROOMS[r].view) { st.panel = 'view'; st.view = this.defaultView(r); out.push(t.windowView); } }
+    if (has('measure','ukur','how big','berapa luas','size')) { const r = st.room!=null ? st.room : s.room; out.push(ROOMS[r].name[L] + ': ' + ROOMS[r].area + ' m² · ' + ROOMS[r].dims); }
+    if (has('guided','show me around','tur terpandu','keliling')) { st.guided = true; st.gPaused = false; st.gT = 0; st.panel = null; out.push(t.guidedTour.charAt(0) + t.guidedTour.slice(1).toLowerCase()); }
+    if (has('price','harga','cost','berapa','how much','cicilan','instal')) { screen = 'price'; out.push(L==='en'?'Opening price and payment plan':'Membuka harga dan skema pembayaran'); }
+    if (has('compare','bandingkan','difference','beda','perbedaan')) { screen = 'compare'; out.push(L==='en'?'Opening unit comparison':'Membuka perbandingan unit'); }
+    if (has('book','visit','kunjung','jadwal','appointment')) { screen = 'lead'; out.push(L==='en'?'Opening site visit booking':'Membuka jadwal kunjungan'); }
+    if (!out.length) out.push(L==='en'?'I can move between rooms, change finishes and lighting, show views, prices and comparisons. Try one of the suggestions.':'Saya bisa pindah ruangan, mengganti material dan cahaya, menampilkan pemandangan, harga, dan perbandingan. Coba salah satu saran.');
+    if (st.room != null && st.room !== s.room) { const r = st.room; delete st.room; this.goRoom(r); }
+    this.setState(Object.assign(st, { ask:'', askReply:{ q, lines: out } }));
+    if (screen) setTimeout(() => this.go(screen), 900);
+    clearTimeout(this._ar); this._ar = setTimeout(() => this.setState({ askReply:null }), 7000);
+  }
+  listen() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { this.showToast(this.state.lang==='en'?'Voice input is not available in this browser':'Input suara tidak tersedia di browser ini'); return; }
+    const r = new SR(); r.lang = this.state.lang==='en' ? 'en-US' : 'id-ID'; r.interimResults = true;
+    r.onresult = (e) => { const txt = Array.from(e.results).map(a=>a[0].transcript).join(''); this.setState({ ask: txt }); if (e.results[e.results.length-1].isFinal) { this.setState({ listening:false }); this.askRun(txt); } };
+    r.onend = () => this.setState({ listening:false }); r.onerror = () => this.setState({ listening:false });
+    this.setState({ listening:true }); r.start();
+  }
+  cleanup() { window.removeEventListener('storage', this.onStorage); clearInterval(this.hb); this.bc && this.bc.close(); clearInterval(this.tick); clearInterval(this.gTick); clearInterval(this.lTick); document.removeEventListener('pointerdown', this.onAct, true); document.removeEventListener('keydown', this.onKey); }
+  onEnter(screen) {
+    if (screen === 'loading') {
+      clearInterval(this.lTick); this.setState({ load:0 });
+      this.lTick = setInterval(() => { const l = this.state.load + 2.2; if (l >= 100) { clearInterval(this.lTick); this.setState({ load:100 }); this.go('tour'); } else this.setState({ load:l }); }, 40);
+    }
+  }
+  goRoom(i) {
+    const seen = this.state.seen.slice(); seen[i] = true;
+    this.setState({ room:i, seen, arrive:true, lookX:0, mPts:[], panel: this.state.panel==='measure'||this.state.panel==='info' ? this.state.panel : null, view: this.defaultView(i) });
+    setTimeout(() => this.setState({ arrive:false }), 40);
+  }
+  defaultView(i) { const v = ROOMS[i].view; return v ? VIEWS.findIndex(x=>x.k===v) : 0; }
+  showToast(msg) { this.setState({ toast:msg }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast:null }), 2600); }
+  resetAll() { clearInterval(this.lTick); this.last = Date.now(); this.setState(Object.assign(this.defaults(), { screen:this.state.screen, idle:false })); this.go('welcome'); }
+  cfgTotal() { const c = this.state.cfg; return CFG_KEYS.reduce((a,k)=>a + CFG[k].find(o=>o.k===c[k]).p, 0); }
+  grade(h, w) {
+    let g;
+    if (h < 9.5) g = { tint:'#ffcf9e', op:.16, filt:'brightness(1.02) saturate(.95)', glow:0 };
+    else if (h < 15) g = { tint:'#ffffff', op:0, filt:'brightness(1.07) saturate(1.02)', glow:0 };
+    else if (h < 17.5) g = { tint:'#ff9d52', op:.2, filt:'brightness(1) saturate(1.1)', glow:.08 };
+    else if (h < 19.5) g = { tint:'#8a4a6a', op:.3, filt:'brightness(.8) saturate(1.05)', glow:.35 };
+    else g = { tint:'#0a1633', op:.6, filt:'brightness(.58) saturate(.8)', glow:.7 };
+    if (w === 1) { g.filt += ' saturate(.7) brightness(.92)'; g.tint = h < 19.5 ? '#9aa3a8' : g.tint; g.op = Math.max(g.op, .22); }
+    if (w === 2) { g.filt += ' saturate(.6) brightness(.82)'; g.tint = h < 19.5 ? '#6d7a82' : g.tint; g.op = Math.max(g.op, .35); }
+    return g;
+  }
+  clock(h) { const hh = Math.floor(h), mm = Math.round((h-hh)*60); return String(hh).padStart(2,'0') + (this.state.lang==='en'?':':'.') + String(mm).padStart(2,'0'); }
+  moreVals(v) {
+    const s = this.state, L = s.lang, t = T[L], sc = s.scale;
+    const u = UNITS[s.unit], R = ROOMS[s.room];
+    const rect = (r, k) => ({ l: r[0]*k+'px', t: r[1]*k+'px', w: r[2]*k+'px', h: r[3]*k+'px' });
+    const g = this.grade(s.hour, s.weather);
+    const styleF = s.before ? '' : CFG.style.find(o=>o.k===s.cfg.style).f;
+    const fl = CFG.floor.find(o=>o.k===s.cfg.floor), wl = CFG.wall.find(o=>o.k===s.cfg.wall);
+    const panel = s.panel;
+    const clusters = CLUSTERS.map((c,i)=>Object.assign(v.clusters[i], { x: parseFloat(c.x)/100*1400+'px' }));
+    const cl = CLUSTERS[s.cluster];
+    const baseJt = u.price*1000, cfgJt = this.cfgTotal(), promo = -((this.cms&&this.cms.pricing)?this.cms.pricing.promo:100), total = baseJt + cfgJt + promo;
+    const dp = total * s.dpPct/100, fin = total - dp;
+    let monthly, monthlyLabel = t.monthly;
+    if (s.planType === 0) { monthly = null; monthlyLabel = t.cashLbl; }
+    else if (s.planType === 1) monthly = fin / s.tenor;
+    else { const r = ((this.cms&&this.cms.pricing)?this.cms.pricing.kpr:7.5)/100/12; monthly = fin * r / (1 - Math.pow(1+r, -s.tenor)); }
+    const tenorOpts = s.planType === 2 ? [60,120,180,240] : [12,24,36,48];
+    const B = UNITS[s.cmpB];
+    const cmpVals = [[u.indoor+' m²',B.indoor+' m²',u.indoor,B.indoor],[u.terr+' m²',B.terr+' m²',u.terr,B.terr],[u.beds,B.beds,u.beds,B.beds],[u.baths,B.baths,u.baths,B.baths],[u.park,B.park,u.park,B.park],[this.fmtB(u.price),this.fmtB(B.price),0,0]];
+    const email = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.f.email), wa = /^\+?[0-9 ]{9,16}$/.test(s.f.wa.trim()), nm = s.f.name.trim().length > 1;
+    const err = { name: s.tried && !nm ? t.errName : '', wa: s.tried && !wa ? t.errWa : '', email: s.tried && !email ? t.errEmail : '' };
+    const today = new Date();
+    const dates = [1,2,3,4,5].map(d => { const x = new Date(today); x.setDate(today.getDate()+d); return x; });
+    const loc = L==='en' ? 'en-GB' : 'id-ID';
+    const mp = s.mPts, factor = parseFloat(R.dims) / 1650;
+    let mLine = null;
+    if (mp.length === 2) { const dx = mp[1].x-mp[0].x, dy = mp[1].y-mp[0].y, d = Math.hypot(dx,dy); mLine = { x:mp[0].x+'px', y:mp[0].y+'px', w:d+'px', rot:'rotate('+Math.atan2(dy,dx)+'rad)', mx:(mp[0].x+mp[1].x)/2+'px', my:(mp[0].y+mp[1].y)/2+'px', txt:(d*factor).toFixed(2).replace('.', L==='en'?'.':',')+' m' }; }
+    const cx = (R.r[0]+R.r[2]/2)*0.4133, cy = (R.r[1]+R.r[3]/2)*0.4133;
+    const toolActs = [()=>this.go('floorplan'), ()=>this.setState({panel: panel==='info'?null:'info'}), ()=>this.setState({panel: panel==='config'?null:'config'}), ()=>this.setState({panel: panel==='time'?null:'time'}), ()=>this.setState({panel: panel==='measure'?null:'measure', mPts:[]}),
+      ()=> R.view ? this.setState({panel:'view', view:this.defaultView(s.room)}) : this.showToast(t.noView), ()=>this.setState({guided:true, gPaused:false, gT:0, panel:null}), ()=>this.go('price'), ()=>this.go('compare')];
+    const toolKeys = [null,'info','config','time','measure','view',null,null,null], glyphs = ['▦','i','◐','☼','↔','▢','▶','Rp','⇄'];
+    const qr = []; for (let y=0;y<21;y++) for (let x=0;x<21;x++) { const f = (a,b)=> a<7&&b<7; const inF = f(x,y)||f(20-x,y)||f(x,20-y); let on; if (inF) { const fx = x<7?x:20-x, fy = y<7?y:20-y; on = fx===0||fx===6||fy===0||fy===6||(fx>=2&&fx<=4&&fy>=2&&fy<=4); } else on = ((x*37 + y*91 + x*y*13) % 7) < 3; qr.push({ c: on ? '#0B1518' : 'transparent' }); }
+    const selBtn = (on) => ({ bg: on ? '#B89A68' : 'transparent', fg: on ? '#0B1518' : '#F3F0E9', bc: on ? '#B89A68' : 'rgba(243,240,233,.3)' });
+    const hsShift = -s.lookX*134;
+    return {
+      clusters, mpCard: { x: parseFloat(cl.x)/100*1400+'px', y: cl.y, name: cl.name[L], kind: cl.kind[L], info: cl.info[L] },
+      unitTypeTxt: this.unitType(u,L), unitTypeUp: this.unitType(u,L).toUpperCase(), projName: PROJECTS[s.proj].name, projNameUp: PROJECTS[s.proj].name.toUpperCase(),
+      unit: Object.assign(v.unit, { park:u.park, priceTxt:this.fmtB(u.price) }),
+      set2d:()=>this.setState({doll:false}), setDoll:()=>this.setState({doll:true}),
+      p2dBg: s.doll?'transparent':'#0B1518', p2dFg: s.doll?'#0B1518':'#F3F0E9', pDollBg: s.doll?'#0B1518':'transparent', pDollFg: s.doll?'#F3F0E9':'#0B1518',
+      planTransform: s.doll ? 'perspective(2200px) rotateX(52deg) rotateZ(-24deg) scale(.86)' : 'none', planShadow: s.doll ? '40px 60px 80px rgba(11,21,24,.25)' : 'none',
+      planRooms: ROOMS.map((r,i)=>Object.assign(rect(r.r,1.15), { name:r.name[L], dims:r.dims, area:r.area, pick:()=>this.setState({planSel: s.planSel===i?null:i}), bg: s.planSel===i ? 'rgba(184,154,104,.38)' : (r.k==='terrace' ? 'rgba(82,107,120,.12)' : 'transparent'), dot: s.planSel===i ? '#B89A68' : '#F3F0E9' })),
+      hasPlanPop: s.planSel !== null,
+      planPop: s.planSel===null ? {} : (()=>{ const r = ROOMS[s.planSel]; return { x:(r.r[0]+r.r[2]/2)*1.15+'px', y:(r.r[1]+r.r[3]*.58)*1.15+'px', name:r.name[L], area:r.area, dims:r.dims, enter:()=>{ this.goRoom(s.planSel); this.go(this._visitedTour ? 'tour' : 'loading'); this._visitedTour = true; } }; })(),
+      goLoading: ()=>{ this.goRoom(0); this.go(this._visitedTour ? 'tour' : 'loading'); this._visitedTour = true; },
+      loadRooms: ROOMS.map((r,i)=>Object.assign(rect(r.r,.8622), { name:r.name[L], bg: 'rgba(184,154,104,' + (s.load > (i+1)*11 ? .34 : .03) + ')' })),
+      loadPct: s.load+'%', loadLabel: Math.round(s.load) + '% · ' + (s.load<30 ? (L==='en'?'LOADING ARCHITECTURE':'MEMUAT ARSITEKTUR') : s.load<65 ? (L==='en'?'LOADING MATERIALS':'MEMUAT MATERIAL') : (L==='en'?'SETTING THE LIGHT':'MENYIAPKAN CAHAYA')),
+      scDown:(e)=>{ this.drag = { x:e.clientX, y:e.clientY, lx:s.lookX, moved:false }; },
+      scMove:(e)=>{ if (!this.drag) return; const dx = (e.clientX - this.drag.x)/sc; if (Math.abs(dx) > 6) this.drag.moved = true; if (this.drag.moved) this.setState({ lookX: Math.max(-1, Math.min(1, this.drag.lx - dx/700)) }); },
+      scUp:(e)=>{ const d = this.drag; this.drag = null; if (!d || d.moved || e.type==='pointerleave' || this.state.panel!=='measure') return; const b = this.stageRef.current.getBoundingClientRect(); const p = { x:(e.clientX-b.left)/sc, y:(e.clientY-b.top)/sc }; const pts = this.state.mPts.length>=2 ? [p] : this.state.mPts.concat([p]); this.setState({ mPts:pts }); },
+      stop:(e)=>e.stopPropagation(),
+      sceneCursor: panel==='measure' ? 'crosshair' : 'grab',
+      sceneTransform: 'scale(' + (s.arrive ? 1.26 : 1.16) + ') translateX(' + (-s.lookX*6) + '%)', sceneFilter: g.filt + styleF,
+      sceneLayers: ROOMS.map((r,i)=>({ op: i===s.room?1:0, pe: i===s.room?'auto':'none', hasImg: !!r.img, noImg: !r.img, img:r.img, slot:'room-'+r.k, ph: (L==='en'?'Drop ':'Letakkan ') + r.name[L] + (L==='en'?' render':' render') })),
+      floorC: fl.c, floorOp: s.before || fl.k==='oak' ? 0 : .5, wallC: wl.c, wallOp: s.before || wl.k==='white' ? 0 : .5,
+      grade: g, rainOp: s.weather===2 ? .5 : 0,
+      hotspots: (s.guided || panel==='measure' || panel==='view') ? [] : R.hs.map(h=>({ x:'calc(' + h.x + '% + ' + hsShift + 'px)', y:h.y+'%', glyph: h.info ? 'i' : h.view ? '▢' : '→', label: h.info ? R.name[L] : h.view ? t.windowView : ROOMS[h.go].name[L],
+        act:(e)=>{ e.stopPropagation(); if (h.info) this.setState({panel:'info'}); else if (h.view) this.setState({panel:'view', view:this.defaultView(s.room)}); else this.goRoom(h.go); } })),
+      mPoints: panel==='measure' ? mp.map(p=>({ x:p.x+'px', y:p.y+'px' })) : [], hasMLine: panel==='measure' && !!mLine, mLine: mLine || {},
+      measureHint: mp.length===0 ? t.mHint1 : mp.length===1 ? t.mHint2 : t.mHint3, clearMeasure:()=>this.setState({mPts:[]}),
+      showHud: !s.guided && panel!=='view', showMini: !panel || panel==='measure' || panel==='time',
+      railRooms: ROOMS.map((r,i)=>({ name:r.name[L], area:r.area, img:r.img, hasImg:!!r.img, noImg:!r.img, go:()=>this.goRoom(i), bc: i===s.room?'#B89A68':'transparent', bg: i===s.room?'rgba(184,154,104,.12)':'transparent', color: i===s.room?'#F3F0E9':'rgba(243,240,233,.8)', seen: s.seen[i] ? '#B89A68' : 'rgba(243,240,233,.2)' })),
+      miniRooms: ROOMS.map((r,i)=>Object.assign(rect(r.r,.4133), { go:()=>this.goRoom(i), bg: i===s.room ? 'rgba(184,154,104,.4)' : s.seen[i] ? 'rgba(243,240,233,.07)' : 'transparent' })),
+      cone: { x: cx+'px', y: cy+'px', rot: R.rot+'deg' },
+      room: { n: '0'+(s.room+1), name:R.name[L], area:R.area, dims:R.dims, cap:R.cap[L], hasView: !!R.view, feats: R.feats[L].map(x=>({txt:x})) },
+      tools: t.tools.map((label,i)=>{ const on = toolKeys[i] && panel===toolKeys[i]; return { label, g:glyphs[i], act:toolActs[i], color: on?'#B89A68':'#F3F0E9', bc: on?'#B89A68':'rgba(243,240,233,.45)', bg: on?'rgba(184,154,104,.18)':'rgba(11,21,24,.4)' }; }),
+      clock: this.clock(s.hour), prevRoom:()=>this.goRoom((s.room+7)%8), nextRoom:()=>this.goRoom((s.room+1)%8),
+      pInfo: panel==='info' && !s.guided, pConfig: panel==='config' && !s.guided, pTime: panel==='time' && !s.guided, pMeasure: panel==='measure' && !s.guided, pView: panel==='view', isGuided: s.guided,
+      closePanel:()=>this.setState({panel:null, mPts:[]}), openView:()=>this.setState({panel:'view', view:this.defaultView(s.room)}), openConfig:()=>this.setState({panel:'config'}),
+      showBefore:()=>this.setState({before:true}), showAfter:()=>this.setState({before:false}),
+      befBg: s.before?'#F3F0E9':'transparent', befFg: s.before?'#0B1518':'#F3F0E9', aftBg: !s.before?'#F3F0E9':'transparent', aftFg: !s.before?'#0B1518':'#F3F0E9',
+      cfgTabs: t.cfgTabs.map((label,i)=>({ label, pick:()=>this.setState({cfgTab:i}), bc: i===s.cfgTab?'#B89A68':'transparent', color: i===s.cfgTab?'#B89A68':'rgba(243,240,233,.7)' })),
+      cfgOpts: CFG[CFG_KEYS[s.cfgTab]].map(o=>{ const key = CFG_KEYS[s.cfgTab], on = s.cfg[key]===o.k; return { label:o[L], c:o.c, price: o.p ? '+' + this.fmtJt(o.p) : (L==='en'?'Included':'Termasuk'), pick:()=>this.setState({ cfg: Object.assign({}, s.cfg, {[key]:o.k}), before:false }), bc: on?'#B89A68':'rgba(243,240,233,.15)', bg: on?'rgba(184,154,104,.12)':'transparent' }; }),
+      cfgTotalTxt: this.fmtJt(cfgJt), saveConfig:()=>this.showToast(t.saved),
+      presetName: t.presets[s.hour<9.5?0:s.hour<15?1:s.hour<17.5?2:s.hour<19.5?3:4].toUpperCase(), hour: s.hour, setHour:(e)=>this.setState({hour:parseFloat(e.target.value)}),
+      presets: PRESETS.map((h,i)=>Object.assign(selBtn(Math.abs(s.hour-h)<.01), { label:t.presets[i], time:this.clock(h), pick:()=>this.setState({hour:h}) })),
+      weathers: t.weathers.map((label,i)=>Object.assign(selBtn(s.weather===i), { label, pick:()=>this.setState({weather:i}) })),
+      viewImg: VIEWS[s.view].img, viewName: t.viewsL[s.view], views: t.viewsL.map((label,i)=>Object.assign(selBtn(s.view===i), { label, pick:()=>this.setState({view:i}) })),
+      guidedStep: '0' + (s.room+1) + ' / 08', pauseLabel: s.gPaused ? '▶ ' + t.play : '❚❚ ' + t.pause, toggleGuidedPause:()=>this.setState({gPaused:!s.gPaused}),
+      guidedNext:()=>{ if (s.room>=7) this.setState({guided:false}); else { this.goRoom(s.room+1); this.setState({gT:0}); } }, takeControl:()=>this.setState({guided:false, gT:0}),
+      guideBars: ROOMS.map((r,i)=>({ name:r.name[L], w: (i<s.room ? 100 : i===s.room ? s.gT*100 : 0) + '%', color: i===s.room ? '#F3F0E9' : 'rgba(243,240,233,.5)', go:()=>{ this.goRoom(i); this.setState({gT:0}); } })),
+      toast: s.toast, hasToast: !!s.toast && s.screen==='tour', hasToastGlobal: !!s.toast && s.screen!=='tour',
+      cmpChoices: UNITS.map((x,i)=>({x,i})).filter(o=>o.i!==s.unit).map(({x,i})=>({ code:x.code, pick:()=>this.setState({cmpB:i}), bg: i===s.cmpB?'#0B1518':'transparent', fg: i===s.cmpB?'#F3F0E9':'#0B1518' })),
+      cmpA: { code:u.code, type:this.unitType(u,L) }, cmpB: { code:B.code, type:this.unitType(B,L) },
+      cmpRows: t.cmpRows.map((label,i)=>{ const r = cmpVals[i]; return { label, a:r[0], b:r[1], ac: r[2]>r[3] ? '#8a6f45' : '#0B1518', bc: r[3]>r[2] ? '#8a6f45' : '#0B1518' }; }),
+      exploreA:()=>{ this.goRoom(0); this.go('tour'); }, exploreB:()=>{ this.setState({unit:s.cmpB, cmpB:s.unit}); this.go('floorplan'); },
+      priceRows: [{label:t.base, val:this.fmtB(u.price), color:'#0B1518'}, {label:t.cfgRow + ' · ' + CFG.floor.find(o=>o.k===s.cfg.floor)[L] + ', ' + CFG.kitchen.find(o=>o.k===s.cfg.kitchen)[L], val:'+ ' + this.fmtJt(cfgJt), color:'#0B1518'}, {label:((this.cms&&this.cms.pricing&&this.cms.pricing.promoName)||t.promo), val:'− ' + this.fmtJt(-promo), color:'#35463D'}],
+      totalTxt: this.fmtB(total/1000), bookingTxt: this.fmtJt((this.cms&&this.cms.pricing)?this.cms.pricing.fee:25),
+      planTypes: t.planTypes.map((label,i)=>({ label, pick:()=>this.setState({planType:i, tenor: i===2?180:24}), bg: i===s.planType?'#0B1518':'transparent', fg: i===s.planType?'#F3F0E9':'#0B1518' })),
+      dpPct: s.dpPct, dpTxt: this.fmtJt(dp), setDp:(e)=>this.setState({dpPct:parseInt(e.target.value,10)}),
+      tenors: tenorOpts.map(n=>({ label: s.planType===2 ? (n/12)+' '+t.yr : n+' '+t.mo, pick:()=>this.setState({tenor:n}), bg: n===s.tenor?'#B89A68':'transparent', bc: n===s.tenor?'#B89A68':'rgba(11,21,24,.3)', op: s.planType===0 ? .35 : 1 })),
+      monthlyLabel, monthlyTxt: monthly===null ? this.fmtB(total*.95/1000) : this.fmtJt(monthly),
+      sessionLines: [{txt: u.code + ' · ' + this.unitType(u,L) + ' · ' + u.indoor + ' m²'}, {txt: CFG.floor.find(o=>o.k===s.cfg.floor)[L] + ' · ' + CFG.style.find(o=>o.k===s.cfg.style)[L] + ' · ' + CFG.kitchen.find(o=>o.k===s.cfg.kitchen)[L]}, {txt: s.seen.filter(Boolean).length + ' / 8 ' + t.roomsExplored}, {txt: t.viewedAt + ' ' + this.clock(s.hour) + ' · ' + this.fmtB(total/1000)}],
+      f: s.f, e: Object.assign(err, { nameBc: err.name?'#e39a7b':'rgba(243,240,233,.4)', waBc: err.wa?'#e39a7b':'rgba(243,240,233,.4)', emailBc: err.email?'#e39a7b':'rgba(243,240,233,.4)', consentBc: s.tried && !s.c1 ? '#e39a7b' : 'rgba(243,240,233,.18)' }),
+      onName:(e)=>this.setState({f:Object.assign({}, this.state.f, {name:e.target.value})}), onWa:(e)=>this.setState({f:Object.assign({}, this.state.f, {wa:e.target.value})}), onEmail:(e)=>this.setState({f:Object.assign({}, this.state.f, {email:e.target.value})}),
+      purposes: t.purposes.map((label,i)=>Object.assign(selBtn(s.purpose===i), { label, pick:()=>this.setState({purpose:i}) })),
+      dates: dates.map((d,i)=>Object.assign(selBtn(s.date===i), { dow: d.toLocaleDateString(loc,{weekday:'short'}).toUpperCase(), day: d.getDate(), pick:()=>this.setState({date:i}) })),
+      c1Bg: s.c1?'#B89A68':'transparent', c1Mark: s.c1?'✓':'', c2Bg: s.c2?'#B89A68':'transparent', c2Mark: s.c2?'✓':'',
+      toggleC1:()=>this.setState({c1:!s.c1}), toggleC2:()=>this.setState({c2:!s.c2}),
+      submitLead:()=>{ if (nm && wa && email && s.c1) { this.setState({ visitTxt: dates[s.date].toLocaleDateString(loc,{weekday:'long', day:'numeric', month:'long'}) + '.' }); this.go('success'); } else this.setState({tried:true}); },
+      toastBrochure:()=>this.showToast(t.brochureSent), toastWa:()=>this.showToast(t.waSent), visitTxt: s.visitTxt, qr,
+      continueExploring:()=>this.go('tour'), resetAll:()=>this.resetAll(),
+      ask: s.ask, onAsk:(e)=>this.setState({ask:e.target.value}), askKey:(e)=>{ if (e.key==='Enter' && s.ask.trim()) this.askRun(s.ask.trim()); }, askGo:()=>{ if (s.ask.trim()) this.askRun(s.ask.trim()); }, micGo:()=>this.listen(),
+      micBg: s.listening ? '#B89A68' : 'transparent', micFg: s.listening ? '#0B1518' : '#B89A68', askPh: L==='en' ? 'Ask Ananta — “Show me the largest bedroom at sunset”' : 'Tanya Ananta — “Tunjukkan kamar terbesar saat senja”',
+      hasReply: !!s.askReply, askReply: s.askReply || { q:'', lines:[] }, askLines: (s.askReply ? s.askReply.lines : []).map(txt=>({txt})), hasSugg: !s.askReply && !s.ask,
+      suggestions: (L==='en' ? ['Show me the largest bedroom','Make the floor marble','Terrace at sunset','How much is this unit?'] : ['Tunjukkan kamar terbesar','Ganti lantai jadi marmer','Teras saat senja','Berapa harga unit ini?']).map(q=>({ q, pick:()=>this.askRun(q) })),
+      openMobile:()=>window.open('Ananta Mobile Web.dc.html?room=' + s.room + '&floor=' + ['oak','marble','stone','terrazzo'].indexOf(s.cfg.floor), '_blank'),
+      navOpen: !!s.navOpen, toggleNav: ()=>this.setState({ navOpen: !s.navOpen }),
+      navScreens: ['Welcome','Projects','Overview','Masterplan','Unit explorer','Floor plan','Loading','3D tour','Compare','Price','Lead form','Thank you'].map((label,i)=>({ label: (i<9?'0':'') + (i+1) + '  ' + label, go:()=>{ this.setState({navOpen:false}); if (SCREENS[i]==='tour') this.goRoom(this.state.room); this.go(SCREENS[i]); } })),
+      navIdle: ()=>this.setState({ idle:true, idleLeft:20, navOpen:false }),
+      isIdle: s.idle, idleLeft: s.idleLeft, idleDeg: (s.idleLeft/20*360)+'deg', idleContinue:()=>{ this.last = Date.now(); this.setState({idle:false}); }, idleSave:()=>{ this.last = Date.now(); this.setState({idle:false}); this.showToast(t.savedPhone); this.go('success'); }
+    };
+  }
+  stageRef = React.createRef();
+  componentDidMount() {
+    this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(0.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); };
+    this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300); if (window.ResizeObserver) { this._ro = new ResizeObserver(this.onResize); this._ro.observe(document.documentElement); }
+    this.init && this.init(); window.__ananta = this;
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); this.cleanup && this.cleanup(); }
+  go(screen) {
+    if (screen === this.state.screen) return;
+    this.setState({ fade:0, fadeT:'scale(1.02)', fadeF:'blur(6px)' });
+    clearTimeout(this._ft); clearTimeout(this._ft2);
+    this._ft = setTimeout(() => { this.setState({ screen, fade:0, fadeT:'scale(.985)', fadeF:'blur(6px)' }); this.onEnter && this.onEnter(screen); this._ft2 = setTimeout(() => this.setState({ fade:1, fadeT:'none', fadeF:'none' }), 40); }, 420);
+  }
+  fmtB(v) { return this.state.lang==='en' ? 'Rp ' + v.toFixed(2) + ' bn' : 'Rp ' + v.toFixed(2).replace('.',',') + ' M'; }
+  fmtJt(v) { const n = Math.round(v).toLocaleString(this.state.lang==='en'?'en-US':'id-ID'); return this.state.lang==='en' ? 'Rp ' + n + ' mn' : 'Rp ' + n + ' jt'; }
+  unitType(u, L) { const t = T[L]; return u.beds===4 ? 'Penthouse' : u.beds + ' ' + (u.beds===1 ? t.bedWord : t.bedsWord); }
+  statusInfo(s, L) { const t=T[L]; return { label: t[s], dot: s==='available' ? '#6f9a7c' : s==='reserved' ? '#B89A68' : '#7b7f80' }; }
+  baseVals() {
+    const s = this.state, L = s.lang, t = T[L];
+    const idx = SCREENS.indexOf(s.screen);
+    const stepMap = ['projects','overview','units','floorplan','tour'];
+    const curStep = s.screen==='masterplan' ? 1 : s.screen==='compare'||s.screen==='price'||s.screen==='lead' ? 4 : stepMap.indexOf(s.screen);
+    const p = PROJECTS[s.proj];
+    const u = UNITS[s.unit];
+    const ui = this.statusInfo(u.status, L);
+    const filtered = UNITS.map((x,i)=>({x,i})).filter(o => s.unitFilter===0 || o.x.beds===s.unitFilter);
+    const ovItems = s.ovTab===0 ? [[t.area,p.area],[t.bedrooms,p.beds],[t.completion,p.done],[L==='en'?'Tenure':'Status', L==='en'?'Leasehold 80 yr':'Hak sewa 80 thn']] : s.ovTab===1 ? p.loc2 : FACILITIES[L];
+    const cl = CLUSTERS[s.cluster];
+    return {
+      t, stageRef:this.stageRef,
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')', fade: s.fade, fadeT: s.fadeT || 'none', fadeF: s.fadeF || 'none',
+      showHeader: ['projects','overview','masterplan','units','floorplan','compare','price','lead'].includes(s.screen),
+      isWelcome: s.screen==='welcome', isProjects: s.screen==='projects', isOverview: s.screen==='overview', isMasterplan: s.screen==='masterplan', isUnits: s.screen==='units',
+      isFloorplan: s.screen==='floorplan', isLoading: s.screen==='loading', isTour: s.screen==='tour', isCompare: s.screen==='compare', isPrice: s.screen==='price', isLead: s.screen==='lead', isSuccess: s.screen==='success',
+      steps: t.steps.map((label,i)=>({ label, n:'0'+(i+1), go:()=>this.go(stepMap[i]), bc: i===curStep ? '#B89A68' : 'transparent', color: i===curStep ? '#F3F0E9' : 'rgba(243,240,233,.6)' })),
+      enBg: L==='en'?'#F3F0E9':'transparent', enFg: L==='en'?'#0B1518':'#F3F0E9', idBg: L==='id'?'#F3F0E9':'transparent', idFg: L==='id'?'#0B1518':'#F3F0E9',
+      setEn:()=>this.setState({lang:'en'}), setId:()=>this.setState({lang:'id'}),
+      setEnStop:(e)=>{e.stopPropagation();this.setState({lang:'en'})}, setIdStop:(e)=>{e.stopPropagation();this.setState({lang:'id'})},
+      goWelcome:()=>this.go('welcome'), goProjects:()=>this.go('projects'), goUnits:()=>this.go('units'), goMasterplan:()=>this.go('masterplan'),
+      goFloorplan:()=>this.go('floorplan'), goCompare:()=>this.go('compare'), goLead:()=>this.go('lead'), goPrice:()=>this.go('price'),
+      projects: PROJECTS.map((x,i)=>({ n:'0'+(i+1), name:x.name, img:x.img, type:x.type[L], loc:x.loc, status:x.status[L], fromTxt:this.fmtB(x.from), open:()=>{ this.setState({proj:i, ovTab:0}); this.go(i===2?'masterplan':'overview'); } })),
+      proj: { name:p.name, img:p.img, type:p.type[L], loc:p.loc, desc:p.desc[L], fromTxt:this.fmtB(p.from), area:p.area, beds:p.beds, done:p.done },
+      t_ovSide: t.ovSide,
+      ovTabs: t.tabs.map((label,i)=>({ label, pick:()=>this.setState({ovTab:i}), bc: i===s.ovTab?'#B89A68':'transparent', color: i===s.ovTab?'#B89A68':'rgba(243,240,233,.7)' })),
+      ovItems: ovItems.map(a=>({a:a[0], b:a[1]})),
+      crumbs: t.crumbs.map((label,i)=>({ label: label.toUpperCase(), sep: i<4?'›':'', color: i===1?'#B89A68':'rgba(243,240,233,.6)' })),
+      clusters: CLUSTERS.map((c,i)=>({ n:c.n, x:c.x, y:c.y, name:c.name[L], pick:()=>this.setState({cluster:i}), bg: i===s.cluster?'#B89A68':'rgba(11,21,24,.85)', fg: i===s.cluster?'#0B1518':'#F3F0E9', ring: i===s.cluster?'rgba(184,154,104,.3)':'rgba(11,21,24,.25)', listColor: i===s.cluster?'#F3F0E9':'rgba(243,240,233,.6)' })),
+      mpCard: { x: 'calc(' + cl.x + ' * 1400 / 1920)', y: cl.y, name: cl.name[L], kind: cl.kind[L], info: cl.info[L] },
+      unitHits: UNITS.map((x,i)=>({ x:(x.x*1140/1060)+'px', y:(x.y*970/843)+'px', pick:()=>this.setState({unit:i}), bc: i===s.unit?'#B89A68':'transparent', glow: i===s.unit?'rgba(184,154,104,.55)':'transparent' })),
+      unitFilters: [t.all,'1','2','3','4'].map((label,i)=>({ label: i===0?label: label + ' ' + (i===1?t.bedWord:t.bedsWord), pick:()=>this.setState({unitFilter:i}), bg: i===s.unitFilter?'#B89A68':'transparent', fg: i===s.unitFilter?'#0B1518':'#F3F0E9', bc: i===s.unitFilter?'#B89A68':'rgba(243,240,233,.25)' })),
+      unitRows: filtered.map(({x,i})=>{ const si=this.statusInfo(x.status,L); return { code:x.code, type:this.unitType(x,L), indoor:x.indoor, status:si.label, dot:si.dot, price:this.fmtB(x.price), pick:()=>this.setState({unit:i}), bg: i===s.unit?'rgba(184,154,104,.14)':'transparent', op: x.status==='sold'?.55:1 }; }),
+      unit: { code:u.code, status:ui.label, dot:ui.dot, indoor:u.indoor, terr:u.terr, beds:u.beds, baths:u.baths, desc:UNIT_DESC[L] }
+    };
+  }
+  renderVals() {
+    const v = this.baseVals();
+    v.t = Object.assign({}, v.t, { ovSide: v.t.ovSide });
+    const br = this.cms && this.cms.brand; if (br && this.state.lang==='en' && br.headline) { const w = br.headline.trim().split(' '); const n = w.length > 2 ? 2 : 1; v.t.wH1 = w.slice(0, w.length-n).join(' '); v.t.wH2 = w.slice(-n).join(' '); }
+    return this.moreVals ? Object.assign(v, this.moreVals(v)) : v;
+  }
+}
+</script>
+</body>
+</html>

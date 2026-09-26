@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;height:100%;background:#d9d4c9;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#8a6f45}a:hover{color:#0B1518}input:focus{outline:none;border-color:#B89A68 !important}</style></helmet>
+<div style="position:fixed;inset:0;background:#d9d4c9">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:300px 1fr">
+<dc-import name="CMSSidebar" active="{{ active }}" local="{{ local }}" on-pick="{{ pick }}" hint-size="300px,1080px"></dc-import>
+<div style="position:relative;padding:44px 64px;display:flex;flex-direction:column;gap:24px;min-width:0;min-height:0;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">ANANTA RESIDENCES · ALL SCREENS</span><span style="font:300 60px/1 'Cormorant Garamond',serif">{{ title }}</span></div><span style="font:400 15px Montserrat;opacity:.6;max-width:560px;text-align:right">{{ sub }}</span></div>
+
+<sc-if value="{{ isTr }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div style="display:flex;gap:8px"><sc-for list="{{ trFilters }}" as="f" hint-placeholder-count="5"><div onClick="{{ f.pick }}" style="cursor:pointer;padding:11px 16px;font:500 14px Montserrat;background:{{ f.bg }};color:{{ f.fg }};border:1px solid #0B1518">{{ f.label }}</div></sc-for></div>
+<div style="display:flex;gap:16px;align-items:center"><span style="font:500 14px Montserrat">Bahasa Indonesia {{ pct }} complete</span><span style="width:220px;height:6px;background:rgba(11,21,24,.1)"><span style="display:block;height:6px;width:{{ pct }};background:#B89A68;transition:width .3s"></span></span></div>
+</div>
+<div style="display:grid;grid-template-columns:200px 150px 1fr 1fr 110px;gap:18px;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 10px Montserrat;letter-spacing:.2em;opacity:.6"><span>KEY</span><span>SCREEN</span><span>ENGLISH</span><span>BAHASA INDONESIA</span><span>STATUS</span></div>
+<div style="display:flex;flex-direction:column;overflow:auto;flex:1;min-height:0">
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="10"><div style="display:grid;grid-template-columns:200px 150px 1fr 1fr 110px;gap:18px;padding:5px 0;border-bottom:1px solid rgba(11,21,24,.08);align-items:center"><span style="font:400 12px ui-monospace,Menlo,monospace;opacity:.7">{{ r.key }}</span><span style="font:500 12px Montserrat;opacity:.7">{{ r.screen }}</span><input value="{{ r.en }}" onChange="{{ r.setEn }}" style="border:1px solid rgba(11,21,24,.15);background:#fff;padding:7px 10px;font:400 14px Montserrat;color:#0B1518"><input value="{{ r.id }}" onChange="{{ r.setId }}" placeholder="Missing translation" style="border:1px solid {{ r.idBc }};background:{{ r.idBg }};padding:7px 10px;font:400 14px Montserrat;color:#0B1518"><span style="font:600 10px Montserrat;letter-spacing:.16em;color:{{ r.sc }}">{{ r.status }}</span></div></sc-for>
+</div>
+<div style="display:flex;justify-content:flex-end"><div onClick="{{ publish }}" style="cursor:pointer;background:#0B1518;color:#F3F0E9;padding:16px 26px;font:600 11px Montserrat;letter-spacing:.22em">PUBLISH TRANSLATIONS</div></div>
+</sc-if>
+
+<sc-if value="{{ isPh }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:1fr 520px;gap:44px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:240px 1fr;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 10px Montserrat;letter-spacing:.2em;opacity:.6"><span>ACTION</span><span>PHRASES THAT TRIGGER IT (EN · ID)</span></div>
+<sc-for list="{{ actions }}" as="a" hint-placeholder-count="8"><div onClick="{{ a.pick }}" style="cursor:pointer;display:grid;grid-template-columns:240px 1fr;padding:12px 0;border-bottom:1px solid rgba(11,21,24,.08);align-items:center;background:{{ a.bg }}"><span style="display:flex;flex-direction:column;gap:3px"><span style="font:500 15px Montserrat">{{ a.label }}</span><span style="font:400 11px ui-monospace,Menlo,monospace;opacity:.55">{{ a.fn }}</span></span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ a.words }}" as="w" hint-placeholder-count="4"><span style="display:flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid rgba(11,21,24,.25);font:500 13px Montserrat;background:{{ w.bg }}">{{ w.t }}<span onClick="{{ w.del }}" style="cursor:pointer;opacity:.45">✕</span></span></sc-for></span></div></sc-for>
+<div style="display:flex;gap:8px;margin-top:10px"><span style="font:600 11px Montserrat;letter-spacing:.2em;align-self:center;opacity:.6;width:240px">ADD TO · {{ selLabel }}</span><input value="{{ newWord }}" onChange="{{ setNewWord }}" onKeyDown="{{ newKey }}" placeholder="e.g. kamar paling besar" style="flex:1;border:1px solid rgba(11,21,24,.2);padding:12px;font:400 15px Montserrat;color:#0B1518"><div onClick="{{ addWord }}" style="cursor:pointer;padding:12px 20px;background:#0B1518;color:#F3F0E9;font:600 11px Montserrat;letter-spacing:.18em;display:flex;align-items:center">ADD</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+<div style="background:#0B1518;color:#F3F0E9;padding:28px;display:flex;flex-direction:column;gap:14px">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">TEST A PHRASE</span>
+<div style="display:flex;gap:10px;align-items:center;border:1px solid rgba(184,154,104,.6);padding:6px 6px 6px 16px"><span style="color:#B89A68;font:400 20px 'Cormorant Garamond',serif">✦</span><input value="{{ test }}" onChange="{{ setTest }}" placeholder="Type what a visitor might say…" style="flex:1;background:transparent;border:0;color:#F3F0E9;font:400 15px Montserrat;padding:10px 0"></div>
+<sc-for list="{{ matches }}" as="m" hint-placeholder-count="1"><div style="display:flex;justify-content:space-between;font:500 14px Montserrat"><span><span style="color:#B89A68">→ </span>{{ m.label }}</span><span style="font:400 12px ui-monospace,Menlo,monospace;opacity:.6">matched “{{ m.w }}”</span></div></sc-for>
+<sc-if value="{{ noMatch }}" hint-placeholder-val="{{ false }}"><span style="font:400 14px Montserrat;color:#e39a7b">No action matched. Add a phrase on the left.</span></sc-if>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#8a6f45">UNANSWERED · LAST 30 DAYS</span>
+<sc-for list="{{ unanswered }}" as="u" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:1fr 50px 160px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.1)"><span style="font:italic 400 18px 'Cormorant Garamond',serif">“{{ u.q }}”</span><span style="font:500 13px Montserrat;opacity:.6">×{{ u.n }}</span><span onClick="{{ u.map }}" style="cursor:pointer;padding:8px 10px;border:1px solid #0B1518;font:600 10px Montserrat;letter-spacing:.14em;text-align:center">MAP TO {{ selShort }}</span></div></sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:64px;top:44px;background:#0B1518;color:#F3F0E9;padding:16px 22px;font:600 12px Montserrat;letter-spacing:.16em;display:flex;gap:10px"><span style="color:#B89A68">✓</span>{{ toast }}</div></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TR0 = [
+  ['welcome.headline','Welcome','Experience your future home.','Rasakan rumah masa depan Anda.'],['welcome.cta','Welcome','Enter experience','Mulai pengalaman'],['welcome.touch','Welcome','Touch anywhere to begin','Sentuh di mana saja untuk memulai'],
+  ['projects.title','Projects','Select a project','Pilih proyek'],['units.viewPlan','Units','View floor plan','Lihat denah'],['plan.enter3d','Floor plan','Enter 3D walkthrough','Masuk tur 3D'],
+  ['tour.youAreIn','3D tour','You are in','Anda berada di'],['tour.windowView','3D tour','View from window','Lihat dari jendela'],['tour.measureHint','3D tour','Tap two points in the room',''],
+  ['tour.sunsetAt','3D tour','Sunset today at 18:12','Matahari terbenam pukul 18.12'],['config.saved','Configure','Configuration saved to your session',''],['price.indicative','Price','Indicative only. Final price confirmed by your consultant.','Harga indikatif. Harga final dikonfirmasi konsultan Anda.'],
+  ['lead.title','Lead form','Ready to experience it in person?','Siap merasakannya secara langsung?'],['lead.consent','Lead form','I agree that Ananta Property may contact me via WhatsApp and email.',''],['success.contact','Thank you','Your consultant will contact you within 24 hours.','Konsultan Anda akan menghubungi dalam 24 jam.'],
+  ['idle.title','Idle','Still exploring?','Masih menjelajah?']
+];
+const ACT0 = [
+  ['Go to Master Bedroom','navigate_to_room("master")',['master','largest bedroom','main bedroom','kamar utama','kamar terbesar']],
+  ['Go to Terrace & Pool','navigate_to_room("terrace")',['terrace','pool','balcony','teras','kolam']],
+  ['Go to Kitchen','navigate_to_room("kitchen")',['kitchen','dapur']],
+  ['Floor: Marble','change_material("floor","marble")',['marble','marmer']],
+  ['Style: Japandi','change_material("style","japandi")',['japandi']],
+  ['Lighting: Sunset','change_lighting(18.0)',['sunset','senja','sore']],
+  ['Lighting: Night','change_lighting(20.5)',['night','malam']],
+  ['Open price','get_price()',['price','how much','harga','berapa','cicilan']],
+  ['Compare units','compare_units()',['compare','difference','bandingkan','beda']],
+  ['Book site visit','book_site_visit()',['book','visit','kunjungan','jadwal']]
+];
+const UN0 = [['kamar paling besar yang mana',14],['where does the sun set',9],['is there a study room',7],['bisa lihat parkiran',6],['show me something cheaper',5]];
+class Component extends DCLogic {
+  state = { scale:1, sec:'translations', tr: TR0.map(r=>({ key:r[0], screen:r[1], en:r[2], id:r[3] })), tf:0, acts: ACT0.map(a=>({ label:a[0], fn:a[1], words:a[2].slice() })), asel:0, newWord:'', test:'show me the largest bedroom at sunset', un: UN0.map(u=>({ q:u[0], n:u[1] })), toast:null };
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300);
+    const q = new URLSearchParams(location.search).get('s'); if (['translations','phrases'].includes(q)) this.setState({ sec:q }); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  toastMsg(m) { this.setState({ toast:m }); clearTimeout(this._t); this._t = setTimeout(()=>this.setState({ toast:null }), 2600); }
+  setTr(i, p) { const tr = this.state.tr.slice(); tr[i] = Object.assign({}, tr[i], p); this.setState({ tr }); }
+  addTo(i, w) { const acts = this.state.acts.slice(); if (!w || acts[i].words.includes(w)) return; acts[i] = Object.assign({}, acts[i], { words: acts[i].words.concat([w]) }); this.setState({ acts }); }
+  renderVals() {
+    const s = this.state, sel = on => ({ bg: on?'#0B1518':'transparent', fg: on?'#F3F0E9':'#0B1518' });
+    const done = s.tr.filter(r=>r.id.trim()).length, pct = Math.round(done/s.tr.length*100) + '%';
+    const screens = ['All','Missing only','3D tour','Lead form','Welcome'];
+    const rows = s.tr.map((r,i)=>({r,i})).filter(({r}) => s.tf===0 || (s.tf===1 && !r.id.trim()) || (s.tf>1 && r.screen===screens[s.tf]));
+    const x = ' ' + s.test.toLowerCase() + ' ';
+    const matches = []; s.acts.forEach(a => { const w = a.words.find(w => x.includes(w.toLowerCase())); if (w) matches.push({ label:a.label, w }); });
+    const A = s.acts[s.asel];
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      active: s.sec, local: ['translations','phrases'], pick: (k)=>this.setState({ sec:k }),
+      isTr: s.sec==='translations', isPh: s.sec==='phrases',
+      title: s.sec==='translations' ? 'Translations' : 'Ask Ananta phrases',
+      sub: s.sec==='translations' ? 'Every customer-facing string in English and Bahasa Indonesia. Missing strings fall back to English.' : 'Phrases that trigger each concierge action. Ask Ananta only runs these approved actions.',
+      trFilters: screens.map((label,i)=>Object.assign(sel(s.tf===i), { label: i===1 ? label + ' (' + (s.tr.length-done) + ')' : label, pick:()=>this.setState({ tf:i }) })), pct,
+      rows: rows.map(({r,i})=>{ const miss = !r.id.trim(); return { key:r.key, screen:r.screen, en:r.en, id:r.id, idBc: miss?'#e39a7b':'rgba(11,21,24,.15)', idBg: miss?'rgba(227,154,123,.08)':'#fff', status: miss?'MISSING':'DONE', sc: miss?'#c06a4a':'#35463D', setEn:(e)=>this.setTr(i,{ en:e.target.value }), setId:(e)=>this.setTr(i,{ id:e.target.value }) }; }),
+      publish: ()=>this.toastMsg('Translations published · ' + pct + ' Bahasa coverage'),
+      actions: s.acts.map((a,i)=>({ label:a.label, fn:a.fn, bg: i===s.asel?'rgba(184,154,104,.12)':'transparent', pick:()=>this.setState({ asel:i }),
+        words: a.words.map(w=>({ t:w, bg: matches.some(m=>m.w===w && m.label===a.label) ? 'rgba(184,154,104,.3)' : '#fff', del:(e)=>{ e.stopPropagation(); const acts = s.acts.slice(); acts[i] = Object.assign({}, a, { words: a.words.filter(y=>y!==w) }); this.setState({ acts }); } })) })),
+      selLabel: A.label.toUpperCase(), selShort: A.label.replace(/^(Go to |Lighting: |Floor: |Style: )/,'').toUpperCase(),
+      newWord: s.newWord, setNewWord:(e)=>this.setState({ newWord:e.target.value }), newKey:(e)=>{ if (e.key==='Enter') { this.addTo(s.asel, s.newWord.trim().toLowerCase()); this.setState({ newWord:'' }); } },
+      addWord: ()=>{ this.addTo(s.asel, s.newWord.trim().toLowerCase()); this.setState({ newWord:'' }); },
+      test: s.test, setTest:(e)=>this.setState({ test:e.target.value }), matches, noMatch: !matches.length && !!s.test.trim(),
+      unanswered: s.un.map((u,i)=>({ q:u.q, n:u.n, map:()=>{ this.addTo(s.asel, u.q); this.setState({ un: s.un.filter((_,j)=>j!==i) }); this.toastMsg('“' + u.q + '” now triggers ' + A.label); } })),
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;height:100%;background:#d9d4c9;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#8a6f45}a:hover{color:#0B1518}input:focus{outline:none;border-color:#B89A68 !important}</style></helmet>
+<div style="position:fixed;inset:0;background:#d9d4c9">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:300px 1fr">
+<dc-import name="CMSSidebar" active="{{ active }}" local="{{ local }}" on-pick="{{ pick }}" hint-size="300px,1080px"></dc-import>
+<div style="position:relative;padding:44px 64px;display:flex;flex-direction:column;gap:26px;min-width:0">
+<div style="display:flex;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">ANANTA RESIDENCES · ULUWATU</span><span style="font:300 60px/1 'Cormorant Garamond',serif">{{ title }}</span></div>
+<span style="font:400 15px Montserrat;opacity:.6;max-width:520px;text-align:right">{{ sub }}</span>
+</div>
+
+<sc-if value="{{ isUnits }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:120px 190px 90px 120px 120px 190px 220px 160px 1fr;padding:12px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 11px Montserrat;letter-spacing:.2em;opacity:.6"><span>UNIT</span><span>TYPE</span><span>FLOOR</span><span>INDOOR</span><span>TERRACE</span><span>STATUS</span><span>BASE PRICE (RP JT)</span><span>ON DISPLAYS</span><span></span></div>
+<sc-for list="{{ units }}" as="u" hint-placeholder-count="6">
+<div style="display:grid;grid-template-columns:120px 190px 90px 120px 120px 190px 220px 160px 1fr;padding:14px 0;border-bottom:1px solid rgba(11,21,24,.1);align-items:center;font:400 16px Montserrat;background:{{ u.bg }}">
+<span style="font:500 16px Montserrat">{{ u.code }}</span><span>{{ u.type }}</span><span>{{ u.floor }}</span><span>{{ u.indoor }} m²</span><span>{{ u.terr }} m²</span>
+<span onClick="{{ u.cycle }}" title="Click to change" style="cursor:pointer;justify-self:start;display:flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid rgba(11,21,24,.2);font:600 11px Montserrat;letter-spacing:.16em"><span style="width:9px;height:9px;border-radius:50%;background:{{ u.dot }}"></span>{{ u.status }} ▾</span>
+<input value="{{ u.price }}" onChange="{{ u.setPrice }}" style="width:150px;background:#fff;border:1px solid rgba(11,21,24,.2);padding:10px 12px;font:400 16px Montserrat;color:#0B1518">
+<span onClick="{{ u.toggle }}" style="cursor:pointer;width:46px;height:26px;border-radius:13px;background:{{ u.swBg }};position:relative"><span style="position:absolute;top:3px;left:{{ u.swX }};width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s"></span></span>
+<span style="font:500 12px Montserrat;color:#8a6f45">{{ u.changed }}</span>
+</div>
+</sc-for>
+<div style="font:400 14px Montserrat;opacity:.6">Prices and availability are read by the 3D experience through the API. Nothing in Unreal needs rebuilding.</div>
+</sc-if>
+
+<sc-if value="{{ isPlans }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:1fr 520px;gap:44px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:18px">
+<sc-if value="{{ noUpload }}" hint-placeholder-val="{{ true }}">
+<div onClick="{{ upload }}" style="cursor:pointer;flex:1;border:2px dashed rgba(11,21,24,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#fbf9f4" style-hover="border-color:#B89A68"><span style="font:300 44px 'Cormorant Garamond',serif">Drop a floor plan</span><span style="font:400 15px Montserrat;opacity:.6">DWG · DXF · PDF · PNG · Revit export — click to simulate 2B-01_plan.dwg</span></div>
+</sc-if>
+<sc-if value="{{ hasUpload }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:10px">
+<sc-for list="{{ stages }}" as="st" hint-placeholder-count="5"><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="height:4px;background:rgba(11,21,24,.1)"><div style="height:4px;width:{{ st.w }};background:#B89A68;transition:width .3s"></div></div><span style="font:600 10px Montserrat;letter-spacing:.18em;color:{{ st.color }}">{{ st.label }}</span></div></sc-for>
+</div>
+<div style="position:relative;width:855px;height:589px;align-self:flex-start;opacity:{{ planOp }};transition:opacity .6s">
+<div style="position:absolute;inset:-6px;border:6px solid #0B1518"></div>
+<sc-for list="{{ rooms }}" as="r" hint-placeholder-count="8"><div onClick="{{ r.pick }}" style="position:absolute;left:{{ r.l }};top:{{ r.t }};width:{{ r.w }};height:{{ r.h }};box-sizing:border-box;border:2px solid #0B1518;background:{{ r.bg }};cursor:pointer;padding:14px;display:flex;flex-direction:column;gap:4px" style-hover="background:rgba(184,154,104,.2)"><span style="font:600 12px Montserrat;letter-spacing:.18em;text-transform:uppercase">{{ r.name }}</span><span style="font:400 12px ui-monospace,Menlo,monospace;opacity:.6">{{ r.cam }}</span><span style="font:400 12px Montserrat;opacity:.6">{{ r.hs }} hotspots</span></div></sc-for>
+</div>
+</sc-if>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:36px 36px;display:flex;flex-direction:column;gap:18px">
+<span style="font:600 11px Montserrat;letter-spacing:.28em;color:#B89A68">ROOM TAGGING</span>
+<sc-if value="{{ hasRoom }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:8px"><label style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">DISPLAY NAME</label><input value="{{ rs.name }}" onChange="{{ setRoomName }}" style="background:transparent;border:0;border-bottom:1px solid rgba(243,240,233,.4);color:#F3F0E9;font:300 32px 'Cormorant Garamond',serif;padding:6px 0"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font:400 15px Montserrat">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">AREA</span><span>{{ rs.area }} m²</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">DIMENSIONS</span><span>{{ rs.dims }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">CAMERA ANCHOR</span><span style="font:400 14px ui-monospace,Menlo,monospace;color:#B89A68">{{ rs.cam }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">3D ANCHOR (X, Y, Z)</span><span style="font:400 14px ui-monospace,Menlo,monospace">{{ rs.xyz }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">PLAN REGION</span><span style="font:400 14px ui-monospace,Menlo,monospace">{{ rs.region }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">HOTSPOTS</span><span style="display:flex;gap:10px;align-items:center"><span onClick="{{ hsMinus }}" style="cursor:pointer;width:28px;height:28px;border:1px solid rgba(243,240,233,.4);display:flex;align-items:center;justify-content:center">−</span>{{ rs.hs }}<span onClick="{{ hsPlus }}" style="cursor:pointer;width:28px;height:28px;border:1px solid rgba(243,240,233,.4);display:flex;align-items:center;justify-content:center">+</span></span></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ rs.types }}" as="ty" hint-placeholder-count="4"><div onClick="{{ ty.pick }}" style="cursor:pointer;padding:9px 12px;font:500 12px Montserrat;background:{{ ty.bg }};color:{{ ty.fg }};border:1px solid {{ ty.bc }}">{{ ty.label }}</div></sc-for></div>
+</sc-if>
+<sc-if value="{{ noRoom }}" hint-placeholder-val="{{ true }}"><span style="font:400 15px/1.6 Montserrat;opacity:.7">{{ tagHint }}</span></sc-if>
+<div onClick="{{ saveMap }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;padding:20px;text-align:center;font:600 12px Montserrat;letter-spacing:.24em;opacity:{{ saveOp }}">SAVE MAPPING TO DRAFT SCENE</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isScenes }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:1fr 560px;gap:44px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column">
+<div style="display:grid;grid-template-columns:130px 1fr 170px 190px;padding:12px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 11px Montserrat;letter-spacing:.2em;opacity:.6"><span>VERSION</span><span>CHANGE</span><span>AUTHOR</span><span>STATUS</span></div>
+<sc-for list="{{ versions }}" as="v" hint-placeholder-count="5"><div onClick="{{ v.pick }}" style="cursor:pointer;display:grid;grid-template-columns:130px 1fr 170px 190px;padding:18px 0;border-bottom:1px solid rgba(11,21,24,.1);align-items:center;font:400 16px Montserrat;background:{{ v.bg }}" style-hover="background:rgba(184,154,104,.08)"><span style="font:400 26px 'Cormorant Garamond',serif">{{ v.v }}</span><span>{{ v.change }}</span><span style="opacity:.7">{{ v.author }}</span><span style="justify-self:start;padding:7px 12px;font:600 11px Montserrat;letter-spacing:.18em;background:{{ v.sbg }};color:{{ v.sfg }}">{{ v.status }}</span></div></sc-for>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:36px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:300 48px/1 'Cormorant Garamond',serif">Scene {{ sv.v }}</span><span style="font:600 11px Montserrat;letter-spacing:.2em;color:#B89A68">{{ sv.status }}</span></div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="4"><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="height:4px;background:{{ p.c }}"></div><span style="font:600 10px Montserrat;letter-spacing:.2em;color:{{ p.tc }}">{{ p.label }}</span></div></sc-for>
+</div>
+<span style="font:400 15px/1.6 Montserrat;opacity:.8">{{ sv.change }}</span>
+<div style="display:flex;flex-direction:column;border-top:1px solid rgba(243,240,233,.15)">
+<sc-for list="{{ tiers }}" as="tr" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(243,240,233,.08);font:400 14px Montserrat"><span>{{ tr.name }}</span><span style="opacity:.7">{{ tr.size }}</span><span style="color:{{ tr.c }}">{{ tr.st }}</span></div></sc-for>
+</div>
+<div style="margin-top:auto;display:grid;grid-template-columns:1fr 1.4fr;gap:10px">
+<div onClick="{{ rollback }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:18px;text-align:center;font:600 11px Montserrat;letter-spacing:.2em;opacity:{{ rbOp }}">SET AS LIVE</div>
+<div onClick="{{ advance }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:18px;text-align:center;font:600 11px Montserrat;letter-spacing:.2em;opacity:{{ advOp }}">{{ advLabel }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLeads }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:8px"><sc-for list="{{ leadFilters }}" as="f" hint-placeholder-count="5"><div onClick="{{ f.pick }}" style="cursor:pointer;padding:11px 16px;font:500 14px Montserrat;background:{{ f.bg }};color:{{ f.fg }};border:1px solid #0B1518">{{ f.label }}</div></sc-for></div>
+<div style="display:grid;grid-template-columns:230px 200px 1fr 170px 130px 200px 170px;padding:12px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 11px Montserrat;letter-spacing:.2em;opacity:.6"><span>NAME</span><span>WHATSAPP</span><span>INTEREST</span><span>SOURCE</span><span>SIGNAL</span><span>STATUS</span><span>AGENT</span></div>
+<sc-for list="{{ leads }}" as="l" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:230px 200px 1fr 170px 130px 200px 170px;padding:15px 0;border-bottom:1px solid rgba(11,21,24,.1);align-items:center;font:400 15px Montserrat"><span style="font:500 15px Montserrat">{{ l.name }}</span><span style="font:400 14px ui-monospace,Menlo,monospace">{{ l.wa }}</span><span>{{ l.interest }}</span><span>{{ l.src }}</span><span style="font:600 11px Montserrat;letter-spacing:.18em;color:{{ l.sc }}">{{ l.signal }}</span><span onClick="{{ l.cycle }}" style="cursor:pointer;justify-self:start;padding:8px 12px;border:1px solid rgba(11,21,24,.25);font:600 11px Montserrat;letter-spacing:.14em;background:{{ l.stBg }}">{{ l.status }} ▾</span><span style="opacity:.75">{{ l.agent }}</span></div></sc-for>
+</sc-if>
+
+<sc-if value="{{ hasBar }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:64px;right:64px;bottom:36px;background:#0B1518;color:#F3F0E9;padding:18px 26px;display:flex;justify-content:space-between;align-items:center"><span style="font:500 15px Montserrat">{{ barTxt }}</span><div style="display:flex;gap:10px"><div onClick="{{ discard }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:14px 20px;font:600 11px Montserrat;letter-spacing:.2em">DISCARD</div><div onClick="{{ publish }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:14px 22px;font:600 11px Montserrat;letter-spacing:.2em">PUBLISH TO DISPLAYS + WEB</div></div></div>
+</sc-if>
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:64px;top:44px;background:#0B1518;color:#F3F0E9;padding:16px 22px;font:600 12px Montserrat;letter-spacing:.16em;display:flex;gap:10px"><span style="color:#B89A68">✓</span>{{ toast }}</div></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const UNITS0 = [['PH-01','Penthouse','4',350,120,'reserved',14500],['3A-02','3 Bedrooms','3',210,42,'available',7200],['3A-01','3 Bedrooms','3',205,40,'available',7050],['2B-01','2 Bedrooms','2',124,28,'available',4850],['2B-02','2 Bedrooms','2',124,28,'reserved',4850],['1A-03','1 Bedroom','1',68,14,'sold',2950],['1A-04','1 Bedroom','1',68,14,'soon',2950]];
+const STATUS = [['available','AVAILABLE','#6f9a7c'],['reserved','RESERVED','#B89A68'],['sold','SOLD','#7b7f80'],['soon','COMING SOON','#526B78']];
+const ROOMS0 = [['Entrance Foyer',380,0,120,300,7.2,'2.4 × 3.0 m','CAM-ENTRANCE',2,'Circulation'],['Living Room',0,0,380,300,28.2,'6.0 × 4.7 m','CAM-LIVING',4,'Living'],['Dining',0,300,300,170,14.4,'4.0 × 3.6 m','CAM-DINING',2,'Living'],['Kitchen',300,300,200,170,12.6,'3.6 × 3.5 m','CAM-KITCHEN',3,'Service'],['Master Bedroom',500,0,400,260,24.5,'4.5 × 4.0 m','CAM-MASTER',4,'Bedroom'],['Bathroom',500,260,160,210,7.8,'2.6 × 3.0 m','CAM-BATH',2,'Wet'],['Bedroom 2',660,260,240,210,13.5,'3.6 × 3.75 m','CAM-BEDROOM-02',2,'Bedroom'],['Terrace & Pool',0,470,900,150,28,'8.0 × 3.5 m','CAM-TERRACE',3,'Outdoor']];
+const TYPES = ['Living','Bedroom','Service','Wet','Circulation','Outdoor'];
+const STAGES = ['IMPORT','SPACE RECOGNITION','WALLS · DOORS · WINDOWS','ROOMS & DIMENSIONS','3D MAPPING'];
+const PIPE = ['DRAFT','REVIEW','APPROVED','LIVE'];
+const VERS0 = [['2.1','Updated master bedroom furniture and sunset lighting preset','Dimas · 3D',0],['2.0','Final architecture from Revit v14, new terrace pool edge','Dimas · 3D',1],['1.2','Premium kitchen package and Japandi style set','Sari · 3D',3],['1.1','Updated kitchen cabinetry','Sari · 3D',2],['1.0','Original interactive walkthrough','Dimas · 3D',2]];
+const LEAD_ST = ['NEW','CONTACTED','VISIT BOOKED','WON','LOST'];
+const LEADS0 = [['Budi Santoso','+62 812 4410 2231','2B-01 · Oak · Modern','Showroom','HIGH',0,'Ayu Pratiwi'],['Clara Wijaya','+62 813 9982 1150','3A-02 · compared PH-01','Web 3D','MEDIUM',1,'Ayu Pratiwi'],['James Holloway','+65 9123 4480','PH-01 · Luxury interior','Showroom','HIGH',2,'Rizky Hartono'],['Dewi Lestari','+62 857 2210 7781','2B-01 · price viewed','Instagram','MEDIUM',0,'—'],['Arif Rahman','+62 811 3300 9921','1A-04 · floor plan','Web 3D','EARLY',1,'Rizky Hartono'],['Mei Tanaka','+81 90 4410 2210','PH-01 · brochure','Web 3D','MEDIUM',3,'Ayu Pratiwi']];
+class Component extends DCLogic {
+  state = { scale:1, tab:0, units: UNITS0.map(u=>({ code:u[0], type:u[1], floor:u[2], indoor:u[3], terr:u[4], status:u[5], price:u[6], on:true })), dirty:{}, uploaded:false, prog:0, rooms: ROOMS0.map(r=>({ name:r[0], r:[r[1],r[2],r[3],r[4]], area:r[5], dims:r[6], cam:r[7], hs:r[8], type:r[9] })), sel:null, mapDirty:false,
+    vers: VERS0.map(v=>({ v:v[0], change:v[1], author:v[2], st:v[3] })), vsel:0, leads: LEADS0.map(l=>({ name:l[0], wa:l[1], interest:l[2], src:l[3], signal:l[4], st:l[5], agent:l[6] })), lf:0, toast:null };
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); const q = new URLSearchParams(location.search).get('s'); const qi = ['units','plans','scenes','leads'].indexOf(q); if (qi >= 0) this.setState({ tab: qi }); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearInterval(this.pv); }
+  toastMsg(m) { this.setState({ toast:m }); clearTimeout(this._t); this._t = setTimeout(()=>this.setState({ toast:null }), 2600); }
+  upd(i, patch) { const units = this.state.units.slice(); units[i] = Object.assign({}, units[i], patch); this.setState({ units, dirty: Object.assign({}, this.state.dirty, {[i]:true}) }); }
+  renderVals() {
+    const s = this.state, nd = Object.keys(s.dirty).length;
+    const titles = [['Units & pricing','Status and prices update the showroom and web experience in real time.'],['Floor plans','Import a drawing, check recognised rooms, and bind each one to a 3D camera anchor.'],['Scenes & versions','Every Unreal build is versioned. Only one version is live on the displays.'],['Leads','Captured from the showroom, web and mobile with session context attached.']];
+    const selR = s.sel!==null ? s.rooms[s.sel] : null;
+    const v = s.vers[s.vsel];
+    const f = s.lf, leads = s.leads.map((l,i)=>({l,i})).filter(o => f===0 || o.l.st===f-1);
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      nav: ['Units & pricing','Floor plans','Scenes & versions','Leads'].map((label,i)=>({ label, badge: i===0 ? (nd||'') : i===3 ? s.leads.filter(l=>l.st===0).length + ' new' : i===2 ? 'v' + s.vers.find(x=>x.st===3).v : '', pick:()=>this.setState({ tab:i }), bc: i===s.tab?'#B89A68':'transparent', bg: i===s.tab?'rgba(184,154,104,.12)':'transparent' })),
+      active: ['units','plans','scenes','leads'][s.tab], local: ['units','plans','scenes','leads'], pick: (k)=>this.setState({ tab: ['units','plans','scenes','leads'].indexOf(k) }),
+      title: titles[s.tab][0], sub: titles[s.tab][1],
+      isUnits: s.tab===0, isPlans: s.tab===1, isScenes: s.tab===2, isLeads: s.tab===3,
+      units: s.units.map((u,i)=>{ const st = STATUS.find(x=>x[0]===u.status); return { code:u.code, type:u.type, floor:u.floor, indoor:u.indoor, terr:u.terr, status:st[1], dot:st[2], price:String(u.price), bg: s.dirty[i] ? 'rgba(184,154,104,.1)' : 'transparent', changed: s.dirty[i] ? 'UNPUBLISHED' : '',
+        cycle:()=>{ const k = STATUS.findIndex(x=>x[0]===u.status); this.upd(i, { status: STATUS[(k+1)%4][0] }); }, setPrice:(e)=>{ const n = parseInt(e.target.value.replace(/\D/g,''),10); this.upd(i, { price: isNaN(n)?0:n }); },
+        toggle:()=>this.upd(i, { on: !u.on }), swBg: u.on?'#B89A68':'rgba(11,21,24,.2)', swX: u.on?'23px':'3px' }; }),
+      hasBar: (s.tab===0 && nd>0), barTxt: nd + ' unit' + (nd>1?'s':'') + ' changed', discard:()=>this.setState({ units: UNITS0.map(u=>({ code:u[0], type:u[1], floor:u[2], indoor:u[3], terr:u[4], status:u[5], price:u[6], on:true })), dirty:{} }),
+      publish:()=>{ { const c = JSON.parse(localStorage.getItem('ananta.cms')||'{}'); localStorage.setItem('ananta.cms', JSON.stringify(Object.assign(c, { units: this.state.units.map(u=>({ code:u.code, price:u.price, status:u.status })), ts: Date.now() }))); } this.setState({ dirty:{} }); this.toastMsg('Published · LED wall, specs screen, web and mobile updated'); },
+      noUpload: !s.uploaded, hasUpload: s.uploaded,
+      upload:()=>{ this.setState({ uploaded:true, prog:0 }); clearInterval(this.pv); this.pv = setInterval(()=>{ const p = this.state.prog + 2; if (p>=100) { clearInterval(this.pv); this.setState({ prog:100 }); } else this.setState({ prog:p }); }, 50); },
+      stages: STAGES.map((label,i)=>{ const w = Math.max(0, Math.min(100, (s.prog - i*20)*5)); return { label, w: w+'%', color: w>=100 ? '#0B1518' : 'rgba(11,21,24,.45)' }; }),
+      planOp: s.prog>=100 ? 1 : .15 + s.prog/140,
+      rooms: s.rooms.map((r,i)=>({ name:r.name, cam:r.cam, hs:r.hs, l:r.r[0]*.95+'px', t:r.r[1]*.95+'px', w:r.r[2]*.95+'px', h:r.r[3]*.95+'px', bg: s.sel===i ? 'rgba(184,154,104,.38)' : (s.prog>=(i+1)*12 ? 'rgba(184,154,104,.08)' : 'transparent'), pick:()=>{ if (s.prog>=100) this.setState({ sel:i }); } })),
+      hasRoom: !!selR, noRoom: !selR, tagHint: s.prog>=100 ? '8 rooms recognised. Select a room on the plan to check its name, type and camera anchor.' : 'Upload a drawing to start. Rooms appear here once recognised.',
+      rs: selR ? { name:selR.name, area:selR.area, dims:selR.dims, cam:selR.cam, hs:selR.hs, region: 'X=' + selR.r[0] + ' Y=' + selR.r[1] + ' W=' + selR.r[2] + ' H=' + selR.r[3], xyz: (selR.r[0]*3+240) + ', ' + (selR.r[1]*3+180) + ', 120',
+        types: TYPES.map(ty=>({ label:ty, pick:()=>this.editRoom({ type:ty }), bg: selR.type===ty?'#B89A68':'transparent', fg: selR.type===ty?'#0B1518':'#F3F0E9', bc: selR.type===ty?'#B89A68':'rgba(243,240,233,.3)' })) } : { types:[] },
+      setRoomName:(e)=>this.editRoom({ name:e.target.value }), hsPlus:()=>this.editRoom({ hs: selR.hs+1 }), hsMinus:()=>this.editRoom({ hs: Math.max(0, selR.hs-1) }),
+      saveOp: s.mapDirty ? 1 : .4, saveMap:()=>{ if (!s.mapDirty) return; this.setState({ mapDirty:false }); this.toastMsg('Mapping saved to scene v2.1 (draft)'); },
+      versions: s.vers.map((x,i)=>({ v:'v'+x.v, change:x.change, author:x.author, status:PIPE[x.st], pick:()=>this.setState({ vsel:i }), bg: i===s.vsel?'rgba(184,154,104,.12)':'transparent', sbg: x.st===3?'#0B1518':x.st===2?'#35463D':x.st===1?'#B89A68':'rgba(11,21,24,.1)', sfg: x.st===0?'#0B1518':x.st===1?'#0B1518':'#F3F0E9' })),
+      sv: { v:'v'+v.v, status:PIPE[v.st], change:v.change },
+      pipeline: PIPE.map((label,i)=>({ label, c: i<=v.st ? '#B89A68' : 'rgba(243,240,233,.15)', tc: i<=v.st ? '#F3F0E9' : 'rgba(243,240,233,.45)' })),
+      tiers: [['Showroom · High','18.4 GB'],['Desktop web · Medium','2.1 GB'],['Mobile web','640 MB'],['VR · Quest','3.2 GB']].map((tr,i)=>({ name:tr[0], size:tr[1], st: v.st>=1 || i<2 ? 'Built' : 'Queued', c: v.st>=1 || i<2 ? '#8fbf9a' : '#B89A68' })),
+      advLabel: v.st>=3 ? 'LIVE ON ALL DISPLAYS' : 'ADVANCE TO ' + PIPE[v.st+1], advOp: v.st>=3 ? .4 : 1,
+      advance:()=>{ if (v.st>=3) return; const vers = s.vers.map((x,i)=>{ if (i===s.vsel) return Object.assign({}, x, { st:x.st+1 }); if (v.st+1===3 && x.st===3) return Object.assign({}, x, { st:2 }); return x; }); this.setState({ vers }); this.toastMsg(v.st+1===3 ? 'v'+v.v+' is now live · previous version archived' : 'v'+v.v+' moved to '+PIPE[v.st+1]); },
+      rbOp: v.st===2 ? 1 : .35, rollback:()=>{ if (v.st!==2) return; const vers = s.vers.map((x,i)=> i===s.vsel ? Object.assign({}, x, { st:3 }) : x.st===3 ? Object.assign({}, x, { st:2 }) : x); this.setState({ vers }); this.toastMsg('Rolled back to v'+v.v); },
+      leadFilters: ['All'].concat(LEAD_ST.map(x=>x.charAt(0)+x.slice(1).toLowerCase())).map((label,i)=>({ label, pick:()=>this.setState({ lf:i }), bg: i===s.lf?'#0B1518':'transparent', fg: i===s.lf?'#F3F0E9':'#0B1518' })),
+      leads: leads.map(({l,i})=>({ name:l.name, wa:l.wa, interest:l.interest, src:l.src, signal:l.signal, agent:l.agent, status:LEAD_ST[l.st], sc: l.signal==='HIGH'?'#8a6f45':l.signal==='MEDIUM'?'#0B1518':'rgba(11,21,24,.5)', stBg: l.st===2||l.st===3 ? 'rgba(184,154,104,.25)' : 'transparent',
+        cycle:()=>{ const ls = s.leads.slice(); ls[i] = Object.assign({}, l, { st:(l.st+1)%5 }); this.setState({ leads:ls }); } })),
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+  editRoom(p) { const rooms = this.state.rooms.slice(); rooms[this.state.sel] = Object.assign({}, rooms[this.state.sel], p); this.setState({ rooms, mapDirty:true }); }
+}
+</script>
+</body>
+</html>

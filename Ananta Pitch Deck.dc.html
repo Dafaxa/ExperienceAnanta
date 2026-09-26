@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;background:#050a0b;font-family:Montserrat,sans-serif}a{color:#B89A68}a:hover{color:#F3F0E9}</style></helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+<section data-label="Title" data-screen-label="01" data-speaker-notes="Open on the idea: buyers can walk through the property before it exists." style="background:#0B1518;color:#F3F0E9;overflow:hidden">
+<img src="img/villa_wide.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,21,24,.95) 25%,rgba(11,21,24,.2) 75%)"></div>
+<div style="position:absolute;left:120px;top:96px;display:flex;flex-direction:column;gap:8px"><div style="font:400 40px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 13px/1 Montserrat;letter-spacing:.66em;padding-left:44px">PROPERTY™</div></div>
+<div style="position:absolute;left:120px;top:340px;width:900px;display:flex;flex-direction:column;gap:32px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#B89A68">PROPERTY EXPERIENCE™</div>
+<div style="font:300 130px/.95 'Cormorant Garamond',serif">Walk through it<br><span style="font-style:italic;color:#B89A68">before it’s built.</span></div>
+<div style="font:300 32px/1.5 Montserrat;opacity:.9">Interactive 3D sales infrastructure for property developers.</div>
+</div>
+<div style="position:absolute;left:120px;bottom:80px;font:500 24px Montserrat;letter-spacing:.3em;opacity:.8">PEOPLE · PLACES · A BRIGHTER TOMORROW</div>
+</section>
+
+<section data-label="Problem" data-screen-label="02" data-speaker-notes="Static formats leave buyers guessing about the things that decide a purchase." style="background:#F3F0E9;color:#0B1518;padding:110px 120px;box-sizing:border-box;display:flex;flex-direction:column;gap:60px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#8a6f45">01 — THE PROBLEM</div>
+<div style="font:300 96px/1 'Cormorant Garamond',serif;max-width:1500px">Brochures and renders can’t show what buyers <span style="font-style:italic;color:#8a6f45">need to feel.</span></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:60px;margin-top:auto">
+<div style="display:flex;flex-direction:column;gap:18px;border-top:2px solid #0B1518;padding-top:28px"><span style="font:400 44px 'Cormorant Garamond',serif">Proportion</span><span style="font:400 26px/1.5 Montserrat;opacity:.75">How big a 24 m² bedroom really is, and how rooms connect.</span></div>
+<div style="display:flex;flex-direction:column;gap:18px;border-top:2px solid #0B1518;padding-top:28px"><span style="font:400 44px 'Cormorant Garamond',serif">Light &amp; view</span><span style="font:400 26px/1.5 Montserrat;opacity:.75">What the terrace looks like at sunset, from floor two.</span></div>
+<div style="display:flex;flex-direction:column;gap:18px;border-top:2px solid #0B1518;padding-top:28px"><span style="font:400 44px 'Cormorant Garamond',serif">Possibility</span><span style="font:400 26px/1.5 Montserrat;opacity:.75">How the home changes with a different floor, kitchen or style.</span></div>
+</div>
+</section>
+
+<section data-label="Platform" data-screen-label="03" data-speaker-notes="One asset, reused from marketing through to sales." style="background:#0B1518;color:#F3F0E9;padding:110px 120px;box-sizing:border-box;display:flex;flex-direction:column;gap:70px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#B89A68">02 — THE PLATFORM</div>
+<div style="font:300 96px/1 'Cormorant Garamond',serif">One digital twin. <span style="font-style:italic;color:#B89A68">Every channel.</span></div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:auto">
+<sc-for list="{{ flow }}" as="f" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;gap:18px;padding:34px 30px 0 0;border-top:2px solid #B89A68"><span style="font:400 40px 'Cormorant Garamond',serif;color:#B89A68">{{ f.n }}</span><span style="font:500 32px Montserrat">{{ f.t }}</span><span style="font:300 24px/1.5 Montserrat;opacity:.8">{{ f.d }}</span></div></sc-for>
+</div>
+</section>
+
+<section data-label="Experience" data-screen-label="04" data-speaker-notes="Demo the walkthrough live if possible." style="background:#0B1518;color:#F3F0E9;overflow:hidden;display:grid;grid-template-columns:1100px 1fr">
+<div style="position:relative"><img src="img/living.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:60px;bottom:60px;background:rgba(11,21,24,.85);padding:22px 30px;font:500 24px Montserrat;letter-spacing:.2em">LIVING ROOM · 28.2 m² · 18:00</div></div>
+<div style="padding:110px 90px;display:flex;flex-direction:column;gap:36px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#B89A68">03 — THE EXPERIENCE</div>
+<div style="font:300 76px/1 'Cormorant Garamond',serif">Buyers take <span style="font-style:italic;color:#B89A68">control.</span></div>
+<div style="display:flex;flex-direction:column;gap:22px;font:400 28px/1.35 Montserrat">
+<sc-for list="{{ feats }}" as="f" hint-placeholder-count="6"><div style="display:flex;gap:18px"><span style="color:#B89A68">—</span>{{ f.t }}</div></sc-for>
+</div>
+</div>
+</section>
+
+<section data-label="Showroom" data-screen-label="05" data-speaker-notes="The consultant guides from a tablet; the visitor only sees the polished experience." style="background:#0B1518;color:#F3F0E9;overflow:hidden">
+<img src="img/showroom.jpg" style="position:absolute;right:0;top:0;width:1000px;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,#0B1518 48%,rgba(11,21,24,.1) 80%)"></div>
+<div style="position:absolute;left:120px;top:110px;width:860px;display:flex;flex-direction:column;gap:40px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#B89A68">04 — THE SALES GALLERY</div>
+<div style="font:300 88px/1 'Cormorant Garamond',serif">A showroom that <span style="font-style:italic;color:#B89A68">sells itself.</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:34px 44px">
+<sc-for list="{{ displays }}" as="d" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(243,240,233,.3);padding-top:18px"><span style="font:500 24px Montserrat;letter-spacing:.14em;color:#B89A68">{{ d.a }}</span><span style="font:300 26px/1.4 Montserrat">{{ d.b }}</span></div></sc-for>
+</div>
+<div style="font:300 26px/1.5 Montserrat;opacity:.8">Runs offline from a local server. Leads queue and sync when the connection returns.</div>
+</div>
+</section>
+
+<section data-label="Platform CMS" data-screen-label="06" data-speaker-notes="Developers change prices, content and brand without rebuilding the 3D app." style="background:#F3F0E9;color:#0B1518;padding:110px 120px;box-sizing:border-box;display:flex;flex-direction:column;gap:56px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#8a6f45">05 — THE CONTENT PLATFORM</div>
+<div style="font:300 88px/1 'Cormorant Garamond',serif">Property data stays the <span style="font-style:italic;color:#8a6f45">source of truth.</span></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px 60px;margin-top:auto">
+<sc-for list="{{ cms }}" as="c" hint-placeholder-count="6"><div style="display:flex;flex-direction:column;gap:12px;border-top:2px solid #0B1518;padding-top:22px"><span style="font:600 24px Montserrat;letter-spacing:.14em">{{ c.a }}</span><span style="font:400 26px/1.45 Montserrat;opacity:.75">{{ c.b }}</span></div></sc-for>
+</div>
+</section>
+
+<section data-label="Intelligence" data-screen-label="07" data-speaker-notes="Sample funnel from the PRD. The goal is intent, not time spent." style="background:#0B1518;color:#F3F0E9;padding:110px 120px;box-sizing:border-box;display:grid;grid-template-columns:720px 1fr;gap:100px">
+<div style="display:flex;flex-direction:column;gap:40px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#B89A68">06 — INTELLIGENCE</div>
+<div style="font:300 88px/1 'Cormorant Garamond',serif">Know what buyers <span style="font-style:italic;color:#B89A68">care about.</span></div>
+<div style="font:300 28px/1.5 Montserrat;opacity:.85">Every room, finish, price view and booking is tracked per session and attached to the lead in your CRM.</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(243,240,233,.25);padding-top:24px"><span style="font:500 24px Montserrat;letter-spacing:.2em;color:#B89A68">NORTH STAR</span><span style="font:400 44px 'Cormorant Garamond',serif">Immersive-to-Intent rate</span></div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;gap:22px">
+<sc-for list="{{ funnel }}" as="f" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:300px 1fr 110px;gap:24px;align-items:center"><span style="font:400 26px Montserrat">{{ f.a }}</span><div style="height:40px;background:rgba(243,240,233,.08)"><div style="height:40px;width:{{ f.w }};background:{{ f.c }}"></div></div><span style="font:400 44px 'Cormorant Garamond',serif;text-align:right">{{ f.n }}</span></div></sc-for>
+<span style="font:400 24px Montserrat;opacity:.55">Per 100 showroom visitors · sample model</span>
+</div>
+</section>
+
+<section data-label="Packages" data-screen-label="08" data-speaker-notes="Price ranges come from the PRD business model and depend on scope." style="background:#F3F0E9;color:#0B1518;padding:110px 120px;box-sizing:border-box;display:flex;flex-direction:column;gap:56px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#8a6f45">07 — PACKAGES</div>
+<div style="font:300 88px/1 'Cormorant Garamond',serif">Start with one unit. <span style="font-style:italic;color:#8a6f45">Grow into a platform.</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:28px;flex:1">
+<sc-for list="{{ packages }}" as="p" hint-placeholder-count="4"><div style="background:{{ p.bg }};color:{{ p.fg }};padding:40px 34px;display:flex;flex-direction:column;gap:20px"><span style="font:400 56px/1 'Cormorant Garamond',serif;color:#B89A68">{{ p.k }}</span><span style="font:500 30px/1.2 Montserrat">{{ p.name }}</span><span style="font:400 24px/1.5 Montserrat;opacity:.8">{{ p.inc }}</span><span style="margin-top:auto;font:400 34px 'Cormorant Garamond',serif;border-top:1px solid {{ p.line }};padding-top:18px">{{ p.price }}</span></div></sc-for>
+</div>
+</section>
+
+<section data-label="Pilot & roadmap" data-screen-label="09" data-speaker-notes="Validate with one complete experience before scaling." style="background:#0B1518;color:#F3F0E9;padding:110px 120px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:110px">
+<div style="display:flex;flex-direction:column;gap:40px">
+<div style="font:500 24px Montserrat;letter-spacing:.3em;color:#B89A68">08 — THE PILOT</div>
+<div style="font:300 88px/1 'Cormorant Garamond',serif">8–12 weeks to a <span style="font-style:italic;color:#B89A68">live showroom.</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;margin-top:auto">
+<sc-for list="{{ pilot }}" as="p" hint-placeholder-count="6"><div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid rgba(243,240,233,.25);padding-top:16px"><span style="font:400 60px/1 'Cormorant Garamond',serif;color:#B89A68">{{ p.n }}</span><span style="font:400 24px Montserrat;opacity:.85">{{ p.l }}</span></div></sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center">
+<sc-for list="{{ roadmap }}" as="r" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:160px 1fr;gap:30px;padding:28px 0;border-bottom:1px solid rgba(243,240,233,.15)"><span style="font:400 36px 'Cormorant Garamond',serif;color:#B89A68">{{ r.q }}</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 28px Montserrat">{{ r.t }}</span><span style="font:300 24px Montserrat;opacity:.75">{{ r.d }}</span></div></div></sc-for>
+</div>
+</section>
+
+<section data-label="Close" data-screen-label="10" data-speaker-notes="Invite them to the showroom demo." style="background:#0B1518;color:#F3F0E9;overflow:hidden">
+<img src="img/ocean.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,21,24,.95) 20%,rgba(11,21,24,.3) 70%)"></div>
+<div style="position:absolute;left:120px;right:120px;bottom:110px;display:flex;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:30px"><div style="font:300 120px/.95 'Cormorant Garamond',serif">Let’s create<br><span style="font-style:italic;color:#B89A68">a brighter tomorrow.</span></div><div style="font:500 26px Montserrat;letter-spacing:.3em">BOOK A SHOWROOM DEMO</div></div>
+<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end"><div style="font:400 36px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 12px/1 Montserrat;letter-spacing:.66em">PROPERTY™</div><div style="font:500 24px Montserrat;letter-spacing:.2em;margin-top:22px;opacity:.85">ananta.id</div></div>
+</div>
+</section>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      flow: [['01','Floor plan','CAD, DWG, PDF or Revit in'],['02','Digital twin','Architecture, interior, light'],['03','Walkthrough','Showroom, web and mobile'],['04','Configure','Finishes, style, time of day'],['05','Convert','Price, booking, CRM']].map(f=>({n:f[0],t:f[1],d:f[2]})),
+      feats: ['Walk room to room, or teleport from the plan','Change floors, kitchens and interior style','Scrub the sun from morning to night','Measure any wall in two taps','See the real view from each window','Ask Ananta by voice, in English or Bahasa'].map(t=>({t})),
+      displays: [['LED WALL','The walkthrough, full scale'],['TOUCH TABLE','Floor plan and navigation'],['SPECS SCREEN','Price and availability'],['SALES TABLET','The consultant’s remote']].map(d=>({a:d[0],b:d[1]})),
+      cms: [['UNITS & PRICING','Status, promos and payment plans, live'],['CONTENT','Hotspots, materials, tour and media'],['BRAND','Ananta, co-branded or white-label'],['LANGUAGE & AI','EN/ID strings and concierge phrases'],['LEADS','Routing, SLA and CRM webhook'],['OPERATIONS','Displays, roles and audit log']].map(c=>({a:c[0],b:c[1]})),
+      funnel: [['Visitors',100,'#F3F0E9'],['Enter 3D',70,'#BBAA95'],['Explore rooms',50,'#BBAA95'],['View price',30,'#B89A68'],['Request info',15,'#B89A68'],['Book visit',8,'#B89A68']].map(f=>({a:f[0],w:f[1]+'%',n:f[1],c:f[2]})),
+      packages: [['A','3D Property','Model, interior, exterior and walkthrough','Rp 50–150 jt+','#fff','#0B1518','rgba(11,21,24,.2)'],['B','Interactive Property','Floor plan, hotspots, configurator, lead capture','Rp 50–150 jt+','#fff','#0B1518','rgba(11,21,24,.2)'],['C','Immersive Sales Gallery','Multi-unit, sales console, displays, analytics, CRM','Rp 150–500 jt+','#0B1518','#F3F0E9','rgba(243,240,233,.3)'],['D','Digital Twin Enterprise','Multi-project, AI concierge, API, VR','Annual licence','#0B1518','#F3F0E9','rgba(243,240,233,.3)']].map(p=>({k:p[0],name:p[1],inc:p[2],price:p[3],bg:p[4],fg:p[5],line:p[6]})),
+      pilot: [['1','unit, one building'],['8','rooms'],['20','hotspots'],['10','materials'],['5','lighting presets'],['1','sales console']].map(p=>({n:p[0],l:p[1]})),
+      roadmap: [['Q4 2026','MVP','Walkthrough, floor plan sync, lead capture'],['Q1 2027','Sales','Console, CMS, CRM'],['Q2 2027','Scale','Multi-project, masterplan, analytics'],['Q3 2027','AI','Concierge and voice'],['Q4 2027','Twin','VR and digital twin platform']].map(r=>({q:r[0],t:r[1],d:r[2]}))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><script src="./image-slot.js"></script><style>html,body{margin:0;height:100%;background:#d9d4c9;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#8a6f45}a:hover{color:#0B1518}input:focus,textarea:focus{outline:none;border-color:#B89A68 !important}</style></helmet>
+<div style="position:fixed;inset:0;background:#d9d4c9">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:300px 1fr">
+<dc-import name="CMSSidebar" active="{{ active }}" local="{{ local }}" on-pick="{{ pick }}" hint-size="300px,1080px"></dc-import>
+<div style="position:relative;padding:44px 64px;display:flex;flex-direction:column;gap:24px;min-width:0;min-height:0;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">ANANTA RESIDENCES · 2B-01</span><span style="font:300 60px/1 'Cormorant Garamond',serif">{{ title }}</span></div><span style="font:400 15px Montserrat;opacity:.6;max-width:560px;text-align:right">{{ sub }}</span></div>
+
+<sc-if value="{{ isHot }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ roomChips }}" as="c" hint-placeholder-count="8"><div onClick="{{ c.pick }}" style="cursor:pointer;padding:10px 14px;font:500 14px Montserrat;background:{{ c.bg }};color:{{ c.fg }};border:1px solid #0B1518">{{ c.label }} <span style="opacity:.55">{{ c.n }}</span></div></sc-for></div>
+<div style="display:grid;grid-template-columns:940px 1fr;gap:40px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div onClick="{{ addAt }}" ref="{{ imgRef }}" style="position:relative;width:940px;height:529px;overflow:hidden;background:#1a2629;cursor:{{ hotCursor }}">
+<sc-if value="{{ hr.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ hr.img }}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none"></sc-if>
+<sc-if value="{{ hr.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(243,240,233,.45);font:500 12px Montserrat;letter-spacing:.3em">{{ hr.ph }}</div></sc-if>
+<sc-for list="{{ pins }}" as="p" hint-placeholder-count="3"><div onClick="{{ p.pick }}" style="position:absolute;left:{{ p.x }};top:{{ p.y }};transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;cursor:pointer"><div style="width:38px;height:38px;border-radius:50%;border:2px solid {{ p.ring }};background:{{ p.bg }};color:{{ p.fg }};display:flex;align-items:center;justify-content:center;font:600 13px Montserrat;box-shadow:0 0 0 8px rgba(243,240,233,.14)">{{ p.g }}</div><span style="background:rgba(11,21,24,.75);color:#F3F0E9;padding:6px 10px;font:600 10px Montserrat;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap">{{ p.title }}</span></div></sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center"><div onClick="{{ toggleAdd }}" style="cursor:pointer;padding:14px 20px;font:600 12px Montserrat;letter-spacing:.2em;background:{{ addBg }};color:{{ addFg }};border:1px solid #0B1518">{{ addLabel }}</div><span style="font:400 14px Montserrat;opacity:.6">{{ hotHint }}</span></div>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:32px;display:flex;flex-direction:column;gap:16px">
+<sc-if value="{{ hasPin }}" hint-placeholder-val="{{ false }}">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">HOTSPOT {{ pe.id }}</span>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(243,240,233,.35)"><sc-for list="{{ pinTypes }}" as="t" hint-placeholder-count="5"><div onClick="{{ t.pick }}" style="cursor:pointer;padding:11px 0;text-align:center;font:600 10px Montserrat;letter-spacing:.12em;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div></sc-for></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">TITLE</span><input value="{{ pe.title }}" onChange="{{ setTitle }}" style="background:transparent;border:0;border-bottom:1px solid rgba(243,240,233,.4);color:#F3F0E9;font:300 28px 'Cormorant Garamond',serif;padding:6px 0"></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">DESCRIPTION</span><textarea value="{{ pe.desc }}" onChange="{{ setDesc }}" style="height:90px;resize:none;background:rgba(243,240,233,.05);border:1px solid rgba(243,240,233,.2);color:#F3F0E9;font:400 14px/1.5 Montserrat;padding:10px"></textarea></div>
+<sc-if value="{{ isNav }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">TARGET ROOM</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ targets }}" as="t" hint-placeholder-count="8"><div onClick="{{ t.pick }}" style="cursor:pointer;padding:8px 10px;font:500 12px Montserrat;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bc }}">{{ t.label }}</div></sc-for></div></div></sc-if>
+<div style="font:400 12px ui-monospace,Menlo,monospace;opacity:.55">x {{ pe.px }} · y {{ pe.py }} · room {{ hr.key }}</div>
+<div style="margin-top:auto;display:grid;grid-template-columns:1fr 1.4fr;gap:10px"><div onClick="{{ delPin }}" style="cursor:pointer;border:1px solid #e39a7b;color:#e39a7b;padding:16px;text-align:center;font:600 11px Montserrat;letter-spacing:.2em">DELETE</div><div onClick="{{ savePins }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:16px;text-align:center;font:600 11px Montserrat;letter-spacing:.2em">SAVE TO DRAFT</div></div>
+</sc-if>
+<sc-if value="{{ noPin }}" hint-placeholder-val="{{ true }}"><span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">HOTSPOTS</span><span style="font:400 15px/1.7 Montserrat;opacity:.75">Select a pin to edit it, or turn on “Add hotspot” and click the render to place a new one. Types: Info, Product, View (window simulation), Navigate (to another room) and CTA.</span></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMat }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:8px"><sc-for list="{{ matTabs }}" as="t" hint-placeholder-count="4"><div onClick="{{ t.pick }}" style="cursor:pointer;padding:12px 18px;font:600 12px Montserrat;letter-spacing:.18em;background:{{ t.bg }};color:{{ t.fg }};border:1px solid #0B1518">{{ t.label }}</div></sc-for></div><div onClick="{{ addMat }}" style="cursor:pointer;padding:12px 18px;font:600 12px Montserrat;letter-spacing:.18em;border:1px dashed #0B1518">+ ADD MATERIAL</div></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+<sc-for list="{{ mats }}" as="m" hint-placeholder-count="4">
+<div style="background:#fff;border:1px solid {{ m.bc }};display:flex;flex-direction:column">
+<div style="height:150px;background:{{ m.c }};position:relative"><span style="position:absolute;right:10px;top:10px;background:#0B1518;color:#F3F0E9;padding:5px 8px;font:600 9px Montserrat;letter-spacing:.2em;display:{{ m.defDisp }}">DEFAULT</span></div>
+<div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+<input value="{{ m.name }}" onChange="{{ m.setName }}" style="border:0;border-bottom:1px solid rgba(11,21,24,.2);font:400 24px 'Cormorant Garamond',serif;padding:4px 0;color:#0B1518;background:transparent">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:600 10px Montserrat;letter-spacing:.2em;opacity:.6">PRICE MODIFIER (JT)</span><input value="{{ m.p }}" onChange="{{ m.setP }}" style="width:80px;border:1px solid rgba(11,21,24,.2);padding:8px;font:400 15px Montserrat;text-align:right;color:#0B1518"></div>
+<div style="display:flex;flex-wrap:wrap;gap:5px"><sc-for list="{{ m.units }}" as="u" hint-placeholder-count="4"><span onClick="{{ u.pick }}" style="cursor:pointer;padding:5px 8px;font:500 11px Montserrat;background:{{ u.bg }};color:{{ u.fg }};border:1px solid rgba(11,21,24,.25)">{{ u.code }}</span></sc-for></div>
+<div onClick="{{ m.makeDef }}" style="cursor:pointer;font:600 10px Montserrat;letter-spacing:.2em;color:#8a6f45">{{ m.defLabel }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<span style="font:400 14px Montserrat;opacity:.6">Only approved materials appear in the configurator and Ask Ananta. Unit chips control where each option is offered.</span>
+</sc-if>
+
+<sc-if value="{{ isTour }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:820px 1fr;gap:40px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column">
+<div style="display:grid;grid-template-columns:50px 1fr 110px 160px 90px;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 11px Montserrat;letter-spacing:.2em;opacity:.6"><span>#</span><span>STOP</span><span>INCLUDE</span><span>DURATION</span><span>ORDER</span></div>
+<sc-for list="{{ stops }}" as="t" hint-placeholder-count="8"><div onClick="{{ t.pick }}" style="cursor:pointer;display:grid;grid-template-columns:50px 1fr 110px 160px 90px;padding:12px 0;border-bottom:1px solid rgba(11,21,24,.1);align-items:center;font:400 16px Montserrat;background:{{ t.bg }};opacity:{{ t.op }}">
+<span style="font:400 24px 'Cormorant Garamond',serif;color:#8a6f45">{{ t.n }}</span><span style="font:500 16px Montserrat">{{ t.name }}</span>
+<span onClick="{{ t.toggle }}" style="width:44px;height:24px;border-radius:12px;background:{{ t.swBg }};position:relative"><span style="position:absolute;top:3px;left:{{ t.swX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s"></span></span>
+<span style="display:flex;gap:10px;align-items:center"><span onClick="{{ t.minus }}" style="width:30px;height:30px;border:1px solid rgba(11,21,24,.3);display:flex;align-items:center;justify-content:center">−</span>{{ t.dur }}s<span onClick="{{ t.plus }}" style="width:30px;height:30px;border:1px solid rgba(11,21,24,.3);display:flex;align-items:center;justify-content:center">+</span></span>
+<span style="display:flex;gap:6px"><span onClick="{{ t.up }}" style="width:30px;height:30px;border:1px solid rgba(11,21,24,.3);display:flex;align-items:center;justify-content:center">↑</span><span onClick="{{ t.down }}" style="width:30px;height:30px;border:1px solid rgba(11,21,24,.3);display:flex;align-items:center;justify-content:center">↓</span></span>
+</div></sc-for>
+<div style="display:flex;justify-content:space-between;padding:18px 0;font:500 15px Montserrat"><span>{{ tourCount }} stops</span><span>Total {{ tourTotal }}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#8a6f45">CAPTION · {{ ts.name }}</span>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">ENGLISH</span><textarea value="{{ ts.en }}" onChange="{{ setEn }}" style="height:80px;resize:none;background:#fff;border:1px solid rgba(11,21,24,.2);font:400 15px/1.5 Montserrat;padding:12px;color:#0B1518"></textarea></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">BAHASA INDONESIA</span><textarea value="{{ ts.id }}" onChange="{{ setId }}" style="height:80px;resize:none;background:#fff;border:1px solid rgba(11,21,24,.2);font:400 15px/1.5 Montserrat;padding:12px;color:#0B1518"></textarea></div>
+<div style="position:relative;height:300px;overflow:hidden;background:#000">
+<sc-if value="{{ ts.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ ts.img }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85"></sc-if>
+<div style="position:absolute;left:0;right:0;top:0;height:32px;background:#000"></div><div style="position:absolute;left:0;right:0;bottom:0;height:32px;background:#000"></div>
+<div style="position:absolute;left:24px;top:48px;font:300 40px/1 'Cormorant Garamond',serif;color:#F3F0E9">{{ ts.name }}</div>
+<div style="position:absolute;left:40px;right:40px;bottom:50px;text-align:center;font:italic 400 20px/1.35 'Cormorant Garamond',serif;color:#F3F0E9;background:rgba(11,21,24,.55);padding:10px 16px">“{{ ts.en }}”</div>
+</div>
+<a href="Ananta Immersive Prototype.dc.html" style="font:600 11px Montserrat;letter-spacing:.2em;text-decoration:none">PREVIEW IN WALKTHROUGH ↗</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPoi }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:820px 1fr;gap:40px;flex:1;min-height:0">
+<div style="position:relative;width:820px;height:600px;overflow:hidden;background:#1a2629">
+<img src="img/masterplan.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85">
+<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:#B89A68;border:3px solid #F3F0E9;box-shadow:0 0 0 12px rgba(184,154,104,.3)"></div>
+<sc-for list="{{ poiPins }}" as="p" hint-placeholder-count="6"><div onClick="{{ p.pick }}" style="position:absolute;left:{{ p.x }};top:{{ p.y }};transform:translate(-50%,-50%);cursor:pointer;display:flex;gap:8px;align-items:center"><span style="width:18px;height:18px;border-radius:50%;background:{{ p.bg }};border:2px solid #F3F0E9"></span><span style="background:rgba(11,21,24,.8);color:#F3F0E9;padding:5px 8px;font:500 11px Montserrat;white-space:nowrap">{{ p.name }} · {{ p.t }}</span></div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:6px"><sc-for list="{{ poiCats }}" as="c" hint-placeholder-count="5"><div onClick="{{ c.pick }}" style="cursor:pointer;padding:9px 12px;font:500 12px Montserrat;background:{{ c.bg }};color:{{ c.fg }};border:1px solid #0B1518">{{ c.label }}</div></sc-for></div><div onClick="{{ addPoi }}" style="cursor:pointer;padding:9px 12px;font:600 11px Montserrat;letter-spacing:.16em;border:1px dashed #0B1518">+ ADD</div></div>
+<sc-for list="{{ pois }}" as="p" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:14px 1fr 140px 110px 30px;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.1);background:{{ p.rowBg }}"><span style="width:12px;height:12px;border-radius:50%;background:{{ p.bg }}"></span><input value="{{ p.name }}" onChange="{{ p.setName }}" style="border:0;border-bottom:1px solid rgba(11,21,24,.15);font:400 16px Montserrat;padding:6px 0;background:transparent;color:#0B1518"><span onClick="{{ p.cycle }}" style="cursor:pointer;font:600 10px Montserrat;letter-spacing:.16em;border:1px solid rgba(11,21,24,.25);padding:7px 8px;text-align:center">{{ p.cat }} ▾</span><input value="{{ p.t }}" onChange="{{ p.setT }}" style="border:1px solid rgba(11,21,24,.2);font:400 14px Montserrat;padding:7px;color:#0B1518"><span onClick="{{ p.del }}" style="cursor:pointer;opacity:.5;font:500 16px Montserrat">✕</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMedia }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:8px"><sc-for list="{{ mediaFilters }}" as="f" hint-placeholder-count="5"><div onClick="{{ f.pick }}" style="cursor:pointer;padding:11px 16px;font:500 14px Montserrat;background:{{ f.bg }};color:{{ f.fg }};border:1px solid #0B1518">{{ f.label }}</div></sc-for></div>
+<div style="display:grid;grid-template-columns:1fr 420px;gap:36px;flex:1;min-height:0">
+<div style="display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:14px;align-content:start">
+<div onClick="{{ addMedia }}" style="cursor:pointer;border:2px dashed rgba(11,21,24,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font:600 11px Montserrat;letter-spacing:.2em;opacity:.7" style-hover="border-color:#B89A68;opacity:1"><span style="font:300 34px 'Cormorant Garamond',serif;letter-spacing:0">+</span>UPLOAD</div>
+<sc-for list="{{ media }}" as="m" hint-placeholder-count="7"><div onClick="{{ m.pick }}" style="cursor:pointer;position:relative;overflow:hidden;background:#1a2629;outline:3px solid {{ m.ring }};outline-offset:-3px">
+<sc-if value="{{ m.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ m.img }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></sc-if>
+<sc-if value="{{ m.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0"><image-slot id="{{ m.slot }}" shape="rect" placeholder="{{ m.name }}"></image-slot></div></sc-if>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(0deg,rgba(11,21,24,.9),transparent);color:#F3F0E9;display:flex;justify-content:space-between;align-items:baseline;pointer-events:none"><span style="font:500 12px Montserrat">{{ m.name }}</span><span style="font:600 9px Montserrat;letter-spacing:.2em;color:#B89A68">{{ m.kind }}</span></div>
+</div></sc-for>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:30px;display:flex;flex-direction:column;gap:16px">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">ASSET</span>
+<input value="{{ md.name }}" onChange="{{ setMName }}" style="background:transparent;border:0;border-bottom:1px solid rgba(243,240,233,.4);color:#F3F0E9;font:300 28px 'Cormorant Garamond',serif;padding:6px 0">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">ROOM</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ mdRooms }}" as="r" hint-placeholder-count="8"><div onClick="{{ r.pick }}" style="cursor:pointer;padding:7px 9px;font:500 12px Montserrat;background:{{ r.bg }};color:{{ r.fg }};border:1px solid {{ r.bc }}">{{ r.label }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">TIME OF DAY</span><div style="display:flex;gap:6px"><sc-for list="{{ mdTimes }}" as="r" hint-placeholder-count="4"><div onClick="{{ r.pick }}" style="cursor:pointer;flex:1;text-align:center;padding:9px 0;font:500 12px Montserrat;background:{{ r.bg }};color:{{ r.fg }};border:1px solid {{ r.bc }}">{{ r.label }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:6px;font:400 13px/1.8 Montserrat;opacity:.8;border-top:1px solid rgba(243,240,233,.15);padding-top:12px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.7">USED IN</span><span>{{ md.used }}</span></div>
+<div onClick="{{ saveMedia }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;padding:16px;text-align:center;font:600 11px Montserrat;letter-spacing:.2em">SAVE TAGS</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:64px;top:44px;background:#0B1518;color:#F3F0E9;padding:16px 22px;font:600 12px Montserrat;letter-spacing:.16em;display:flex;gap:10px"><span style="color:#B89A68">✓</span>{{ toast }}</div></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ROOMS = [['entrance','Entrance','img/villa_hero.jpg'],['living','Living','img/living.jpg'],['dining','Dining','img/living2.jpg'],['kitchen','Kitchen',null],['master','Master','Master Bedroom'],['bed2','Bedroom 2',null],['bath','Bath',null],['terrace','Terrace','img/villa_wide.jpg']].map(r=>[r[0],r[1], r[2] && r[2].startsWith('img/') ? r[2] : null]);
+const PT = [['INFO','i'],['PRODUCT','◆'],['VIEW','▢'],['NAVIGATE','→'],['CTA','★']];
+const PINS0 = { entrance:[[34,56,0,'Pivot door','Double-height oak pivot door.'],[62,62,3,'Living room','',1]], living:[[47,64,0,'Living room','6.0 × 4.7 m, opens to the garden.'],[72,50,3,'Dining','',2],[30,44,3,'Terrace','',7],[58,40,1,'Pendant lights','Handmade brass pendants · Rp 18 jt']], dining:[[62,66,0,'Dining','Eight-seat table.'],[73,52,3,'Kitchen','',3]], kitchen:[[50,60,1,'Premium kitchen','Quartz tops, integrated appliances.'],[72,48,3,'Master','',4]], master:[[50,64,0,'Master bedroom','24.5 m² with walk-in.'],[32,38,2,'Ocean view','Window simulation'],[72,50,3,'Bathroom','',6]], bed2:[[50,64,0,'Bedroom 2','Queen-size, garden view.']], bath:[[50,60,1,'Stone bath','Freestanding terrazzo bath.']], terrace:[[40,66,0,'Infinity pool','Six-metre pool.'],[62,34,2,'Sunset view',''],[80,72,4,'Book a visit','']] };
+const MATCATS = ['FLOOR','WALL','KITCHEN','STYLE'];
+const MATS0 = { FLOOR:[['Oak','#8a6440',0],['Marble','#e6e1d8',45],['Stone','#6f6a63',30],['Terrazzo','#c9bfae',20]], WALL:[['Warm white','#f1ece2',0],['Beige','#c8b294',0],['Grey','#8c9196',0],['Textured','#9b8466',15]], KITCHEN:[['Standard','#d8d2c6',0],['Modern','#3d4447',35],['Premium','#6b5641',85],['Luxury','#1d1d1d',160]], STYLE:[['Modern','#a59a8a',0],['Minimalist','#e4e0d8',0],['Japandi','#b89d7c',60],['Luxury','#4a3a2a',180]] };
+const UCODES = ['PH-01','3A-02','2B-01','1A-03'];
+const CAPS = [['Arrive through a pivot door into a double-height foyer framed in natural stone.','Masuk melalui pintu pivot ke foyer setinggi dua lantai berbingkai batu alam.'],['The living room spans six by four point seven metres and opens fully to the garden.','Ruang keluarga berukuran enam kali empat koma tujuh meter dan terbuka penuh ke taman.'],['Dinner with the ocean in view, one step from the kitchen.','Makan malam dengan pemandangan laut, selangkah dari dapur.'],['The premium kitchen package adds quartz tops and integrated appliances.',''],['The master suite faces the ocean, with a walk-in wardrobe and ensuite bath.','Kamar utama menghadap laut, dengan walk-in wardrobe dan kamar mandi dalam.'],['A quiet second bedroom overlooking the garden.','Kamar kedua yang tenang menghadap taman.'],['A stone bath and rain shower under a skylight.',''],['The terrace ends in a six-metre infinity pool facing the western sunset.','Teras berakhir di kolam infinity enam meter menghadap senja di barat.']];
+const POICATS = ['BEACH','CULTURE','SCHOOL','HEALTH','TRANSPORT','LEISURE'];
+const POICOL = ['#526B78','#B89A68','#35463D','#b87a55','#0B1518','#8fa58a'];
+const POIS0 = [['Bingin Beach','5 min',0,22,30],['Uluwatu Temple','8 min',1,78,66],['Pecatu Golf','12 min',5,70,24],['International school','20 min',2,30,76],['BIMC Hospital','30 min',3,84,40],['Ngurah Rai Airport','35 min',4,16,52]];
+const MEDIA0 = [['Living · sunset','RENDER','img/living.jpg',1,2],['Dining · evening','RENDER','img/living2.jpg',2,2],['Terrace & pool','RENDER','img/villa_wide.jpg',7,2],['Entrance · exterior','RENDER','img/villa_hero.jpg',0,2],['Aerial masterplan','RENDER','img/masterplan.jpg',null,1],['Ocean view','360','img/ocean.jpg',4,2],['Kitchen · day','RENDER',null,3,1],['Master · night','RENDER',null,4,3],['Exterior flythrough','VIDEO',null,null,2]];
+const TIMES = ['Morning','Day','Sunset','Night'];
+class Component extends DCLogic {
+  state = { scale:1, sec:'hotspots', hroom:1, pins: JSON.parse(JSON.stringify(PINS0)), psel:null, adding:false, mcat:0, mats: JSON.parse(JSON.stringify(MATS0)), mdef:{FLOOR:0,WALL:0,KITCHEN:0,STYLE:0}, munits:{},
+    stops: ROOMS.map((r,i)=>({ i, on:true, dur:7, en:CAPS[i][0], id:CAPS[i][1] })), tsel:1, pois: POIS0.map(p=>({ name:p[0], t:p[1], cat:p[2], x:p[3], y:p[4] })), pcat:-1,
+    media: MEDIA0.map((m,i)=>({ name:m[0], kind:m[1], img:m[2], room:m[3], time:m[4], id:i })), mf:0, msel:0, toast:null };
+  imgRef = React.createRef();
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300);
+    const q = new URLSearchParams(location.search).get('s'); if (['hotspots','materials','tour','poi','media'].includes(q)) this.setState({ sec:q }); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  toastMsg(m) { this.setState({ toast:m }); clearTimeout(this._t); this._t = setTimeout(()=>this.setState({ toast:null }), 2600); }
+  setPin(patch) { const s = this.state, k = ROOMS[s.hroom][0], pins = Object.assign({}, s.pins); pins[k] = pins[k].slice(); pins[k][s.psel] = Object.assign([], pins[k][s.psel]); Object.keys(patch).forEach(i => pins[k][s.psel][i] = patch[i]); this.setState({ pins }); }
+  setStop(i, patch) { const stops = this.state.stops.slice(); stops[i] = Object.assign({}, stops[i], patch); this.setState({ stops }); }
+  renderVals() {
+    const s = this.state, sel = on => ({ bg: on?'#0B1518':'transparent', fg: on?'#F3F0E9':'#0B1518' }), dsel = on => ({ bg: on?'#B89A68':'transparent', fg: on?'#0B1518':'#F3F0E9', bc: on?'#B89A68':'rgba(243,240,233,.3)' });
+    const T = { hotspots:['Hotspots','Place and edit interactive points inside each room. Changes go to the draft scene.'], materials:['Materials','The approved finishes buyers can choose, their price and the units they apply to.'], tour:['Guided tour','Order the stops, set how long each lasts, and write the captions in both languages.'], poi:['Facilities & location','Points of interest shown on the location layer, with travel times.'], media:['Media library','Renders, video and 360 content, tagged by room and time of day.'] };
+    const rk = ROOMS[s.hroom][0], pins = s.pins[rk] || [], pe = s.psel!==null ? pins[s.psel] : null;
+    const cat = MATCATS[s.mcat];
+    const order = s.stops, tsel = order.find(x=>x.i===s.tsel) || order[0];
+    const incl = order.filter(x=>x.on), tot = incl.reduce((a,x)=>a+x.dur,0);
+    const mf = ['ALL','RENDER','VIDEO','360'][s.mf], media = s.media.filter(m => mf==='ALL' || m.kind===mf), md = s.media.find(m=>m.id===s.msel) || s.media[0];
+    const pois = s.pois.map((p,i)=>({p,i})).filter(o => s.pcat<0 || o.p.cat===s.pcat);
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      active: s.sec, local: ['hotspots','materials','tour','poi','media'], pick: (k)=>this.setState({ sec:k }),
+      title: T[s.sec][0], sub: T[s.sec][1], isHot: s.sec==='hotspots', isMat: s.sec==='materials', isTour: s.sec==='tour', isPoi: s.sec==='poi', isMedia: s.sec==='media',
+      roomChips: ROOMS.map((r,i)=>Object.assign(sel(i===s.hroom), { label:r[1], n:(s.pins[r[0]]||[]).length, pick:()=>this.setState({ hroom:i, psel:null }) })),
+      imgRef: this.imgRef, hr: { key:rk, hasImg: !!ROOMS[s.hroom][2], noImg: !ROOMS[s.hroom][2], img: ROOMS[s.hroom][2], ph: ROOMS[s.hroom][1].toUpperCase() + ' · RENDER PENDING' },
+      hotCursor: s.adding ? 'crosshair' : 'default',
+      addAt: (e)=>{ if (!s.adding) return; const b = this.imgRef.current.getBoundingClientRect(); const x = Math.round((e.clientX-b.left)/b.width*100), y = Math.round((e.clientY-b.top)/b.height*100); const p = Object.assign({}, s.pins); p[rk] = (p[rk]||[]).concat([[x,y,0,'New hotspot','']]); this.setState({ pins:p, psel:p[rk].length-1, adding:false }); },
+      pins: pins.map((p,i)=>({ x:p[0]+'%', y:p[1]+'%', g:PT[p[2]][1], title:p[3], ring: i===s.psel?'#B89A68':'#F3F0E9', bg: i===s.psel?'#B89A68':'rgba(11,21,24,.5)', fg: i===s.psel?'#0B1518':'#F3F0E9', pick:(e)=>{ e.stopPropagation(); this.setState({ psel:i, adding:false }); } })),
+      toggleAdd: ()=>this.setState({ adding:!s.adding }), addLabel: s.adding ? 'CLICK THE RENDER TO PLACE…' : '+ ADD HOTSPOT', addBg: s.adding?'#B89A68':'transparent', addFg: '#0B1518',
+      hotHint: pins.length + ' hotspots in ' + ROOMS[s.hroom][1],
+      hasPin: !!pe, noPin: !pe, isNav: !!pe && pe[2]===3,
+      pe: pe ? { id: 'HS-' + rk.toUpperCase() + '-' + String(s.psel+1).padStart(3,'0'), title:pe[3], desc:pe[4], px:pe[0], py:pe[1] } : {},
+      pinTypes: PT.map((t,i)=>Object.assign(dsel(pe && pe[2]===i), { label:t[0], pick:()=>this.setPin({2:i}) })),
+      targets: ROOMS.map((r,i)=>Object.assign(dsel(pe && pe[5]===i), { label:r[1], pick:()=>this.setPin({5:i, 3:r[1]}) })),
+      setTitle: (e)=>this.setPin({3:e.target.value}), setDesc: (e)=>this.setPin({4:e.target.value}),
+      delPin: ()=>{ const p = Object.assign({}, s.pins); p[rk] = p[rk].filter((_,i)=>i!==s.psel); this.setState({ pins:p, psel:null }); },
+      savePins: ()=>this.toastMsg('Hotspots saved to scene v2.1 (draft)'),
+      matTabs: MATCATS.map((c,i)=>Object.assign(sel(i===s.mcat), { label:c, pick:()=>this.setState({ mcat:i }) })),
+      addMat: ()=>{ const m = Object.assign({}, s.mats); m[cat] = m[cat].concat([['New material','#d4cbbd',0]]); this.setState({ mats:m }); },
+      mats: s.mats[cat].map((m,i)=>{ const key = cat+i, un = s.munits[key] || UCODES.slice(1,3); const def = s.mdef[cat]===i; return { name:m[0], c:m[1], p:String(m[2]), bc: def?'#B89A68':'rgba(11,21,24,.12)', defDisp: def?'block':'none', defLabel: def?'✓ DEFAULT FINISH':'SET AS DEFAULT',
+        setName:(e)=>{ const M = Object.assign({}, s.mats); M[cat] = M[cat].slice(); M[cat][i] = [e.target.value, m[1], m[2]]; this.setState({ mats:M }); },
+        setP:(e)=>{ const n = parseInt(e.target.value.replace(/\D/g,''),10)||0; const M = Object.assign({}, s.mats); M[cat] = M[cat].slice(); M[cat][i] = [m[0], m[1], n]; this.setState({ mats:M }); },
+        makeDef:()=>this.setState({ mdef: Object.assign({}, s.mdef, {[cat]:i}) }),
+        units: UCODES.map(u=>{ const on = un.includes(u); return Object.assign(sel(on), { code:u, pick:()=>this.setState({ munits: Object.assign({}, s.munits, {[key]: on ? un.filter(x=>x!==u) : un.concat([u])}) }) }); }) }; }),
+      stops: order.map((x,idx)=>({ n: x.on ? String(order.slice(0,idx+1).filter(y=>y.on).length).padStart(2,'0') : '—', name:ROOMS[x.i][1], dur:x.dur, op: x.on?1:.45, bg: x.i===s.tsel?'rgba(184,154,104,.14)':'transparent', swBg: x.on?'#B89A68':'rgba(11,21,24,.2)', swX: x.on?'23px':'3px',
+        pick:()=>this.setState({ tsel:x.i }), toggle:(e)=>{ e.stopPropagation(); this.setStop(idx, { on:!x.on }); }, minus:(e)=>{ e.stopPropagation(); this.setStop(idx, { dur:Math.max(3, x.dur-1) }); }, plus:(e)=>{ e.stopPropagation(); this.setStop(idx, { dur:Math.min(20, x.dur+1) }); },
+        up:(e)=>{ e.stopPropagation(); if (idx===0) return; const o = order.slice(); [o[idx-1],o[idx]] = [o[idx],o[idx-1]]; this.setState({ stops:o }); }, down:(e)=>{ e.stopPropagation(); if (idx===order.length-1) return; const o = order.slice(); [o[idx+1],o[idx]] = [o[idx],o[idx+1]]; this.setState({ stops:o }); } })),
+      tourCount: incl.length, tourTotal: Math.floor(tot/60) + 'm ' + String(tot%60).padStart(2,'0') + 's',
+      ts: { name:ROOMS[tsel.i][1], en:tsel.en, id:tsel.id, hasImg: !!ROOMS[tsel.i][2], img:ROOMS[tsel.i][2] },
+      setEn: (e)=>this.setStop(order.indexOf(tsel), { en:e.target.value }), setId: (e)=>this.setStop(order.indexOf(tsel), { id:e.target.value }),
+      poiPins: pois.map(({p})=>({ x:p.x+'%', y:p.y+'%', name:p.name, t:p.t, bg:POICOL[p.cat], pick:()=>{} })),
+      poiCats: ['ALL'].concat(POICATS).slice(0,6).map((c,i)=>Object.assign(sel(s.pcat===i-1), { label:c.charAt(0)+c.slice(1).toLowerCase(), pick:()=>this.setState({ pcat:i-1 }) })),
+      addPoi: ()=>this.setState({ pois: s.pois.concat([{ name:'New place', t:'10 min', cat: Math.max(0,s.pcat), x: 20+Math.round(Math.random()*60), y: 20+Math.round(Math.random()*60) }]) }),
+      pois: pois.map(({p,i})=>({ name:p.name, t:p.t, cat:POICATS[p.cat], bg:POICOL[p.cat], rowBg:'transparent',
+        setName:(e)=>{ const P = s.pois.slice(); P[i] = Object.assign({}, p, { name:e.target.value }); this.setState({ pois:P }); }, setT:(e)=>{ const P = s.pois.slice(); P[i] = Object.assign({}, p, { t:e.target.value }); this.setState({ pois:P }); },
+        cycle:()=>{ const P = s.pois.slice(); P[i] = Object.assign({}, p, { cat:(p.cat+1)%POICATS.length }); this.setState({ pois:P }); }, del:()=>this.setState({ pois: s.pois.filter((_,j)=>j!==i) }) })),
+      mediaFilters: ['All','Renders','Video','360'].map((label,i)=>Object.assign(sel(s.mf===i), { label, pick:()=>this.setState({ mf:i }) })),
+      addMedia: ()=>{ const id = Math.max(...s.media.map(m=>m.id))+1; this.setState({ media: s.media.concat([{ name:'New upload ' + (id-8), kind:'RENDER', img:null, room:null, time:1, id }]), msel:id }); },
+      media: media.map(m=>({ name:m.name, kind:m.kind, img:m.img, hasImg: !!m.img, noImg: !m.img, slot:'media-'+m.id, ring: m.id===s.msel?'#B89A68':'transparent', pick:()=>this.setState({ msel:m.id }) })),
+      md: { name:md.name, used: md.room===null ? 'Welcome loop · masterplan layer' : 'Walkthrough · ' + ROOMS[md.room][1] + (md.kind==='360' ? ' · window view' : '') },
+      setMName: (e)=>{ const M = s.media.map(m=>m.id===md.id ? Object.assign({}, m, { name:e.target.value }) : m); this.setState({ media:M }); },
+      mdRooms: ROOMS.map((r,i)=>Object.assign(dsel(md.room===i), { label:r[1], pick:()=>this.setState({ media: s.media.map(m=>m.id===md.id ? Object.assign({}, m, { room:i }) : m) }) })),
+      mdTimes: TIMES.map((t,i)=>Object.assign(dsel(md.time===i), { label:t, pick:()=>this.setState({ media: s.media.map(m=>m.id===md.id ? Object.assign({}, m, { time:i }) : m) }) })),
+      saveMedia: ()=>this.toastMsg('Tags saved · asset available to the walkthrough'),
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

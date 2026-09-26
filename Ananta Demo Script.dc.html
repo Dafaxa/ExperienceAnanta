@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;background:#e6e1d6;font-family:Montserrat,sans-serif;color:#0B1518}a{color:#8a6f45}a:hover{color:#0B1518}@media print{body{background:#fff}}</style></helmet>
+<div style="max-width:880px;margin:40px auto;background:#F3F0E9;padding:64px 72px;box-shadow:0 2px 20px rgba(11,21,24,.08);display:flex;flex-direction:column;gap:30px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:400 22px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 8px/1 Montserrat;letter-spacing:.62em;padding-left:24px">PROPERTY™</div></div>
+<div style="font:500 10px/1.8 Montserrat;letter-spacing:.26em;text-align:right;opacity:.65">SALES CONSULTANT GUIDE<br>PILOT · ANANTA RESIDENCES</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">PROPERTY EXPERIENCE™</div>
+<div style="font:300 54px/1 'Cormorant Garamond',serif">The five-minute <span style="font-style:italic;color:#8a6f45">walkthrough.</span></div>
+<div style="font:400 15px/1.7 Montserrat;opacity:.8;text-wrap:pretty">One path every consultant follows, so each visitor sees the same highlights and each session produces comparable data. Run it from the sales console; let the visitor take the touch table whenever they want.</div>
+</div>
+<div style="display:flex;flex-direction:column;border-top:2px solid #0B1518">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="8">
+<div style="display:grid;grid-template-columns:70px 90px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid rgba(11,21,24,.12)">
+<span style="font:400 30px/1 'Cormorant Garamond',serif;color:#8a6f45">{{ s.n }}</span>
+<span style="font:600 11px Montserrat;letter-spacing:.16em;padding-top:6px;opacity:.6">{{ s.time }}</span>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 16px Montserrat">{{ s.title }}</span><span style="font:italic 400 19px/1.4 'Cormorant Garamond',serif">“{{ s.say }}”</span><span style="font:400 13px/1.6 Montserrat;opacity:.7">{{ s.do }}</span></div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:36px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.26em;color:#8a6f45">DO</span><span style="font:400 14px/1.9 Montserrat">Hand over the touch table early<br>Pause on the terrace at sunset<br>Show price only when asked or after step 06<br>Log notes in the console during the tour</span></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.26em;color:#8a6f45">AVOID</span><span style="font:400 14px/1.9 Montserrat">Explaining controls before they touch anything<br>More than three material changes<br>Reading the lead signal aloud or treating it as a prediction<br>Ending without the QR handoff</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(11,21,24,.15);padding-top:22px"><span style="font:600 11px Montserrat;letter-spacing:.26em;color:#8a6f45">AFTER EACH SESSION · ASK</span><span style="font:400 14px/1.9 Montserrat">Did you understand the layout? · Was it easier than the floor plan alone? · Which part was most useful? · Did it change your interest in visiting? · What was missing?</span></div>
+<div style="display:flex;justify-content:space-between;font:500 10px Montserrat;letter-spacing:.3em;opacity:.55;border-top:1px solid rgba(11,21,24,.15);padding-top:18px"><span>PEOPLE · PLACES · A BRIGHTER TOMORROW</span><span>V1 · PILOT</span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const S = [
+      ['0:00','Welcome','Let’s walk through your future home.','Start from the LED wall welcome screen. Choose EN or ID with the visitor.'],
+      ['0:30','Unit & floor plan','This is 2B-01: two bedrooms, 124 square metres, facing the sunset.','Open Unit Explorer, tap 2B-01, then the floor plan. Let them tap the living room.'],
+      ['1:00','Enter · Living room','Take a look around. Drag anywhere on the table.','Enter the 3D walkthrough. Hand the touch table to the visitor.'],
+      ['1:45','Make it theirs','Would you prefer marble or oak underfoot?','Console → Materials. One floor change, one style change. Show before/after.'],
+      ['2:30','Master bedroom · view','This is the view you wake up to.','Console → Rooms → Master Bedroom, then Screens → Window view.'],
+      ['3:15','Terrace at sunset','This is six in the evening, in March.','Console → Lighting → Sunset. Open the terrace. Pause here.'],
+      ['4:00','Price & plan','With your finishes, and a 24-month plan, it comes to this per month.','Console → Screens → Price, or say “how much” to Ask Ananta.'],
+      ['4:40','Book & hand off','Shall we see it in person this weekend?','Screens → Lead form. After submitting, the visitor scans the QR to keep their tour.']
+    ];
+    return { steps: S.map((s,i)=>({ n:'0'+(i+1), time:s[0], title:s[1], say:s[2], do:s[3] })) };
+  }
+}
+</script>
+</body>
+</html>

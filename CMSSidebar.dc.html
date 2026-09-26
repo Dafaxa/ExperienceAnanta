@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="width:300px;height:1080px;box-sizing:border-box;background:#0B1518;color:#F3F0E9;padding:36px 26px 28px;display:flex;flex-direction:column;gap:22px;font-family:Montserrat,sans-serif">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:400 24px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 8px/1 Montserrat;letter-spacing:.62em;padding-left:26px">PROPERTY™</div><div style="font:600 10px Montserrat;letter-spacing:.3em;color:#B89A68;margin-top:14px">CONTENT MANAGER</div></div>
+<div style="display:flex;flex-direction:column;gap:14px;flex:1;min-height:0">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:1px">
+<span style="font:600 9px Montserrat;letter-spacing:.3em;opacity:.45;padding:0 12px 5px">{{ g.label }}</span>
+<sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3"><div onClick="{{ it.go }}" style="cursor:pointer;padding:8px 12px;border-left:2px solid {{ it.bc }};background:{{ it.bg }};font:500 13.5px Montserrat;color:{{ it.color }}" style-hover="background:rgba(243,240,233,.06)">{{ it.label }}</div></sc-for>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:12px;align-items:center;border-top:1px solid rgba(243,240,233,.12);padding-top:16px"><div style="width:34px;height:34px;border-radius:50%;background:#B89A68;color:#0B1518;display:flex;align-items:center;justify-content:center;font:600 12px Montserrat">RW</div><div style="display:flex;flex-direction:column;gap:3px"><span style="font:500 13px Montserrat">Rina Wijaya</span><span style="font:600 9px Montserrat;letter-spacing:.22em;color:#B89A68">MARKETING MANAGER</span></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:1080},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;units&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;local&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;},&quot;onPick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(key: string) =&gt; void&quot;}}">
+const SU='Ananta CMS Setup', CO='Ananta CMS Content', SA='Ananta CMS Sales', LG='Ananta CMS Language', OP='Ananta CMS Operations', AD='Ananta Admin CMS';
+const GROUPS = [
+  ['PROJECT', [['setup','Brand & settings',SU],['wizard','New project',SU]]],
+  ['CONTENT', [['hotspots','Hotspots',CO],['materials','Materials',CO],['tour','Guided tour',CO],['poi','Facilities & location',CO],['media','Media library',CO]]],
+  ['COMMERCIAL', [['units','Units & pricing',AD],['pricing','Pricing rules',SA],['forms','Lead form & CTAs',SA],['routing','Lead routing',SA],['leads','Leads',AD]]],
+  ['PIPELINE', [['plans','Floor plans',AD],['scenes','Scenes & versions',AD]]],
+  ['LANGUAGE & AI', [['translations','Translations',LG],['phrases','Ask Ananta phrases',LG]]],
+  ['OPERATIONS', [['displays','Displays',OP],['roles','Roles & permissions',OP],['audit','Audit log',OP]]]
+];
+class Component extends DCLogic {
+  renderVals() {
+    const a = this.props.active, local = this.props.local || [], pick = this.props.onPick;
+    return { groups: GROUPS.map(g => ({ label:g[0], items: g[1].map(([k,label,file]) => ({ label, bc: k===a?'#B89A68':'transparent', bg: k===a?'rgba(184,154,104,.12)':'transparent', color: k===a?'#F3F0E9':'rgba(243,240,233,.72)',
+      go: () => { if (pick && local.includes(k)) pick(k); else window.location.href = encodeURIComponent(file) + '.dc.html?s=' + k; } })) })) };
+  }
+}
+</script>
+</body>
+</html>

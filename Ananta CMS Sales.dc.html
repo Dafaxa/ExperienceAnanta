@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;height:100%;background:#d9d4c9;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#8a6f45}a:hover{color:#0B1518}input:focus,textarea:focus{outline:none;border-color:#B89A68 !important}</style></helmet>
+<div style="position:fixed;inset:0;background:#d9d4c9">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:300px 1fr">
+<dc-import name="CMSSidebar" active="{{ active }}" local="{{ local }}" on-pick="{{ pick }}" hint-size="300px,1080px"></dc-import>
+<div style="position:relative;padding:44px 64px;display:flex;flex-direction:column;gap:24px;min-width:0;min-height:0;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">ANANTA RESIDENCES · ULUWATU</span><span style="font:300 60px/1 'Cormorant Garamond',serif">{{ title }}</span></div><span style="font:400 15px Montserrat;opacity:.6;max-width:560px;text-align:right">{{ sub }}</span></div>
+
+<sc-if value="{{ isPricing }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:1fr 480px;gap:44px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 30px 'Cormorant Garamond',serif">Promotions</span><div onClick="{{ addPromo }}" style="cursor:pointer;padding:10px 14px;font:600 11px Montserrat;letter-spacing:.16em;border:1px dashed #0B1518">+ ADD PROMO</div></div>
+<div style="display:grid;grid-template-columns:1fr 150px 160px 160px 70px;gap:14px;font:600 10px Montserrat;letter-spacing:.2em;opacity:.6;border-bottom:1px solid rgba(11,21,24,.25);padding-bottom:10px"><span>NAME</span><span>DISCOUNT (JT)</span><span>STARTS</span><span>ENDS</span><span>ACTIVE</span></div>
+<sc-for list="{{ promos }}" as="p" hint-placeholder-count="2"><div style="display:grid;grid-template-columns:1fr 150px 160px 160px 70px;gap:14px;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(11,21,24,.1)"><input value="{{ p.name }}" onChange="{{ p.setName }}" style="border:1px solid rgba(11,21,24,.2);padding:10px;font:400 15px Montserrat;color:#0B1518"><input value="{{ p.disc }}" onChange="{{ p.setDisc }}" style="border:1px solid rgba(11,21,24,.2);padding:10px;font:400 15px Montserrat;color:#0B1518"><input type="date" value="{{ p.from }}" onChange="{{ p.setFrom }}" style="border:1px solid rgba(11,21,24,.2);padding:9px;font:400 14px Montserrat;color:#0B1518"><input type="date" value="{{ p.to }}" onChange="{{ p.setTo }}" style="border:1px solid rgba(11,21,24,.2);padding:9px;font:400 14px Montserrat;color:#0B1518"><span onClick="{{ p.toggle }}" style="cursor:pointer;width:44px;height:24px;border-radius:12px;background:{{ p.swBg }};position:relative"><span style="position:absolute;top:3px;left:{{ p.swX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s"></span></span></div></sc-for>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">BOOKING FEE (JT)</span><input value="{{ fee }}" onChange="{{ setFee }}" style="border:1px solid rgba(11,21,24,.2);padding:12px;font:400 17px Montserrat;color:#0B1518"></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">MIN. DOWN PAYMENT (%)</span><input value="{{ dpMin }}" onChange="{{ setDp }}" style="border:1px solid rgba(11,21,24,.2);padding:12px;font:400 17px Montserrat;color:#0B1518"></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">KPR RATE (% / YEAR)</span><input value="{{ kpr }}" onChange="{{ setKpr }}" style="border:1px solid rgba(11,21,24,.2);padding:12px;font:400 17px Montserrat;color:#0B1518"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">INSTALMENT TENORS OFFERED</span><div style="display:flex;gap:8px"><sc-for list="{{ tenors }}" as="t" hint-placeholder-count="5"><div onClick="{{ t.pick }}" style="cursor:pointer;padding:12px 18px;font:500 15px Montserrat;background:{{ t.bg }};color:{{ t.fg }};border:1px solid #0B1518">{{ t.label }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">PRICE VISIBILITY BY CHANNEL</span>
+<sc-for list="{{ channels }}" as="c" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:220px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid rgba(11,21,24,.08)"><span style="font:500 15px Montserrat">{{ c.name }}</span><div style="display:flex;border:1px solid #0B1518;width:max-content"><sc-for list="{{ c.opts }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.pick }}" style="cursor:pointer;padding:9px 16px;font:600 10px Montserrat;letter-spacing:.16em;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</div></sc-for></div></div></sc-for>
+</div>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:34px;display:flex;flex-direction:column;gap:14px">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">PREVIEW · 2B-01</span>
+<sc-for list="{{ pvRows }}" as="r" hint-placeholder-count="5"><div style="display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(243,240,233,.1)"><span style="font:400 15px Montserrat;opacity:.75">{{ r.k }}</span><span style="font:400 24px 'Cormorant Garamond',serif;color:{{ r.c }}">{{ r.v }}</span></div></sc-for>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6">EST. MONTHLY · {{ pvTenor }}</span><span style="font:400 48px 'Cormorant Garamond',serif;color:#B89A68">{{ pvMonthly }}</span><span style="font:400 13px Montserrat;opacity:.6">{{ pvKpr }}</span></div>
+<div onClick="{{ savePricing }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;padding:18px;text-align:center;font:600 11px Montserrat;letter-spacing:.22em">PUBLISH PRICING RULES</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isForms }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:1fr 500px;gap:44px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:36px">
+<div style="display:flex;flex-direction:column"><div style="display:grid;grid-template-columns:1fr 90px 90px;font:600 10px Montserrat;letter-spacing:.2em;opacity:.6;padding-bottom:10px;border-bottom:1px solid rgba(11,21,24,.25)"><span>FIELD</span><span>SHOW</span><span>REQUIRED</span></div>
+<sc-for list="{{ fields }}" as="f" hint-placeholder-count="7"><div style="display:grid;grid-template-columns:1fr 90px 90px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(11,21,24,.08);font:400 15px Montserrat"><span>{{ f.label }}</span><span onClick="{{ f.toggleOn }}" style="cursor:pointer;width:40px;height:22px;border-radius:11px;background:{{ f.onBg }};position:relative"><span style="position:absolute;top:3px;left:{{ f.onX }};width:16px;height:16px;border-radius:50%;background:#fff"></span></span><span onClick="{{ f.toggleReq }}" style="cursor:pointer;width:22px;height:22px;border:1px solid #0B1518;background:{{ f.reqBg }};color:#0B1518;display:flex;align-items:center;justify-content:center;font:700 12px Montserrat;opacity:{{ f.reqOp }}">{{ f.reqMark }}</span></div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">BUYING PURPOSE OPTIONS</span>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ purposes }}" as="p" hint-placeholder-count="4"><span style="display:flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid #0B1518;font:500 14px Montserrat">{{ p.label }}<span onClick="{{ p.del }}" style="cursor:pointer;opacity:.5">✕</span></span></sc-for></div>
+<div style="display:flex;gap:8px"><input value="{{ newPurpose }}" onChange="{{ setNewPurpose }}" placeholder="Add option…" style="flex:1;border:1px solid rgba(11,21,24,.2);padding:10px;font:400 14px Montserrat;color:#0B1518"><div onClick="{{ addPurpose }}" style="cursor:pointer;padding:10px 16px;background:#0B1518;color:#F3F0E9;font:600 11px Montserrat;letter-spacing:.16em;display:flex;align-items:center">ADD</div></div>
+<span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6;margin-top:8px">CONSENT WORDING (EN)</span>
+<textarea value="{{ consent }}" onChange="{{ setConsent }}" style="height:96px;resize:none;border:1px solid rgba(11,21,24,.2);padding:12px;font:400 14px/1.5 Montserrat;color:#0B1518"></textarea>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">CTAS PER SCREEN</span>
+<div style="display:grid;grid-template-columns:200px repeat(4,1fr);font:600 10px Montserrat;letter-spacing:.18em;opacity:.6;padding:8px 0;border-bottom:1px solid rgba(11,21,24,.25)"><span>SCREEN</span><span>BOOK VISIT</span><span>WHATSAPP</span><span>BROCHURE</span><span>SAVE</span></div>
+<sc-for list="{{ ctaRows }}" as="r" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:200px repeat(4,1fr);align-items:center;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.08)"><span style="font:500 15px Montserrat">{{ r.name }}</span><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="4"><span onClick="{{ c.pick }}" style="cursor:pointer;width:24px;height:24px;border:1px solid #0B1518;background:{{ c.bg }};display:flex;align-items:center;justify-content:center;font:700 12px Montserrat">{{ c.mark }}</span></sc-for></div></sc-for>
+</div>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:34px;display:flex;flex-direction:column;gap:14px;overflow:hidden">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">FORM PREVIEW</span>
+<div style="font:300 36px/1 'Cormorant Garamond',serif">Ready to experience it <span style="font-style:italic;color:#B89A68">in person?</span></div>
+<sc-for list="{{ pvFields }}" as="f" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.7">{{ f.label }}</span><div style="border-bottom:1px solid rgba(243,240,233,.4);height:22px"></div></div></sc-for>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ purposes }}" as="p" hint-placeholder-count="4"><span style="padding:7px 10px;border:1px solid rgba(243,240,233,.3);font:500 12px Montserrat">{{ p.label }}</span></sc-for></div>
+<div style="display:flex;gap:10px;font:400 12px/1.5 Montserrat;opacity:.85"><span style="width:14px;height:14px;flex:none;border:1px solid #B89A68"></span>{{ consent }}</div>
+<div onClick="{{ saveForm }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;padding:18px;text-align:center;font:600 11px Montserrat;letter-spacing:.22em">PUBLISH FORM</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRouting }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:1fr 540px;gap:44px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">ASSIGNMENT RULE</span><div style="display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #0B1518"><sc-for list="{{ rules }}" as="r" hint-placeholder-count="4"><div onClick="{{ r.pick }}" style="cursor:pointer;padding:14px 0;text-align:center;font:600 11px Montserrat;letter-spacing:.14em;background:{{ r.bg }};color:{{ r.fg }}">{{ r.label }}</div></sc-for></div><span style="font:400 14px Montserrat;opacity:.65">{{ ruleHint }}</span></div>
+<div style="display:grid;grid-template-columns:260px 1fr 1fr 120px 80px;font:600 10px Montserrat;letter-spacing:.2em;opacity:.6;padding:8px 0;border-bottom:1px solid rgba(11,21,24,.25)"><span>CONSULTANT</span><span>PROJECTS</span><span>LANGUAGES</span><span>THIS WEEK</span><span>ACTIVE</span></div>
+<sc-for list="{{ agents }}" as="a" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:260px 1fr 1fr 120px 80px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(11,21,24,.08);opacity:{{ a.op }}"><span style="display:flex;gap:12px;align-items:center;font:500 15px Montserrat"><span style="width:34px;height:34px;border-radius:50%;background:#B89A68;color:#0B1518;display:flex;align-items:center;justify-content:center;font:600 11px Montserrat">{{ a.ini }}</span>{{ a.name }}</span><span style="font:400 14px Montserrat">{{ a.proj }}</span><span style="font:400 14px Montserrat">{{ a.langs }}</span><span style="display:flex;gap:8px;align-items:center"><span style="width:60px;height:6px;background:rgba(11,21,24,.1)"><span style="display:block;height:6px;width:{{ a.loadW }};background:#B89A68"></span></span><span style="font:500 13px Montserrat">{{ a.load }}</span></span><span onClick="{{ a.toggle }}" style="cursor:pointer;width:40px;height:22px;border-radius:11px;background:{{ a.swBg }};position:relative"><span style="position:absolute;top:3px;left:{{ a.swX }};width:16px;height:16px;border-radius:50%;background:#fff"></span></span></div></sc-for>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 10px Montserrat;letter-spacing:.22em;opacity:.6">FIRST-RESPONSE SLA</span><div style="display:flex;gap:8px"><sc-for list="{{ slas }}" as="s" hint-placeholder-count="4"><div onClick="{{ s.pick }}" style="cursor:pointer;padding:11px 16px;font:500 14px Montserrat;background:{{ s.bg }};color:{{ s.fg }};border:1px solid #0B1518">{{ s.label }}</div></sc-for></div></div>
+<div onClick="{{ toggleEsc }}" style="cursor:pointer;display:flex;gap:14px;align-items:center;font:400 15px/1.5 Montserrat;align-self:end"><span style="width:40px;height:22px;flex:none;border-radius:11px;background:{{ escBg }};position:relative"><span style="position:absolute;top:3px;left:{{ escX }};width:16px;height:16px;border-radius:50%;background:#fff"></span></span>Escalate to sales manager when SLA is missed</div>
+</div>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:34px;display:flex;flex-direction:column;gap:14px;min-height:0">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">CRM WEBHOOK</span>
+<input value="{{ hook }}" onChange="{{ setHook }}" style="background:rgba(243,240,233,.05);border:1px solid rgba(243,240,233,.25);color:#F3F0E9;padding:12px;font:400 13px ui-monospace,Menlo,monospace">
+<div style="display:flex;gap:8px"><div onClick="{{ testHook }}" style="cursor:pointer;flex:1;background:#B89A68;color:#0B1518;padding:14px;text-align:center;font:600 11px Montserrat;letter-spacing:.2em">SEND TEST LEAD</div><div style="display:flex;align-items:center;gap:8px;font:500 12px Montserrat;color:{{ hookColor }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ hookColor }}"></span>{{ hookStatus }}</div></div>
+<span style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.6;margin-top:6px">PAYLOAD</span>
+<pre style="margin:0;flex:1;overflow:hidden;background:rgba(243,240,233,.04);border:1px solid rgba(243,240,233,.12);padding:14px;font:400 12px/1.6 ui-monospace,Menlo,monospace;color:rgba(243,240,233,.85);white-space:pre-wrap">{{ payload }}</pre>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:64px;top:44px;background:#0B1518;color:#F3F0E9;padding:16px 22px;font:600 12px Montserrat;letter-spacing:.16em;display:flex;gap:10px"><span style="color:#B89A68">✓</span>{{ toast }}</div></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const FIELDS0 = [['Full name',1,1],['WhatsApp',1,1],['Email',1,1],['Buying purpose',1,0],['Preferred visit date',1,0],['Budget',0,0],['Preferred unit',0,0]];
+const SCREENS = ['3D walkthrough','Floor plan','Price','Compare','Thank you'];
+const CTA0 = [[1,1,0,1],[1,0,1,0],[1,1,0,0],[1,0,0,1],[0,1,1,0]];
+const AGENTS0 = [['Ayu Pratiwi','AP','Residences · Sky Suites','EN · ID',14,1],['Rizky Hartono','RH','Residences · Masterplan','EN · ID',9,1],['Sarah Lim','SL','Sky Suites','EN · ZH',6,1],['Made Wirawan','MW','Masterplan','ID',3,0]];
+const RULES = [['ROUND-ROBIN','Leads rotate between active consultants, lightest load first.'],['BY PROJECT','Each lead goes to a consultant assigned to that project.'],['BY LANGUAGE','Matches the language the visitor used in the walkthrough.'],['MANUAL','Sales manager assigns every lead.']];
+class Component extends DCLogic {
+  state = { scale:1, sec:'pricing', promos:[{ name:'Launch promo', disc:100, from:'2026-09-01', to:'2026-12-31', on:true },{ name:'Early-bird terrace upgrade', disc:40, from:'2026-10-01', to:'2026-10-31', on:false }], fee:25, dpMin:20, kpr:7.5, tenors:[12,24,36],
+    vis:[0,0,0,1], fields: FIELDS0.map(f=>({ label:f[0], on:!!f[1], req:!!f[2] })), purposes:['Own stay','Investment','Holiday home','Business'], newPurpose:'', consent:'I agree that Ananta Property may contact me about this property via WhatsApp and email.', cta: CTA0.map(r=>r.slice()),
+    rule:0, agents: AGENTS0.map(a=>({ name:a[0], ini:a[1], proj:a[2], langs:a[3], load:a[4], on:!!a[5] })), sla:2, esc:true, hook:'https://crm.ananta.id/api/hooks/leads', hookSt:'idle', toast:null };
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300);
+    const q = new URLSearchParams(location.search).get('s'); if (['pricing','forms','routing'].includes(q)) this.setState({ sec:q }); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  toastMsg(m) { this.setState({ toast:m }); clearTimeout(this._t); this._t = setTimeout(()=>this.setState({ toast:null }), 2600); }
+  setPromo(i, p) { const promos = this.state.promos.slice(); promos[i] = Object.assign({}, promos[i], p); this.setState({ promos }); }
+  renderVals() {
+    const s = this.state, sel = on => ({ bg: on?'#0B1518':'transparent', fg: on?'#F3F0E9':'#0B1518' }), num = v => parseFloat(String(v).replace(',','.')) || 0;
+    const T = { pricing:['Pricing rules','Promotions, fees and payment plans. The 3D experience reads these live; nothing is hardcoded.'], forms:['Lead form & CTAs','Which fields visitors fill in and which calls to action appear on each screen.'], routing:['Lead routing','Who gets each lead, how fast they must respond, and where leads are sent.'] };
+    const base = 4850, promo = s.promos.filter(p=>p.on).reduce((a,p)=>a+num(p.disc),0), total = base - promo, dp = total * num(s.dpMin)/100, t0 = s.tenors.length ? Math.max(...s.tenors) : 12;
+    const r = num(s.kpr)/100/12, kprM = (total-dp) * r / (1 - Math.pow(1+r, -180));
+    const jt = v => 'Rp ' + Math.round(v).toLocaleString('en-US') + ' jt';
+    const sampleLead = { lead_id:'LEAD-00129', name:'Test Lead', phone:'+62 812 0000 0000', project:'Ananta Residences', unit:'2B-01', session_id:'SES-00129', routed_to: s.rule===3 ? null : (s.agents.filter(a=>a.on).sort((a,b)=>a.load-b.load)[0]||{}).name || null, sla_hours:[1,4,24,48][s.sla], interest:{ rooms_viewed:6, materials_selected:2, price_viewed:true, book_visit_clicked:true } };
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      active: s.sec, local: ['pricing','forms','routing'], pick: (k)=>this.setState({ sec:k }),
+      title: T[s.sec][0], sub: T[s.sec][1], isPricing: s.sec==='pricing', isForms: s.sec==='forms', isRouting: s.sec==='routing',
+      promos: s.promos.map((p,i)=>({ name:p.name, disc:String(p.disc), from:p.from, to:p.to, swBg: p.on?'#B89A68':'rgba(11,21,24,.2)', swX: p.on?'23px':'3px',
+        setName:(e)=>this.setPromo(i,{ name:e.target.value }), setDisc:(e)=>this.setPromo(i,{ disc:e.target.value }), setFrom:(e)=>this.setPromo(i,{ from:e.target.value }), setTo:(e)=>this.setPromo(i,{ to:e.target.value }), toggle:()=>this.setPromo(i,{ on:!p.on }) })),
+      addPromo: ()=>this.setState({ promos: s.promos.concat([{ name:'New promotion', disc:0, from:'2026-10-01', to:'2026-10-31', on:false }]) }),
+      fee: String(s.fee), dpMin: String(s.dpMin), kpr: String(s.kpr), setFee:(e)=>this.setState({ fee:e.target.value }), setDp:(e)=>this.setState({ dpMin:e.target.value }), setKpr:(e)=>this.setState({ kpr:e.target.value }),
+      tenors: [12,24,36,48,60].map(n=>Object.assign(sel(s.tenors.includes(n)), { label:n+' mo', pick:()=>this.setState({ tenors: s.tenors.includes(n) ? s.tenors.filter(x=>x!==n) : s.tenors.concat([n]).sort((a,b)=>a-b) }) })),
+      channels: ['LED wall','Specs screen','Web 3D','Mobile web'].map((name,ci)=>({ name, opts: ['SHOW','ON REQUEST','HIDE'].map((label,oi)=>Object.assign(sel(s.vis[ci]===oi), { label, pick:()=>{ const v = s.vis.slice(); v[ci] = oi; this.setState({ vis:v }); } })) })),
+      pvRows: [['Base price', 'Rp 4.85 bn', '#F3F0E9'], ['Active promotions', '− ' + jt(promo), '#8fbf9a'], ['Total', 'Rp ' + (total/1000).toFixed(2) + ' bn', '#F3F0E9'], ['Booking fee', jt(num(s.fee)), '#F3F0E9'], ['Down payment ' + num(s.dpMin) + '%', jt(dp), '#F3F0E9']].map(x=>({ k:x[0], v:x[1], c:x[2] })),
+      pvTenor: t0 + ' MONTHS', pvMonthly: jt((total-dp)/t0), pvKpr: 'KPR 15 yr at ' + num(s.kpr) + '%: ' + jt(kprM) + ' / month',
+      savePricing: ()=>{ const c = JSON.parse(localStorage.getItem('ananta.cms')||'{}'); localStorage.setItem('ananta.cms', JSON.stringify(Object.assign(c, { pricing: { promo, fee: num(s.fee), kpr: num(s.kpr), dpMin: num(s.dpMin), promoName: (s.promos.find(p=>p.on)||{}).name || '' }, ts: Date.now() }))); this.toastMsg('Pricing rules live on ' + s.vis.filter(v=>v!==2).length + ' channels'); },
+      fields: s.fields.map((f,i)=>({ label:f.label, onBg: f.on?'#B89A68':'rgba(11,21,24,.2)', onX: f.on?'21px':'3px', reqBg: f.req?'#B89A68':'transparent', reqMark: f.req?'✓':'', reqOp: f.on?1:.3,
+        toggleOn:()=>{ if (i<2) return; const F = s.fields.slice(); F[i] = Object.assign({}, f, { on:!f.on, req: f.on ? false : f.req }); this.setState({ fields:F }); },
+        toggleReq:()=>{ if (!f.on || i<2) return; const F = s.fields.slice(); F[i] = Object.assign({}, f, { req:!f.req }); this.setState({ fields:F }); } })),
+      purposes: s.purposes.map((label,i)=>({ label, del:()=>this.setState({ purposes: s.purposes.filter((_,j)=>j!==i) }) })),
+      newPurpose: s.newPurpose, setNewPurpose:(e)=>this.setState({ newPurpose:e.target.value }), addPurpose:()=>{ if (s.newPurpose.trim()) this.setState({ purposes: s.purposes.concat([s.newPurpose.trim()]), newPurpose:'' }); },
+      consent: s.consent, setConsent:(e)=>this.setState({ consent:e.target.value }),
+      ctaRows: SCREENS.map((name,ri)=>({ name, cells: s.cta[ri].map((v,ci)=>({ bg: v?'#B89A68':'transparent', mark: v?'✓':'', pick:()=>{ const c = s.cta.map(r=>r.slice()); c[ri][ci] = v?0:1; this.setState({ cta:c }); } })) })),
+      pvFields: s.fields.filter(f=>f.on && f.label!=='Buying purpose').map(f=>({ label: f.label.toUpperCase() + (f.req?' *':'') })),
+      saveForm: ()=>this.toastMsg('Lead form published to showroom, web and mobile'),
+      rules: RULES.map((r,i)=>Object.assign(sel(s.rule===i), { label:r[0], pick:()=>this.setState({ rule:i }) })), ruleHint: RULES[s.rule][1],
+      agents: s.agents.map((a,i)=>({ name:a.name, ini:a.ini, proj:a.proj, langs:a.langs, load:a.load, loadW: Math.min(100, a.load/15*100)+'%', op: a.on?1:.45, swBg: a.on?'#B89A68':'rgba(11,21,24,.2)', swX: a.on?'21px':'3px', toggle:()=>{ const A = s.agents.slice(); A[i] = Object.assign({}, a, { on:!a.on }); this.setState({ agents:A }); } })),
+      slas: ['1 h','4 h','24 h','48 h'].map((label,i)=>Object.assign(sel(s.sla===i), { label, pick:()=>this.setState({ sla:i }) })),
+      toggleEsc: ()=>this.setState({ esc:!s.esc }), escBg: s.esc?'#B89A68':'rgba(11,21,24,.2)', escX: s.esc?'21px':'3px',
+      hook: s.hook, setHook:(e)=>this.setState({ hook:e.target.value, hookSt:'idle' }),
+      testHook: ()=>{ this.setState({ hookSt:'sending' }); setTimeout(()=>this.setState({ hookSt: /^https:\/\//.test(this.state.hook) ? 'ok' : 'fail' }), 900); },
+      hookStatus: { idle:'Not tested', sending:'Sending…', ok:'200 OK · 142 ms', fail:'Failed · URL must use https' }[s.hookSt], hookColor: { idle:'rgba(243,240,233,.5)', sending:'#B89A68', ok:'#8fbf9a', fail:'#e39a7b' }[s.hookSt],
+      payload: JSON.stringify(sampleLead, null, 2),
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

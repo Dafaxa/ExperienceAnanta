@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ananta Property Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap">
+<style>
+  :root {
+    --obsidian: #0B1518;
+    --ivory: #F3F0E9;
+    --gold: #B89A68;
+    --slot: #1a2629;
+    --rule: rgba(243,240,233,.15);
+    --card-border: rgba(243,240,233,.12);
+    --card-bg: rgba(243,240,233,.02);
+    --gutter: clamp(24px,5vw,80px);
+    --serif: 'Cormorant Garamond', serif;
+    --sans: Montserrat, sans-serif;
+  }
+  html, body { margin: 0; background: var(--obsidian); color: var(--ivory); font-family: var(--sans); }
+  a { color: var(--ivory); text-decoration: none; }
+  a:hover { color: var(--gold); }
+
+  .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* Hero */
+  .hero { position: relative; min-height: 440px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 48px var(--gutter); }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,21,24,.95) 20%, rgba(11,21,24,.35) 75%), linear-gradient(0deg, #0B1518 0%, transparent 40%); }
+  .hero-top { position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+  .logo { display: flex; flex-direction: column; gap: 6px; }
+  .logo-word { font: 400 28px/1 var(--sans); letter-spacing: .42em; }
+  .logo-sub { font: 500 9px/1 var(--sans); letter-spacing: .62em; padding-left: 30px; }
+  .motto { font: 500 11px/2 var(--sans); letter-spacing: .3em; text-align: right; opacity: .85; }
+  .hero-copy { position: relative; display: flex; flex-direction: column; gap: 18px; max-width: 760px; margin-top: 60px; }
+  .eyebrow { font: 500 12px var(--sans); letter-spacing: .34em; color: var(--gold); }
+  .headline { margin: 0; font: 300 clamp(48px,6vw,88px)/.98 var(--serif); }
+  .headline em { font-style: italic; color: var(--gold); }
+  .lede { margin: 0; font: 300 18px/1.6 var(--sans); opacity: .85; max-width: 600px; text-wrap: pretty; }
+
+  /* Groups */
+  .body { padding: 24px var(--gutter) 72px; display: flex; flex-direction: column; gap: 48px; }
+  .groups { display: flex; flex-direction: column; gap: 48px; }
+  .group { display: flex; flex-direction: column; gap: 18px; }
+  .group-head { display: flex; align-items: center; gap: 18px; }
+  .group-n { font: 400 24px var(--serif); color: var(--gold); }
+  .group-label { margin: 0; font: 600 12px var(--sans); letter-spacing: .3em; }
+  .group-rule { flex: 1; height: 1px; background: var(--rule); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+
+  /* Cards */
+  .card { display: flex; flex-direction: column; border: 1px solid var(--card-border); background: var(--card-bg); transition: border-color .2s ease; }
+  .card:hover { border-color: var(--gold); }
+  .card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .card-media { position: relative; height: 170px; overflow: hidden; background: var(--slot); }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; opacity: .9; display: block; }
+  .card-tag { position: absolute; left: 14px; top: 14px; background: rgba(11,21,24,.8); padding: 6px 10px; font: 600 10px var(--sans); letter-spacing: .22em; color: var(--ivory); }
+  .card-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 8px; }
+  .card-title { display: flex; justify-content: space-between; align-items: baseline; }
+  .card-name { font: 400 28px/1.05 var(--serif); }
+  .card-arrow { color: var(--gold); }
+  .card-desc { font: 300 14px/1.6 var(--sans); opacity: .8; text-wrap: pretty; }
+
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--rule); padding-top: 24px; font: 500 11px var(--sans); letter-spacing: .3em; opacity: .6; }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .motto { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <img class="hero-img" src="img/villa_wide.jpg" alt="">
+    <div class="hero-shade"></div>
+    <div class="hero-top">
+      <div class="logo" aria-label="Ananta Property">
+        <div class="logo-word">ANANTA</div>
+        <div class="logo-sub">PROPERTY™</div>
+      </div>
+      <div class="motto">PEOPLE · PLACES<br>A BRIGHTER TOMORROW</div>
+    </div>
+    <div class="hero-copy">
+      <div class="eyebrow">PROPERTY EXPERIENCE™ · PLATFORM PROTOTYPE</div>
+      <h1 class="headline">From floor plan to <em>sales conversation.</em></h1>
+      <p class="lede">An interactive 3D walkthrough, a showroom sales console and the content platform behind them. Open the customer screen and the sales console side by side to see them control each other.</p>
+    </div>
+  </header>
+
+  <main class="body">
+    <div id="groups" class="groups"></div>
+    <footer class="foot"><span>ANANTA PROPERTY™</span><span>INDONESIA · SOUTHEAST ASIA · GLOBAL</span></footer>
+  </main>
+</div>
+
+<script>
+  // [file, name, tag, image, description] — file is opened as "<file>.dc.html"
+  const GROUPS = [
+    ['CUSTOMER EXPERIENCE', [
+      ['Ananta Immersive Prototype', 'Showroom walkthrough', 'LED WALL · 1920×1080', 'img/living.jpg', 'Welcome, projects, units, floor plan, 3D tour with configurator, lighting, measure, Ask Ananta, price and booking.'],
+      ['Ananta Mobile Web', 'Mobile web', 'PHONE', 'img/villa_hero.jpg', 'The lighter walkthrough for remote buyers, opened from the showroom QR code.']]],
+    ['SALES & SHOWROOM', [
+      ['Ananta Sales Console', 'Sales console', 'TABLET', 'img/living2.jpg', 'Controls the LED wall live: rooms, finishes, lighting, guided tour and what each screen shows.'],
+      ['Ananta Showroom Setup', 'Gallery setup', 'SHOWROOM', 'img/showroom.jpg', 'The four displays and tablet, how they connect, and how the gallery keeps running offline.'],
+      ['Ananta Demo Script', 'Demo script', 'PRINT', 'img/villa_wide.jpg', 'The five-minute walkthrough every consultant follows, with questions to ask afterwards.']]],
+    ['PLATFORM', [
+      ['Ananta Admin CMS', 'Content manager', 'CMS', 'img/building.jpg', 'Units, pricing, floor plans, scenes and leads, plus brand, content, sales rules, language and operations.'],
+      ['Ananta CMS Setup', 'Brand & new project', 'CMS', 'img/sky.jpg', 'White-label settings with live preview, and the five-step project wizard.'],
+      ['Ananta Analytics', 'Marketing intelligence', 'DASHBOARD', 'img/masterplan.jpg', 'The immersive funnel, room attention, top configurations and session timelines.']]],
+    ['PITCH & HANDOFF', [
+      ['Ananta Pitch Deck', 'Pitch deck', '10 SLIDES', 'img/ocean.jpg', 'For developer meetings: problem, experience, showroom, platform, packages and pilot.'],
+      ['Ananta Developer Handoff', 'Developer handoff', 'SPEC', 'img/building.jpg', 'Screen map, control protocol, data model, events and behaviour rules for engineering.'],
+      ['Ananta Onboarding Guides', 'Onboarding', 'GUIDES', 'img/living2.jpg', 'First-login checklists for sales agents, marketing managers and 3D artists.']]]
+  ];
+
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  const root = document.getElementById('groups');
+
+  GROUPS.forEach(([label, items], i) => {
+    const group = el('section', 'group');
+    const head = el('div', 'group-head');
+    head.append(el('span', 'group-n', '0' + (i + 1)), el('h2', 'group-label', label), el('span', 'group-rule'));
+    const grid = el('div', 'grid');
+
+    items.forEach(([file, name, tag, img, desc]) => {
+      const a = el('a', 'card');
+      a.href = encodeURI(file + '.dc.html');
+      a.target = '_blank';
+      a.rel = 'noopener';
+
+      const media = el('div', 'card-media');
+      const pic = el('img');
+      pic.src = img;
+      pic.alt = '';
+      pic.loading = 'lazy';
+      media.append(pic, el('span', 'card-tag', tag));
+
+      const body = el('div', 'card-body');
+      const title = el('div', 'card-title');
+      title.append(el('span', 'card-name', name), el('span', 'card-arrow', '↗'));
+      body.append(title, el('span', 'card-desc', desc));
+
+      a.append(media, body);
+      grid.append(a);
+    });
+
+    group.append(head, grid);
+    root.append(group);
+  });
+</script>
+</body>
+</html>

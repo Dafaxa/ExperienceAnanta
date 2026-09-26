@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;background:#0B1518;color:#F3F0E9;font-family:Montserrat,sans-serif}a{color:#F3F0E9;text-decoration:none}a:hover{color:#B89A68}</style></helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<div style="position:relative;min-height:440px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px clamp(24px,5vw,80px)">
+<img src="img/villa_wide.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,21,24,.95) 20%,rgba(11,21,24,.35) 75%),linear-gradient(0deg,#0B1518 0%,transparent 40%)"></div>
+<div style="position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:6px"><div style="font:400 28px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 9px/1 Montserrat;letter-spacing:.62em;padding-left:30px">PROPERTY™</div></div><div style="font:500 11px/2 Montserrat;letter-spacing:.3em;text-align:right;opacity:.85">PEOPLE · PLACES<br>A BRIGHTER TOMORROW</div></div>
+<div style="position:relative;display:flex;flex-direction:column;gap:18px;max-width:760px;margin-top:60px">
+<div style="font:500 12px Montserrat;letter-spacing:.34em;color:#B89A68">PROPERTY EXPERIENCE™ · PLATFORM PROTOTYPE</div>
+<div style="font:300 clamp(48px,6vw,88px)/.98 'Cormorant Garamond',serif">From floor plan to <span style="font-style:italic;color:#B89A68">sales conversation.</span></div>
+<div style="font:300 18px/1.6 Montserrat;opacity:.85;max-width:600px;text-wrap:pretty">An interactive 3D walkthrough, a showroom sales console and the content platform behind them. Open the customer screen and the sales console side by side to see them control each other.</div>
+</div>
+</div>
+<div style="padding:24px clamp(24px,5vw,80px) 72px;display:flex;flex-direction:column;gap:48px">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:18px"><span style="font:400 24px 'Cormorant Garamond',serif;color:#B89A68">{{ g.n }}</span><span style="font:600 12px Montserrat;letter-spacing:.3em">{{ g.label }}</span><span style="flex:1;height:1px;background:rgba(243,240,233,.15)"></span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px">
+<sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+<a href="{{ it.href }}" target="{{ it.target }}" style="display:flex;flex-direction:column;border:1px solid rgba(243,240,233,.12);background:rgba(243,240,233,.02)" style-hover="border-color:#B89A68">
+<div style="position:relative;height:170px;overflow:hidden;background:#1a2629"><img src="{{ it.img }}" style="width:100%;height:100%;object-fit:cover;opacity:.9"><span style="position:absolute;left:14px;top:14px;background:rgba(11,21,24,.8);padding:6px 10px;font:600 10px Montserrat;letter-spacing:.22em">{{ it.tag }}</span></div>
+<div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 28px/1.05 'Cormorant Garamond',serif">{{ it.name }}</span><span style="color:#B89A68">↗</span></div><span style="font:300 14px/1.6 Montserrat;opacity:.8;text-wrap:pretty">{{ it.desc }}</span></div>
+</a>
+</sc-for>
+</div>
+</div>
+</sc-for>
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid rgba(243,240,233,.15);padding-top:24px;font:500 11px Montserrat;letter-spacing:.3em;opacity:.6"><span>ANANTA PROPERTY™</span><span>INDONESIA · SOUTHEAST ASIA · GLOBAL</span></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const G = [
+  ['CUSTOMER EXPERIENCE', [
+    ['Ananta Immersive Prototype','Showroom walkthrough','LED WALL · 1920×1080','img/living.jpg','Welcome, projects, units, floor plan, 3D tour with configurator, lighting, measure, Ask Ananta, price and booking.'],
+    ['Ananta Mobile Web','Mobile web','PHONE','img/villa_hero.jpg','The lighter walkthrough for remote buyers, opened from the showroom QR code.']]],
+  ['SALES & SHOWROOM', [
+    ['Ananta Sales Console','Sales console','TABLET','img/living2.jpg','Controls the LED wall live: rooms, finishes, lighting, guided tour and what each screen shows.'],
+    ['Ananta Showroom Setup','Gallery setup','SHOWROOM','img/showroom.jpg','The four displays and tablet, how they connect, and how the gallery keeps running offline.'],
+    ['Ananta Demo Script','Demo script','PRINT','img/villa_wide.jpg','The five-minute walkthrough every consultant follows, with questions to ask afterwards.']]],
+  ['PLATFORM', [
+    ['Ananta Admin CMS','Content manager','CMS','img/building.jpg','Units, pricing, floor plans, scenes and leads, plus brand, content, sales rules, language and operations.'],
+    ['Ananta CMS Setup','Brand & new project','CMS','img/sky.jpg','White-label settings with live preview, and the five-step project wizard.'],
+    ['Ananta Analytics','Marketing intelligence','DASHBOARD','img/masterplan.jpg','The immersive funnel, room attention, top configurations and session timelines.']]],
+  ['PITCH & HANDOFF', [
+    ['Ananta Pitch Deck','Pitch deck','10 SLIDES','img/ocean.jpg','For developer meetings: problem, experience, showroom, platform, packages and pilot.'],
+    ['Ananta Developer Handoff','Developer handoff','SPEC','img/building.jpg','Screen map, control protocol, data model, events and behaviour rules for engineering.'],
+    ['Ananta Onboarding Guides','Onboarding','GUIDES','img/living2.jpg','First-login checklists for sales agents, marketing managers and 3D artists.']]]
+];
+class Component extends DCLogic {
+  renderVals() {
+    return { groups: G.map((g,i)=>({ n:'0'+(i+1), label:g[0], items: g[1].map(it=>({ href: it[0] + '.dc.html', target:'_blank', name:it[1], tag:it[2], img:it[3], desc:it[4] })) })) };
+  }
+}
+</script>
+</body>
+</html>

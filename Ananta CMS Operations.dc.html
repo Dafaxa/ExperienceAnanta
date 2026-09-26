@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;height:100%;background:#d9d4c9;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#8a6f45}a:hover{color:#0B1518}input:focus{outline:none;border-color:#B89A68 !important}</style></helmet>
+<div style="position:fixed;inset:0;background:#d9d4c9">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:300px 1fr">
+<dc-import name="CMSSidebar" active="{{ active }}" local="{{ local }}" on-pick="{{ pick }}" hint-size="300px,1080px"></dc-import>
+<div style="position:relative;padding:44px 64px;display:flex;flex-direction:column;gap:24px;min-width:0;min-height:0;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">{{ eyebrow }}</span><span style="font:300 60px/1 'Cormorant Garamond',serif">{{ title }}</span></div><span style="font:400 15px Montserrat;opacity:.6;max-width:560px;text-align:right">{{ sub }}</span></div>
+
+<sc-if value="{{ isDisp }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:500 15px Montserrat">{{ dispSummary }}</span><div onClick="{{ pushAll }}" style="cursor:pointer;background:#0B1518;color:#F3F0E9;padding:14px 22px;font:600 11px Montserrat;letter-spacing:.2em">PUSH SCENE v2.1 TO ALL</div></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+<sc-for list="{{ displays }}" as="d" hint-placeholder-count="6">
+<div style="background:#fff;border:1px solid rgba(11,21,24,.12);padding:24px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:600 11px Montserrat;letter-spacing:.22em;opacity:.6">{{ d.code }}</span><span style="display:flex;gap:8px;align-items:center;font:600 11px Montserrat;letter-spacing:.16em;color:{{ d.sc }}"><span style="width:9px;height:9px;border-radius:50%;background:{{ d.sc }}"></span>{{ d.status }}</span></div>
+<span style="font:400 32px/1 'Cormorant Garamond',serif">{{ d.name }}</span>
+<div style="display:flex;flex-direction:column;font:400 14px Montserrat">
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(11,21,24,.08)"><span style="opacity:.6">Scene</span><span>{{ d.scene }}</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(11,21,24,.08)"><span style="opacity:.6">Showing</span><span>{{ d.showing }}</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(11,21,24,.08)"><span style="opacity:.6">Offline cache</span><span style="display:flex;gap:8px;align-items:center"><span style="width:70px;height:5px;background:rgba(11,21,24,.1)"><span style="display:block;height:5px;width:{{ d.cache }};background:#B89A68"></span></span>{{ d.cache }}</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0"><span style="opacity:.6">Last sync</span><span>{{ d.sync }}</span></div>
+</div>
+<div style="display:flex;gap:8px"><div onClick="{{ d.restart }}" style="cursor:pointer;flex:1;border:1px solid #0B1518;padding:12px;text-align:center;font:600 10px Montserrat;letter-spacing:.2em">RESTART</div><div onClick="{{ d.identify }}" style="cursor:pointer;flex:1;border:1px solid rgba(11,21,24,.3);padding:12px;text-align:center;font:600 10px Montserrat;letter-spacing:.2em">IDENTIFY</div></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRoles }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 14px Montserrat;opacity:.65">Click a cell to cycle None → View → Edit. Super Admin is locked.</span><div style="display:flex;gap:18px;font:500 13px Montserrat"><span style="display:flex;gap:8px;align-items:center"><span style="width:14px;height:14px;background:#0B1518"></span>Edit</span><span style="display:flex;gap:8px;align-items:center"><span style="width:14px;height:14px;background:#BBAA95"></span>View</span><span style="display:flex;gap:8px;align-items:center"><span style="width:14px;height:14px;border:1px solid rgba(11,21,24,.25)"></span>None</span></div></div>
+<div style="display:grid;grid-template-columns:250px 70px repeat(8,1fr);gap:0;border-top:1px solid rgba(11,21,24,.25)">
+<span style="padding:12px 0;font:600 10px Montserrat;letter-spacing:.2em;opacity:.6">ROLE</span><span style="padding:12px 0;font:600 10px Montserrat;letter-spacing:.2em;opacity:.6">USERS</span>
+<sc-for list="{{ permCols }}" as="c" hint-placeholder-count="8"><span style="padding:12px 4px;font:600 10px Montserrat;letter-spacing:.14em;opacity:.6;text-align:center">{{ c.label }}</span></sc-for>
+<sc-for list="{{ roles }}" as="r" hint-placeholder-count="10">
+<span style="padding:11px 0;border-top:1px solid rgba(11,21,24,.08);font:500 15px Montserrat">{{ r.name }}</span><span style="padding:11px 0;border-top:1px solid rgba(11,21,24,.08);font:400 14px Montserrat;opacity:.65">{{ r.users }}</span>
+<sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="8"><span style="padding:7px 10px;border-top:1px solid rgba(11,21,24,.08);display:flex;justify-content:center"><span onClick="{{ c.pick }}" style="cursor:pointer;width:100%;max-width:110px;padding:7px 0;text-align:center;font:600 10px Montserrat;letter-spacing:.14em;background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.bc }};opacity:{{ c.op }}">{{ c.label }}</span></span></sc-for>
+</sc-for>
+</div>
+<div style="display:flex;justify-content:flex-end"><div onClick="{{ saveRoles }}" style="cursor:pointer;background:#0B1518;color:#F3F0E9;padding:16px 26px;font:600 11px Montserrat;letter-spacing:.22em">SAVE PERMISSIONS</div></div>
+</sc-if>
+
+<sc-if value="{{ isAudit }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:8px"><sc-for list="{{ areas }}" as="a" hint-placeholder-count="6"><div onClick="{{ a.pick }}" style="cursor:pointer;padding:10px 14px;font:500 13px Montserrat;background:{{ a.bg }};color:{{ a.fg }};border:1px solid #0B1518">{{ a.label }}</div></sc-for></div><input value="{{ q }}" onChange="{{ setQ }}" placeholder="Search user, unit, value…" style="width:320px;border:1px solid rgba(11,21,24,.2);padding:12px;font:400 14px Montserrat;color:#0B1518;background:#fff"></div>
+<div style="display:grid;grid-template-columns:170px 190px 150px 1fr 220px 220px;gap:16px;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.25);font:600 10px Montserrat;letter-spacing:.2em;opacity:.6"><span>TIME</span><span>USER</span><span>AREA</span><span>ACTION</span><span>BEFORE</span><span>AFTER</span></div>
+<sc-for list="{{ logs }}" as="l" hint-placeholder-count="10"><div style="display:grid;grid-template-columns:170px 190px 150px 1fr 220px 220px;gap:16px;padding:13px 0;border-bottom:1px solid rgba(11,21,24,.08);align-items:center;font:400 14px Montserrat"><span style="font:400 13px ui-monospace,Menlo,monospace;opacity:.7">{{ l.t }}</span><span style="font:500 14px Montserrat">{{ l.user }}</span><span style="font:600 10px Montserrat;letter-spacing:.16em;color:#8a6f45">{{ l.area }}</span><span>{{ l.action }}</span><span style="font:400 13px ui-monospace,Menlo,monospace;color:#9a5a45;text-decoration:line-through;opacity:.8">{{ l.before }}</span><span style="font:400 13px ui-monospace,Menlo,monospace;color:#35463D">{{ l.after }}</span></div></sc-for>
+<span style="font:400 13px Montserrat;opacity:.55">{{ logCount }}</span>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:64px;top:44px;background:#0B1518;color:#F3F0E9;padding:16px 22px;font:600 12px Montserrat;letter-spacing:.16em;display:flex;gap:10px"><span style="color:#B89A68">✓</span>{{ toast }}</div></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const DISP0 = [['DISPLAY 01','LED wall 4×2','v2.0','Living Room · 3D',100,'ok'],['DISPLAY 02','Touch table','v2.0','Floor plan',100,'ok'],['DISPLAY 03','Specs screen','v2.0','2B-01 specs',96,'ok'],['DISPLAY 04','Masterplan','v1.2','Masterplan',72,'warn'],['TABLET','Sales console','—','Session SES-00128',100,'ok'],['WEB','Web 3D · ananta.id','v2.0 · web tier','42 live sessions',100,'ok']];
+const PERMS = ['PROJECTS','UNITS & PRICE','CONTENT','SCENES','PUBLISH','LEADS','ANALYTICS','USERS'];
+const ROLES0 = [['Super Admin',1,[2,2,2,2,2,2,2,2]],['Developer Admin',2,[2,2,1,1,2,1,1,1]],['Project Admin',3,[1,2,2,1,1,1,1,0]],['Marketing Manager',2,[1,1,2,1,2,1,2,0]],['Sales Manager',2,[1,1,0,0,0,2,2,0]],['Sales Agent',8,[1,1,0,0,0,1,0,0]],['Content Manager',2,[1,0,2,1,0,0,1,0]],['3D Artist',3,[0,0,1,2,0,0,0,0]],['Analyst',1,[1,1,0,0,0,1,2,0]],['Viewer',4,[1,1,1,0,0,0,0,0]]];
+const LOG0 = [['26 Sep 14:42','Rina Wijaya','PRICING','Changed base price · 2B-01','Rp 4,750 jt','Rp 4,850 jt'],['26 Sep 14:40','Rina Wijaya','UNITS','Status · 1A-03','AVAILABLE','SOLD'],['26 Sep 13:15','Dimas Aditya','SCENES','Moved scene v2.1','DRAFT','REVIEW'],['26 Sep 11:02','Ayu Pratiwi','LEADS','Lead status · Budi Santoso','NEW','VISIT BOOKED'],['25 Sep 18:30','Rina Wijaya','CONTENT','Hotspot added · Living','—','Pendant lights'],['25 Sep 16:04','Sari Putri','CONTENT','Material price · Japandi','Rp 50 jt','Rp 60 jt'],['25 Sep 10:12','Hendra Gunawan','USERS','Role changed · Made Wirawan','Viewer','Sales Agent'],['24 Sep 17:45','Rina Wijaya','BRAND','Brand mode','ANANTA','CO-BRANDED'],['24 Sep 09:30','Dimas Aditya','SCENES','Set live · v2.0','v1.2','v2.0'],['23 Sep 15:20','Rina Wijaya','PRICING','Promo activated · Launch promo','OFF','ON · −Rp 100 jt']];
+class Component extends DCLogic {
+  state = { scale:1, sec:'displays', disp: DISP0.map(d=>({ code:d[0], name:d[1], scene:d[2], showing:d[3], cache:d[4], st:d[5], sync:'12 s ago' })), roles: ROLES0.map(r=>({ name:r[0], users:r[1], p:r[2].slice() })), area:0, q:'', toast:null };
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300);
+    const q = new URLSearchParams(location.search).get('s'); if (['displays','roles','audit'].includes(q)) this.setState({ sec:q }); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  toastMsg(m) { this.setState({ toast:m }); clearTimeout(this._t); this._t = setTimeout(()=>this.setState({ toast:null }), 2600); }
+  setDisp(i, p) { const d = this.state.disp.slice(); d[i] = Object.assign({}, d[i], p); this.setState({ disp:d }); }
+  renderVals() {
+    const s = this.state, sel = on => ({ bg: on?'#0B1518':'transparent', fg: on?'#F3F0E9':'#0B1518' });
+    const T = { displays:['SHOWROOM · ULUWATU MARKETING GALLERY','Displays','Every screen in the gallery plus the web channel, with scene version and offline readiness.'], roles:['ALL PROJECTS','Roles & permissions','What each role can see and change across the platform.'], audit:['ALL PROJECTS','Audit log','Every change to prices, units, content, scenes and users, with before and after values.'] };
+    const stMap = { ok:['ONLINE','#35463D'], warn:['CACHE SYNCING','#b87a55'], restart:['RESTARTING…','#B89A68'], id:['IDENTIFYING','#526B78'] };
+    const areas = ['All','PRICING','UNITS','CONTENT','SCENES','LEADS','USERS'];
+    const q = s.q.toLowerCase();
+    const logs = LOG0.filter(l => (s.area===0 || l[2]===areas[s.area]) && (!q || l.join(' ').toLowerCase().includes(q)));
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      active: s.sec, local: ['displays','roles','audit'], pick: (k)=>this.setState({ sec:k }),
+      eyebrow: T[s.sec][0], title: T[s.sec][1], sub: T[s.sec][2], isDisp: s.sec==='displays', isRoles: s.sec==='roles', isAudit: s.sec==='audit',
+      dispSummary: s.disp.filter(d=>d.st==='ok').length + ' of ' + s.disp.length + ' online · ' + s.disp.filter(d=>d.scene.startsWith('v2.0')).length + ' on live scene v2.0',
+      pushAll: ()=>{ s.disp.forEach((d,i)=>{ if (d.scene!=='—') this.setDisp(i, { st:'warn', cache:40 }); }); this.toastMsg('Pushing v2.1 · displays keep v2.0 until download completes'); setTimeout(()=>this.setState({ disp: this.state.disp.map(d=> d.scene==='—' ? d : Object.assign({}, d, { st:'ok', cache:100, scene: d.code==='WEB' ? 'v2.1 · web tier' : 'v2.1', sync:'just now' })) }), 2400); },
+      displays: s.disp.map((d,i)=>({ code:d.code, name:d.name, scene:d.scene, showing:d.showing, cache:d.cache+'%', sync:d.sync, status:stMap[d.st][0], sc:stMap[d.st][1],
+        restart:()=>{ this.setDisp(i,{ st:'restart' }); setTimeout(()=>this.setDisp(i,{ st:'ok', sync:'just now' }), 2000); },
+        identify:()=>{ this.setDisp(i,{ st:'id' }); setTimeout(()=>this.setDisp(i,{ st: d.st==='warn'?'warn':'ok' }), 1800); this.toastMsg(d.name + ' is flashing its ID on screen'); } })),
+      permCols: PERMS.map(label=>({ label })),
+      roles: s.roles.map((r,ri)=>({ name:r.name, users:r.users, cells: r.p.map((v,ci)=>({ label:['NONE','VIEW','EDIT'][v], bg:['transparent','#BBAA95','#0B1518'][v], fg: v===2?'#F3F0E9':'#0B1518', bc: v===0?'rgba(11,21,24,.2)':'transparent', op: ri===0 ? .6 : 1,
+        pick:()=>{ if (ri===0) return; const R = s.roles.slice(); const p = r.p.slice(); p[ci] = (p[ci]+1)%3; R[ri] = Object.assign({}, r, { p }); this.setState({ roles:R }); } })) })),
+      saveRoles: ()=>this.toastMsg('Permissions saved · change recorded in audit log'),
+      areas: areas.map((label,i)=>Object.assign(sel(s.area===i), { label: i===0?label:label.charAt(0)+label.slice(1).toLowerCase(), pick:()=>this.setState({ area:i }) })),
+      q: s.q, setQ:(e)=>this.setState({ q:e.target.value }),
+      logs: logs.map(l=>({ t:l[0], user:l[1], area:l[2], action:l[3], before:l[4], after:l[5] })), logCount: logs.length + ' of ' + LOG0.length + ' entries · retained for 24 months',
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500;600&family=Caveat:wght@400;600&display=swap"><style>body{margin:0;background:#F3F0E9;font-family:Montserrat,sans-serif;color:#0B1518}a{color:#8a6f45}a:hover{color:#0B1518}.dv-turn{padding:44px 48px 36px;border-bottom:1px solid rgba(11,21,24,.1);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:12px;margin:0 0 8px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#0B1518;color:#F3F0E9;border-radius:4px;text-decoration:none}.dv-tname{font:500 30px/1.1 'Cormorant Garamond',serif;color:#0B1518}.dv-grp{font:600 10px Montserrat;letter-spacing:.28em;color:#8a6f45;margin:34px 0 14px;display:flex;align-items:center;gap:14px}.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(11,21,24,.08);color:#0B1518;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:500 11px/1.3 Montserrat,sans-serif;color:rgba(11,21,24,.7)}.dv-card{max-width:100%;border:1px solid rgba(11,21,24,.12);border-radius:6px;box-shadow:0 2px 10px rgba(11,21,24,.08);overflow:hidden}.dv-opt:target .dv-oid{background:#B89A68;color:#0B1518}.dv-next{margin:30px 0 0;font:12px/1.5 Montserrat,sans-serif;color:rgba(11,21,24,.55)}</style></helmet>
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Filling the gaps — loading, reset, view, price, consent</span></div>
+<div style="font:400 12px/1.6 Montserrat;color:rgba(11,21,24,.6);max-width:760px">Five screens that complete the customer flow in <a href="#t1">turn 1</a>. <a class="dv-oid" href="#2e">2e</a> revises <a class="dv-oid" href="#1o">1o</a>.</div>
+<div class="dv-opts" style="margin-top:22px">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Scene loading / 2D → 3D transition</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;left:24px;top:20px;font:500 10px Montserrat;letter-spacing:.35em">ANANTA<div style="font-size:6px;letter-spacing:.5em;margin-top:3px;opacity:.8">PROPERTY™</div></div>
+<div style="position:absolute;left:24px;top:76px;display:flex;flex-direction:column;gap:8px;width:200px">
+<div style="font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68">PREPARING YOUR WALKTHROUGH</div>
+<div style="font:400 24px/1.02 'Cormorant Garamond',serif">Ananta Residences<br><span style="font-style:italic;color:#B89A68">Type B · 2B-01</span></div>
+<div style="font:500 7px/2 Montserrat;opacity:.8;border-top:1px solid rgba(243,240,233,.2);padding-top:6px">8 rooms · 20 points of interest<br>Starting at: Entrance</div>
+</div>
+<div style="position:absolute;right:30px;top:44px;width:210px;height:160px;border:2px solid rgba(243,240,233,.7);display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr 1fr .6fr">
+<div style="border-right:1px solid rgba(243,240,233,.5);border-bottom:1px solid rgba(243,240,233,.5);background:rgba(184,154,104,.35)"></div>
+<div style="border-bottom:1px solid rgba(243,240,233,.5);background:rgba(184,154,104,.35)"></div>
+<div style="border-right:1px solid rgba(243,240,233,.5);border-bottom:1px solid rgba(243,240,233,.5);background:rgba(184,154,104,.18)"></div>
+<div style="border-bottom:1px solid rgba(243,240,233,.5)"></div>
+<div style="grid-column:span 2"></div>
+</div>
+<div style="position:absolute;right:30px;top:212px;width:210px;font:500 6px Montserrat;letter-spacing:.15em;opacity:.65;text-align:right">ROOMS FILL IN AS THEY STREAM</div>
+<div style="position:absolute;left:24px;right:24px;bottom:34px;height:2px;background:rgba(243,240,233,.15)"><div style="width:58%;height:2px;background:#B89A68"></div></div>
+<div style="position:absolute;left:24px;right:24px;bottom:16px;display:flex;justify-content:space-between;font:500 6px Montserrat;letter-spacing:.2em;opacity:.7"><span>58% · LOADING MATERIALS</span><span>TIP: DRAG TO LOOK AROUND</span></div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Floor plan extrudes into the camera at 100% for a continuous 2D→3D move. Showroom build preloads, so this mostly serves web.</div></sc-if></div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Idle timeout &amp; session reset</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d;opacity:.5"></div>
+<div style="position:absolute;inset:0;background:rgba(11,21,24,.6)"></div>
+<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:260px;background:#0B1518;border:1px solid rgba(184,154,104,.5);padding:22px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+<div style="width:54px;height:54px;border-radius:50%;border:2px solid rgba(243,240,233,.15);border-top-color:#B89A68;border-right-color:#B89A68;display:flex;align-items:center;justify-content:center;font:400 20px 'Cormorant Garamond',serif">20</div>
+<div style="font:400 18px 'Cormorant Garamond',serif">Still <span style="font-style:italic;color:#B89A68">exploring?</span></div>
+<div style="font:400 7px/1.6 Montserrat;opacity:.75">For your privacy, this session will close and your selections will be cleared.</div>
+<div style="display:flex;gap:6px;width:100%"><div style="flex:1;background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:8px">CONTINUE</div><div style="flex:1;border:1px solid rgba(243,240,233,.5);font:600 6.5px Montserrat;letter-spacing:.2em;padding:8px">SAVE TO PHONE</div></div>
+<div style="font:500 6px Montserrat;letter-spacing:.18em;opacity:.6">END SESSION</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">After 90s of no input → this; after 20s → back to 1a. "Save to phone" shows the QR from 1p. Sales console can suppress the timeout.</div></sc-if></div>
+
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Window view simulation</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:#141e21"></div>
+<div style="position:absolute;left:60px;right:60px;top:40px;bottom:70px;background:repeating-linear-gradient(135deg,rgba(184,154,104,.1) 0 1px,transparent 1px 9px),linear-gradient(180deg,#3b4a52,#4a3e30);border:6px solid #0B1518;display:grid;grid-template-columns:1fr 1fr 1fr"><div style="border-right:4px solid #0B1518"></div><div style="border-right:4px solid #0B1518;display:flex;align-items:center;justify-content:center;font:500 7px Montserrat;letter-spacing:.25em;opacity:.6">[ OCEAN VIEW ]</div><div></div></div>
+<div style="position:absolute;left:18px;top:12px;display:flex;flex-direction:column;gap:2px"><span style="font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68">VIEW FROM</span><span style="font:400 15px 'Cormorant Garamond',serif">Master Bedroom · West window</span></div>
+<div style="position:absolute;right:18px;top:14px;font:500 6px Montserrat;letter-spacing:.2em">✕ BACK TO ROOM</div>
+<div style="position:absolute;left:18px;right:18px;bottom:12px;display:flex;justify-content:space-between;align-items:center;background:rgba(11,21,24,.9);border:1px solid rgba(243,240,233,.15);padding:9px 12px">
+<div style="display:flex;gap:5px;font:500 6px Montserrat;letter-spacing:.12em"><span style="background:#B89A68;color:#0B1518;padding:4px 7px">Ocean</span><span style="border:1px solid rgba(243,240,233,.35);padding:4px 7px">Garden</span><span style="border:1px solid rgba(243,240,233,.35);padding:4px 7px">Pool</span></div>
+<div style="display:flex;gap:5px;font:500 6px Montserrat;letter-spacing:.12em"><span style="border:1px solid rgba(243,240,233,.35);padding:4px 7px">08:00</span><span style="border:1px solid rgba(243,240,233,.35);padding:4px 7px">12:00</span><span style="background:#B89A68;color:#0B1518;padding:4px 7px">18:00</span><span style="border:1px solid rgba(243,240,233,.35);padding:4px 7px">20:00</span></div>
+<div style="font:500 6px Montserrat;letter-spacing:.12em;opacity:.7">Floor 2 · 8.4 m elevation</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Frame the real window as a picture frame. View options only where site context exists — drone plate or modelled context, labelled as simulation.</div></sc-if></div>
+
+<div class="dv-opt" id="2d"><div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a>Price &amp; payment plan</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:1fr 1.1fr">
+<div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;border-right:1px solid rgba(11,21,24,.12)">
+<div style="font:500 6px Montserrat;letter-spacing:.25em;color:#8a6f45">UNIT 2B-01 · TYPE B</div>
+<div style="font:400 20px 'Cormorant Garamond',serif">Your price</div>
+<div style="font:500 7.5px/2.1 Montserrat">
+<div style="display:flex;justify-content:space-between"><span style="opacity:.6">Base price</span><span>Rp X.XX B</span></div>
+<div style="display:flex;justify-content:space-between"><span style="opacity:.6">Premium interior</span><span>+ Rp XX jt</span></div>
+<div style="display:flex;justify-content:space-between"><span style="opacity:.6">Launch promo</span><span style="color:#35463D">− Rp XX jt</span></div>
+<div style="display:flex;justify-content:space-between;border-top:1px solid rgba(11,21,24,.2);padding-top:4px;margin-top:3px"><span style="font-weight:600">Total</span><span style="font:400 15px 'Cormorant Garamond',serif">Rp X.XX B</span></div>
+<div style="display:flex;justify-content:space-between"><span style="opacity:.6">Booking fee</span><span>Rp XX jt</span></div>
+</div>
+<div style="margin-top:auto;font:500 6px Montserrat;letter-spacing:.12em;opacity:.55">Indicative. Final price confirmed by sales. Updated from CMS.</div>
+</div>
+<div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:500 6px Montserrat;letter-spacing:.25em;opacity:.6">PAYMENT PLAN</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);font:600 6px Montserrat;letter-spacing:.12em;text-align:center;border:1px solid #0B1518"><span style="padding:5px 0">CASH</span><span style="padding:5px 0;background:#0B1518;color:#F3F0E9">INSTALMENT</span><span style="padding:5px 0">KPR</span></div>
+<div style="font:500 6px Montserrat;letter-spacing:.2em;opacity:.6">DOWN PAYMENT · 30%</div>
+<div style="position:relative;height:12px"><div style="position:absolute;left:0;right:0;top:5px;height:2px;background:rgba(11,21,24,.2)"></div><div style="position:absolute;left:0;width:30%;top:5px;height:2px;background:#B89A68"></div><div style="position:absolute;left:28%;top:0;width:12px;height:12px;border-radius:50%;background:#B89A68"></div></div>
+<div style="font:500 6px Montserrat;letter-spacing:.2em;opacity:.6">TENOR</div>
+<div style="display:flex;gap:4px;font:500 6.5px Montserrat"><span style="border:1px solid rgba(11,21,24,.3);padding:3px 7px">12 mo</span><span style="background:#B89A68;padding:3px 7px">24 mo</span><span style="border:1px solid rgba(11,21,24,.3);padding:3px 7px">36 mo</span></div>
+<div style="background:#0B1518;color:#F3F0E9;padding:10px 12px;display:flex;justify-content:space-between;align-items:baseline;margin-top:auto"><span style="font:500 6px Montserrat;letter-spacing:.2em;opacity:.75">EST. MONTHLY</span><span style="font:400 17px 'Cormorant Garamond',serif;color:#B89A68">Rp XX jt</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font:600 6px Montserrat;letter-spacing:.15em;text-align:center"><span style="border:1px solid #0B1518;padding:6px">COMPARE UNIT</span><span style="background:#B89A68;padding:6px">BOOK SITE VISIT</span></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Config upgrades flow in from 1k. Sales can hide price on the LED wall (1q) and show it only on the tablet. Fires PRICE_VIEWED.</div></sc-if></div>
+
+<div class="dv-opt" id="2e"><div class="dv-olabel"><a class="dv-oid" href="#2e">2e</a>Lead form with consent (revises <a class="dv-oid" href="#1o">1o</a>)</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9;display:grid;grid-template-columns:200px 1fr">
+<div style="position:relative;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px">
+<div style="font:400 20px/1.05 'Cormorant Garamond',serif">Ready to experience it <span style="color:#B89A68;font-style:italic">in person?</span></div>
+<div style="border-top:1px solid rgba(243,240,233,.25);padding-top:6px;font:500 6px/1.9 Montserrat;opacity:.85"><span style="letter-spacing:.2em;color:#B89A68">SHARED WITH YOUR CONSULTANT</span><br>Type B · Unit 2B-01<br>Oak floor · Modern kitchen<br>Est. Rp X.XX B · 24 mo plan</div>
+</div>
+<div style="padding:18px 20px;display:flex;flex-direction:column;gap:7px">
+<div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">NAME *</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">WHATSAPP *</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px;font:500 7px Montserrat;opacity:.6">+62</div></div><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">EMAIL *</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">PURPOSE</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px;font:500 7px Montserrat">Own stay ▾</div></div><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">VISIT DATE</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div></div></div>
+<div style="display:flex;flex-direction:column;gap:5px;border:1px solid rgba(243,240,233,.18);padding:7px 8px;margin-top:2px">
+<div style="display:flex;gap:6px;align-items:flex-start;font:400 6.5px/1.5 Montserrat"><span style="width:9px;height:9px;flex:none;background:#B89A68;color:#0B1518;font:600 7px Montserrat;display:flex;align-items:center;justify-content:center">✓</span><span>I agree that Ananta Property may contact me about this property via WhatsApp and email. *</span></div>
+<div style="display:flex;gap:6px;align-items:flex-start;font:400 6.5px/1.5 Montserrat;opacity:.8"><span style="width:9px;height:9px;flex:none;border:1px solid rgba(243,240,233,.6)"></span><span>Share my walkthrough activity so my consultant can prepare.</span></div>
+</div>
+<div style="margin-top:auto;background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:8px;text-align:center">BOOK A SITE VISIT →</div>
+<div style="font:500 5.5px Montserrat;letter-spacing:.12em;opacity:.6;text-align:center">PRIVACY POLICY · UU PDP COMPLIANT</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Contact consent is required; behavioural sharing is a separate opt-in. Session data only attaches to the CRM lead when ticked.</div></sc-if></div>
+</div>
+<p class="dv-next">Try next: "wireframe admin CMS + scene versioning" · "AI concierge overlay on <a class="dv-oid" href="#1h">1h</a>" · "take <a class="dv-oid" href="#2d">2d</a> hi-fi"</p>
+</section>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Ananta Property Experience™ — screen wireframes</span></div>
+<div style="font:400 12px/1.6 Montserrat;color:rgba(11,21,24,.6);max-width:760px">Showroom-first (16:9 LED / touch) flow from the PRD: Discover → Select → Enter → Explore → Configure → Compare → Connect, plus the sales console, gallery setup and analytics. Hatched boxes are placeholders for renders and the live 3D scene.</div>
+
+<div class="dv-grp">01 · DISCOVER &amp; SELECT<span style="flex:1;height:1px;background:rgba(184,154,104,.4)"></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Welcome / attract loop</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629"></div>
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,21,24,.92) 0%,rgba(11,21,24,.3) 70%)"></div>
+<div style="position:absolute;right:16px;bottom:44px;font:500 7px Montserrat;letter-spacing:.2em;color:rgba(243,240,233,.5)">[ CINEMATIC EXTERIOR LOOP ]</div>
+<div style="position:absolute;left:24px;top:20px;font:500 11px Montserrat;letter-spacing:.35em">ANANTA<div style="font-size:6px;letter-spacing:.5em;margin-top:3px;opacity:.8">PROPERTY™</div></div>
+<div style="position:absolute;left:24px;top:86px;display:flex;flex-direction:column;gap:10px;max-width:280px">
+<div style="font:500 7px Montserrat;letter-spacing:.25em;color:#B89A68">PROPERTY EXPERIENCE™</div>
+<div style="font:400 30px/1.02 'Cormorant Garamond',serif">Experience your<br>future <span style="color:#B89A68;font-style:italic">home.</span></div>
+<div style="width:28px;height:1px;background:#B89A68"></div>
+<div style="display:flex;gap:8px"><div style="background:#B89A68;color:#0B1518;font:600 7px Montserrat;letter-spacing:.2em;padding:8px 12px">ENTER EXPERIENCE →</div><div style="border:1px solid rgba(243,240,233,.5);font:600 7px Montserrat;letter-spacing:.2em;padding:8px 12px">BAHASA / EN</div></div>
+</div>
+<div style="position:absolute;left:24px;right:24px;bottom:14px;display:flex;justify-content:space-between;font:500 6px Montserrat;letter-spacing:.3em;color:rgba(243,240,233,.6);border-top:1px solid rgba(243,240,233,.2);padding-top:8px"><span>PEOPLE · PLACES · A BRIGHTER TOMORROW</span><span>TOUCH ANYWHERE TO BEGIN</span></div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Idle state on the LED wall. Loops exterior flythrough; first touch starts a session (SESSION_STARTED).</div></sc-if></div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Project gallery</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;left:24px;right:24px;top:18px;display:flex;justify-content:space-between;align-items:center"><div style="font:500 10px Montserrat;letter-spacing:.35em">ANANTA</div><div style="font:500 6px Montserrat;letter-spacing:.3em;color:rgba(243,240,233,.6)">REAL ESTATE · HOSPITALITY · LIFESTYLE</div></div>
+<div style="position:absolute;left:24px;top:46px;font:400 22px 'Cormorant Garamond',serif">Select a <span style="color:#B89A68">project</span></div>
+<div style="position:absolute;left:24px;right:24px;top:86px;bottom:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+<div style="position:relative;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629;border:1px solid #B89A68"><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-direction:column;gap:4px"><div style="font:400 14px 'Cormorant Garamond',serif">Ananta Residences</div><div style="font:500 6px Montserrat;letter-spacing:.22em;opacity:.7">VILLA · ULUWATU, BALI</div><div style="display:flex;justify-content:space-between;font:500 7px Montserrat;border-top:1px solid rgba(243,240,233,.25);padding-top:5px;margin-top:3px"><span>From Rp X.X B</span><span style="color:#B89A68">→</span></div></div></div>
+<div style="position:relative;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629"><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-direction:column;gap:4px"><div style="font:400 14px 'Cormorant Garamond',serif">Ananta Sky Suites</div><div style="font:500 6px Montserrat;letter-spacing:.22em;opacity:.7">APARTMENT · SCBD, JAKARTA</div><div style="display:flex;justify-content:space-between;font:500 7px Montserrat;border-top:1px solid rgba(243,240,233,.25);padding-top:5px;margin-top:3px"><span>From Rp X.X B</span><span style="color:#B89A68">→</span></div></div></div>
+<div style="position:relative;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629"><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-direction:column;gap:4px"><div style="font:400 14px 'Cormorant Garamond',serif">Ananta Grand Masterplan</div><div style="font:500 6px Montserrat;letter-spacing:.22em;opacity:.7">MASTERPLAN · UBUD, BALI</div><div style="display:flex;justify-content:space-between;font:500 7px Montserrat;border-top:1px solid rgba(243,240,233,.25);padding-top:5px;margin-top:3px"><span>Coming soon</span><span style="color:#B89A68">→</span></div></div></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Hero render, name, location, starting price. Tapping a card transitions the environment to that project.</div></sc-if></div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Property overview</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9;display:grid;grid-template-columns:1.1fr 1fr">
+<div style="position:relative;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629"><div style="position:absolute;left:14px;top:14px;font:500 9px Montserrat;letter-spacing:.35em">ANANTA</div><div style="position:absolute;left:14px;bottom:14px;font:500 6px Montserrat;letter-spacing:.2em;opacity:.55">[ HERO RENDER / VIDEO ]</div></div>
+<div style="padding:26px 22px;display:flex;flex-direction:column;gap:9px">
+<div style="font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68">VILLA · ULUWATU, BALI</div>
+<div style="font:400 24px/1 'Cormorant Garamond',serif">Ananta Residences</div>
+<div style="font:300 8px/1.5 Montserrat;opacity:.75">Exclusive cliffside villas. 24 units across 3 types, completion 2027.</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(243,240,233,.2);border-bottom:1px solid rgba(243,240,233,.2);padding:8px 0;gap:4px">
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">FROM</div><div style="font:400 13px 'Cormorant Garamond',serif">Rp X.X B</div></div>
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">AREA</div><div style="font:400 13px 'Cormorant Garamond',serif">120–250 m²</div></div>
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">BEDROOMS</div><div style="font:400 13px 'Cormorant Garamond',serif">3–4</div></div></div>
+<div style="display:flex;gap:6px"><div style="background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px 10px">EXPLORE UNITS →</div><div style="border:1px solid rgba(243,240,233,.5);font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px 10px">MASTERPLAN</div></div>
+<div style="margin-top:auto;display:flex;gap:12px;font:500 6px Montserrat;letter-spacing:.2em;opacity:.7"><span style="color:#B89A68;border-bottom:1px solid #B89A68;padding-bottom:3px">OVERVIEW</span><span>LOCATION</span><span>FACILITIES</span><span>GALLERY</span></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">All numbers pulled from CMS, never hardcoded. Location tab opens POI map (schools, hospitals, airport).</div></sc-if></div>
+
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Masterplan (zoom city → room)</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0 150px 0 0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629"></div>
+<div style="position:absolute;left:16px;top:14px;font:500 6px Montserrat;letter-spacing:.2em;display:flex;gap:6px;opacity:.85"><span style="opacity:.5">CITY ›</span><span style="color:#B89A68">DEVELOPMENT</span><span style="opacity:.5">› BUILDING › UNIT › ROOM</span></div>
+<div style="position:absolute;left:80px;top:90px;width:18px;height:18px;border-radius:50%;background:#B89A68;color:#0B1518;font:600 7px Montserrat;display:flex;align-items:center;justify-content:center">1</div>
+<div style="position:absolute;left:190px;top:130px;width:18px;height:18px;border-radius:50%;border:1px solid #B89A68;font:600 7px Montserrat;display:flex;align-items:center;justify-content:center">2</div>
+<div style="position:absolute;left:260px;top:70px;width:18px;height:18px;border-radius:50%;border:1px solid #B89A68;font:600 7px Montserrat;display:flex;align-items:center;justify-content:center">3</div>
+<div style="position:absolute;left:140px;top:200px;width:18px;height:18px;border-radius:50%;border:1px solid #B89A68;font:600 7px Montserrat;display:flex;align-items:center;justify-content:center">4</div>
+<div style="position:absolute;left:100px;top:112px;background:rgba(11,21,24,.9);border:1px solid rgba(184,154,104,.6);padding:6px 8px;font:500 6.5px Montserrat;display:flex;flex-direction:column;gap:3px"><span style="font:400 11px 'Cormorant Garamond',serif">Villa Cluster A</span><span style="opacity:.7">8 units · 3 available</span><span style="color:#B89A68;letter-spacing:.15em">ZOOM IN →</span></div>
+<div style="position:absolute;right:0;top:0;bottom:0;width:150px;padding:18px 14px;display:flex;flex-direction:column;gap:8px;border-left:1px solid rgba(243,240,233,.12)">
+<div style="font:400 16px 'Cormorant Garamond',serif">Masterplan</div>
+<div style="font:500 6.5px/2.1 Montserrat;letter-spacing:.14em"><div style="color:#B89A68">01 VILLA CLUSTER A</div><div>02 RESIDENCE</div><div>03 CLUBHOUSE</div><div>04 POOL &amp; PARK</div><div>05 COMMERCIAL</div><div>06 PARKING</div></div>
+<div style="margin-top:auto;display:flex;gap:4px;font:500 6px Montserrat;letter-spacing:.15em"><span style="border:1px solid rgba(243,240,233,.4);padding:4px 6px">DAY</span><span style="border:1px solid rgba(243,240,233,.4);padding:4px 6px">NIGHT</span><span style="border:1px solid rgba(243,240,233,.4);padding:4px 6px">POI</span></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Phase 3. Breadcrumb doubles as zoom level. Needed for township/large-scale projects; skip for single-villa pilot.</div></sc-if></div>
+
+<div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Unit explorer</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;left:0;top:0;bottom:62px;width:92px;padding:16px 10px;display:flex;flex-direction:column;gap:9px;font:500 6.5px Montserrat;letter-spacing:.08em;border-right:1px solid rgba(243,240,233,.1)"><div style="font:500 8px Montserrat;letter-spacing:.3em;margin-bottom:6px">ANANTA</div><span style="opacity:.7">Masterplan</span><span style="border:1px solid #B89A68;padding:5px 6px;margin:0 -6px">Unit Explorer</span><span style="opacity:.7">Floor Plans</span><span style="opacity:.7">Availability</span><span style="opacity:.7">Gallery</span><span style="opacity:.7">Virtual Tour</span></div>
+<div style="position:absolute;left:92px;top:0;bottom:62px;width:250px;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629">
+<div style="position:absolute;left:90px;top:22px;border:1px solid rgba(243,240,233,.3);background:rgba(11,21,24,.8);padding:3px 6px;font:500 6.5px Montserrat">PH-01</div>
+<div style="position:absolute;left:90px;top:62px;border:1px solid rgba(243,240,233,.3);background:rgba(11,21,24,.8);padding:3px 6px;font:500 6.5px Montserrat">3A-02</div>
+<div style="position:absolute;left:40px;top:98px;width:170px;height:40px;border:1.5px solid #B89A68;box-shadow:0 0 12px rgba(184,154,104,.5)"></div>
+<div style="position:absolute;left:90px;top:110px;background:#0B1518;padding:3px 6px;font:500 6.5px Montserrat;color:#B89A68">2B-01</div>
+<div style="position:absolute;left:90px;top:158px;border:1px solid rgba(243,240,233,.3);background:rgba(11,21,24,.8);padding:3px 6px;font:500 6.5px Montserrat">1A-03</div>
+</div>
+<div style="position:absolute;right:0;top:0;bottom:62px;width:178px;padding:16px 14px;display:flex;flex-direction:column;gap:7px">
+<div style="font:400 16px 'Cormorant Garamond',serif">Unit <span style="color:#B89A68">Explorer</span></div>
+<div style="height:50px;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629"></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="font:500 10px Montserrat">UNIT 2B-01</span><span style="background:#35463D;color:#F3F0E9;font:600 5.5px Montserrat;letter-spacing:.15em;padding:2px 5px">AVAILABLE</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);font:500 6px Montserrat;gap:3px;opacity:.85"><span>124 m²</span><span>28 m² out</span><span>2 BR</span><span>2 BA</span></div>
+<div style="background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px 10px;text-align:center;margin-top:auto">VIEW FLOOR PLAN →</div>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:62px;border-top:1px solid rgba(243,240,233,.12);padding:10px 14px;display:flex;flex-direction:column;gap:7px">
+<div style="display:flex;gap:6px;font:500 6px Montserrat"><span style="background:#B89A68;color:#0B1518;padding:3px 7px">All units</span><span style="padding:3px 7px;opacity:.7">1 Bedroom</span><span style="padding:3px 7px;opacity:.7">2 Bedrooms</span><span style="padding:3px 7px;opacity:.7">3 Bedrooms</span><span style="padding:3px 7px;opacity:.7">Penthouse</span><span style="margin-left:auto;border:1px solid rgba(243,240,233,.3);padding:3px 7px">Filter: price · floor · area</span></div>
+<div style="display:flex;gap:10px;font:500 6px Montserrat;opacity:.7"><span>● Available</span><span>● Reserved</span><span>● Sold</span><span>● Coming soon</span></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Tap a floor on the building render to select. Status colours live, from CMS unit status.</div></sc-if></div>
+
+<div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>2D floor plan ↔ 3D entry</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#F3F0E9;color:#0B1518">
+<div style="position:absolute;left:18px;top:14px;display:flex;gap:10px;align-items:center"><span style="font:400 16px 'Cormorant Garamond',serif">Type B · Unit 2B-01</span><span style="display:flex;font:600 6px Montserrat;letter-spacing:.15em;border:1px solid #0B1518"><span style="background:#0B1518;color:#F3F0E9;padding:3px 7px">2D</span><span style="padding:3px 7px">DOLLHOUSE</span></span></div>
+<div style="position:absolute;left:30px;top:48px;width:300px;height:220px;border:3px solid #0B1518;display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr 1fr 0.6fr">
+<div style="border-right:1.5px solid #0B1518;border-bottom:1.5px solid #0B1518;background:rgba(184,154,104,.28);position:relative;padding:6px;font:500 6.5px Montserrat;letter-spacing:.1em">LIVING<br><span style="opacity:.6">6.0 × 4.7</span><div style="position:absolute;left:60px;top:34px;width:9px;height:9px;border-radius:50%;background:#B89A68;box-shadow:0 0 0 4px rgba(184,154,104,.3)"></div></div>
+<div style="border-bottom:1.5px solid #0B1518;padding:6px;font:500 6.5px Montserrat;letter-spacing:.1em;position:relative">MASTER BED<br><span style="opacity:.6">4.5 × 4.0</span><div style="position:absolute;right:14px;bottom:14px;width:9px;height:9px;border-radius:50%;border:2px solid #B89A68"></div></div>
+<div style="border-right:1.5px solid #0B1518;border-bottom:1.5px solid #0B1518;padding:6px;font:500 6.5px Montserrat;letter-spacing:.1em;position:relative">KITCHEN · DINING<div style="position:absolute;right:14px;bottom:14px;width:9px;height:9px;border-radius:50%;border:2px solid #B89A68"></div></div>
+<div style="border-bottom:1.5px solid #0B1518;display:grid;grid-template-columns:1fr 1fr"><div style="border-right:1.5px solid #0B1518;padding:6px;font:500 6.5px Montserrat">BED 02</div><div style="padding:6px;font:500 6.5px Montserrat">BATH</div></div>
+<div style="grid-column:span 2;padding:6px;font:500 6.5px Montserrat;letter-spacing:.1em;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(11,21,24,.06) 6px 7px)">TERRACE &amp; POOL</div>
+</div>
+<div style="position:absolute;left:108px;top:106px;background:#0B1518;color:#F3F0E9;padding:7px 9px;display:flex;flex-direction:column;gap:3px;font:500 6px Montserrat"><span style="font:400 12px 'Cormorant Garamond',serif">Living Room</span><span style="opacity:.7">28 m²</span><span style="color:#B89A68;letter-spacing:.18em">ENTER ROOM →</span></div>
+<div style="position:absolute;left:298px;top:16px;font:500 7px Montserrat">N ↑</div>
+<div style="position:absolute;right:0;top:0;bottom:0;width:160px;background:#0B1518;color:#F3F0E9;padding:18px 14px;display:flex;flex-direction:column;gap:8px">
+<div style="font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68">PROPERTY</div>
+<div style="font:400 20px 'Cormorant Garamond',serif">124 m²</div>
+<div style="font:500 7px/2 Montserrat;opacity:.85;border-top:1px solid rgba(243,240,233,.2);padding-top:6px">3 Bedroom<br>2 Bathroom<br>2 Parking<br>Facing: West (sunset)</div>
+<div style="margin-top:auto;background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:8px;text-align:center">ENTER 3D →</div>
+<div style="font:500 6px Montserrat;letter-spacing:.15em;text-align:center;opacity:.7">COMPARE UNIT</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Ivory "paper" for plans so they read architectural. Room tap → popover → camera anchor in 3D (CAM-LIVING).</div></sc-if></div>
+</div>
+
+<div class="dv-grp">02 · 3D WALKTHROUGH — THREE HUD APPROACHES<span style="flex:1;height:1px;background:rgba(184,154,104,.4)"></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1g"><div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>A · Minimal HUD (UI disappears)</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d"></div>
+<div style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font:500 7px Montserrat;letter-spacing:.25em;opacity:.4">[ LIVE 3D SCENE · UE5 ]</div>
+<div style="position:absolute;left:18px;right:18px;top:14px;display:flex;justify-content:space-between;align-items:center"><div style="font:500 8px Montserrat;letter-spacing:.3em">ANANTA <span style="opacity:.6;letter-spacing:.1em">· Residences · Type B</span></div><div style="font:500 12px Montserrat">☰</div></div>
+<div style="position:absolute;left:330px;top:104px;display:flex;align-items:center;gap:6px"><div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #F3F0E9;background:rgba(11,21,24,.5);font:600 8px 'Cormorant Garamond',serif;display:flex;align-items:center;justify-content:center">i</div><span style="font:500 6.5px Montserrat;letter-spacing:.15em;background:rgba(11,21,24,.6);padding:3px 6px">KITCHEN</span></div>
+<div style="position:absolute;left:150px;top:150px;width:16px;height:16px;border-radius:50%;border:1.5px solid #F3F0E9;background:rgba(11,21,24,.5)"></div>
+<div style="position:absolute;left:18px;bottom:52px;display:flex;flex-direction:column;gap:3px"><span style="font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68">YOU ARE IN</span><span style="font:400 18px 'Cormorant Garamond',serif">Living Room · 28 m²</span></div>
+<div style="position:absolute;right:18px;bottom:52px;font:500 6px Montserrat;letter-spacing:.15em;opacity:.6">DRAG TO LOOK · W A S D TO WALK</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:38px;background:rgba(11,21,24,.85);border-top:1px solid rgba(243,240,233,.15);display:flex;align-items:center;padding:0 18px;gap:22px;font:500 6.5px Montserrat;letter-spacing:.2em"><span>FLOOR PLAN</span><span>ROOMS</span><span>CONFIGURE</span><span>LIGHT</span><span>DETAILS</span><span style="margin-left:auto;background:#B89A68;color:#0B1518;padding:6px 10px">BOOK SITE VISIT</span></div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">PRD screen 06 literal. Bar fades after 5s idle; hotspot pins appear on approach. Best for self-serve web.</div></sc-if></div>
+
+<div class="dv-opt" id="1h"><div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>B · Tour rail + live mini-plan</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d"></div>
+<div style="position:absolute;left:16px;top:14px;font:500 9px Montserrat;letter-spacing:.35em">ANANTA</div>
+<div style="position:absolute;left:16px;top:34px;font:400 18px 'Cormorant Garamond',serif">Virtual <span style="color:#B89A68">Tour</span></div>
+<div style="position:absolute;left:16px;top:66px;width:118px;display:flex;flex-direction:column;gap:4px;background:rgba(11,21,24,.75);padding:5px">
+<div style="display:flex;gap:6px;align-items:center;border:1px solid #B89A68;padding:3px"><div style="width:30px;height:18px;background:#2c3a3d"></div><span style="font:500 6.5px Montserrat">Living Room</span></div>
+<div style="display:flex;gap:6px;align-items:center;padding:3px"><div style="width:30px;height:18px;background:#2c3a3d"></div><span style="font:500 6.5px Montserrat;opacity:.8">Master Bedroom</span></div>
+<div style="display:flex;gap:6px;align-items:center;padding:3px"><div style="width:30px;height:18px;background:#2c3a3d"></div><span style="font:500 6.5px Montserrat;opacity:.8">Kitchen &amp; Dining</span></div>
+<div style="display:flex;gap:6px;align-items:center;padding:3px"><div style="width:30px;height:18px;background:#2c3a3d"></div><span style="font:500 6.5px Montserrat;opacity:.8">Bathroom</span></div>
+<div style="display:flex;gap:6px;align-items:center;padding:3px"><div style="width:30px;height:18px;background:#2c3a3d"></div><span style="font:500 6.5px Montserrat;opacity:.8">Terrace &amp; Pool</span></div>
+</div>
+<div style="position:absolute;right:48px;top:40px;width:120px;background:rgba(11,21,24,.85);border:1px solid rgba(243,240,233,.2);border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:6px">
+<div style="font:500 6px Montserrat;letter-spacing:.2em">TYPE B · 3 BR VILLA</div>
+<div style="height:70px;border:1px solid rgba(243,240,233,.5);position:relative;display:grid;grid-template-columns:1fr 1fr"><div style="border-right:1px solid rgba(243,240,233,.4)"></div><div></div><div style="position:absolute;left:24px;top:34px;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:24px solid rgba(184,154,104,.45);transform:rotate(-20deg);transform-origin:top"></div><div style="position:absolute;left:34px;top:30px;width:7px;height:7px;border-radius:50%;background:#B89A68"></div></div>
+<div style="font:500 6px Montserrat;opacity:.8">◉ Living Room — tap plan to jump</div>
+</div>
+<div style="position:absolute;right:14px;top:40px;display:flex;flex-direction:column;gap:6px"><div style="width:22px;height:22px;border-radius:50%;border:1px solid rgba(243,240,233,.5)"></div><div style="width:22px;height:22px;border-radius:50%;border:1px solid rgba(243,240,233,.5)"></div></div>
+<div style="position:absolute;right:14px;bottom:60px;display:flex;flex-direction:column;gap:8px;font:500 5.5px Montserrat;letter-spacing:.18em;text-align:right"><span>FLOOR PLAN</span><span>CONFIGURE</span><span>SPECIFICATION</span><span style="color:#B89A68">ENQUIRE</span></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:46px;background:rgba(11,21,24,.85);display:flex;gap:6px;padding:7px 14px">
+<div style="flex:1;border:1px solid #B89A68;background:#2c3a3d;font:500 5px Montserrat;display:flex;align-items:flex-end;padding:3px">LIVING</div><div style="flex:1;background:#2c3a3d;font:500 5px Montserrat;display:flex;align-items:flex-end;padding:3px">DINING</div><div style="flex:1;background:#2c3a3d;font:500 5px Montserrat;display:flex;align-items:flex-end;padding:3px">KITCHEN</div><div style="flex:1;background:#2c3a3d;font:500 5px Montserrat;display:flex;align-items:flex-end;padding:3px">MASTER</div><div style="flex:1;background:#2c3a3d;font:500 5px Montserrat;display:flex;align-items:flex-end;padding:3px">BED 2</div><div style="flex:1;background:#2c3a3d;font:500 5px Montserrat;display:flex;align-items:flex-end;padding:3px">POOL</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Matches your Virtual Tour reference. Mini-plan view-cone = 2D↔3D sync always visible. Busier; suits touch kiosk where teleport beats WASD.</div></sc-if></div>
+
+<div class="dv-opt" id="1i"><div class="dv-olabel"><a class="dv-oid" href="#1i">1i</a>C · Guided cinematic mode</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#000;color:#F3F0E9">
+<div style="position:absolute;left:0;right:0;top:26px;bottom:26px;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d"></div>
+<div style="position:absolute;left:18px;top:8px;font:500 6px Montserrat;letter-spacing:.3em;opacity:.7">GUIDED TOUR · 02 / 08</div>
+<div style="position:absolute;right:18px;top:8px;font:500 6px Montserrat;letter-spacing:.2em;opacity:.7">❚❚ PAUSE · SKIP ›</div>
+<div style="position:absolute;left:18px;top:50px;font:400 26px/1 'Cormorant Garamond',serif">Living <span style="font-style:italic;color:#B89A68">Room</span></div>
+<div style="position:absolute;left:50%;bottom:62px;transform:translateX(-50%);width:340px;text-align:center;font:400 13px/1.35 'Cormorant Garamond',serif;font-style:italic;background:rgba(11,21,24,.6);padding:8px 12px">"This living room spans 6 × 4.7 metres, opening fully to the terrace and the western sunset."</div>
+<div style="position:absolute;right:18px;bottom:36px;border:1px solid #B89A68;color:#B89A68;font:600 6.5px Montserrat;letter-spacing:.2em;padding:6px 10px">TAKE CONTROL</div>
+<div style="position:absolute;left:18px;right:18px;bottom:9px;display:grid;grid-template-columns:repeat(8,1fr);gap:4px">
+<div style="height:2px;background:#B89A68"></div><div style="height:2px;background:linear-gradient(90deg,#B89A68 50%,rgba(243,240,233,.25) 50%)"></div><div style="height:2px;background:rgba(243,240,233,.25)"></div><div style="height:2px;background:rgba(243,240,233,.25)"></div><div style="height:2px;background:rgba(243,240,233,.25)"></div><div style="height:2px;background:rgba(243,240,233,.25)"></div><div style="height:2px;background:rgba(243,240,233,.25)"></div><div style="height:2px;background:rgba(243,240,233,.25)"></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Entrance → Living → Dining → Kitchen → Master → Bath → Balcony → Garden. Voice-over optional; sales can trigger each step from console.</div></sc-if></div>
+</div>
+
+<div class="dv-grp">03 · IN-EXPERIENCE LAYERS<span style="flex:1;height:1px;background:rgba(184,154,104,.4)"></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1j"><div class="dv-olabel"><a class="dv-oid" href="#1j">1j</a>Room info panel (hotspot)</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d;opacity:.6"></div>
+<div style="position:absolute;left:120px;top:120px;width:16px;height:16px;border-radius:50%;background:#B89A68;box-shadow:0 0 0 6px rgba(184,154,104,.3)"></div>
+<div style="position:absolute;right:0;top:0;bottom:0;width:210px;background:rgba(11,21,24,.94);border-left:1px solid rgba(184,154,104,.4);padding:20px 18px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68"><span>ROOM 04</span><span style="color:#F3F0E9">✕</span></div>
+<div style="font:400 22px/1 'Cormorant Garamond',serif">Master Bedroom</div>
+<div style="font:400 15px 'Cormorant Garamond',serif;color:#B89A68">24.5 m² <span style="font:500 7px Montserrat;color:#F3F0E9;opacity:.7">· 4.5 × 4.0 m</span></div>
+<div style="font:400 7.5px/2 Montserrat;border-top:1px solid rgba(243,240,233,.2);padding-top:6px">— King-size configuration<br>— Walk-in wardrobe<br>— Ensuite bathroom<br>— Garden &amp; ocean view</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px"><div style="height:30px;background:#2c3a3d"></div><div style="height:30px;background:#2c3a3d"></div><div style="height:30px;background:#2c3a3d"></div></div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:5px"><div style="background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px;text-align:center">VIEW FROM WINDOW</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px"><div style="border:1px solid rgba(243,240,233,.4);font:600 6px Montserrat;letter-spacing:.15em;padding:6px;text-align:center">FLOOR PLAN</div><div style="border:1px solid rgba(243,240,233,.4);font:600 6px Montserrat;letter-spacing:.15em;padding:6px;text-align:center">CONFIGURE</div></div></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Same panel serves all hotspot types (INFO, PRODUCT, VIEW, CTA). "View from window" swaps camera to actual view simulation.</div></sc-if></div>
+
+<div class="dv-opt" id="1k"><div class="dv-olabel"><a class="dv-oid" href="#1k">1k</a>Material configurator</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;left:0;top:0;bottom:0;right:190px;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d"></div>
+<div style="position:absolute;left:14px;top:14px;display:flex;font:600 6px Montserrat;letter-spacing:.15em;border:1px solid rgba(243,240,233,.5)"><span style="padding:4px 8px">BEFORE</span><span style="padding:4px 8px;background:#F3F0E9;color:#0B1518">AFTER</span></div>
+<div style="position:absolute;right:0;top:0;bottom:0;width:190px;padding:16px 14px;display:flex;flex-direction:column;gap:9px">
+<div style="font:400 18px 'Cormorant Garamond',serif">Customise</div>
+<div style="display:flex;gap:9px;font:500 6px Montserrat;letter-spacing:.15em;border-bottom:1px solid rgba(243,240,233,.15);padding-bottom:5px"><span style="color:#B89A68;border-bottom:1px solid #B89A68;padding-bottom:4px">FLOOR</span><span style="opacity:.7">WALL</span><span style="opacity:.7">KITCHEN</span><span style="opacity:.7">FURNITURE</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+<div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="width:32px;height:32px;background:#BBAA95;outline:1.5px solid #B89A68;outline-offset:2px"></div><span style="font:500 5.5px Montserrat">Oak</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="width:32px;height:32px;background:#e6e2da"></div><span style="font:500 5.5px Montserrat;opacity:.7">Marble</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="width:32px;height:32px;background:#6e6a64"></div><span style="font:500 5.5px Montserrat;opacity:.7">Stone</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="width:32px;height:32px;background:#a69a88"></div><span style="font:500 5.5px Montserrat;opacity:.7">Tile</span></div>
+</div>
+<div style="font:500 6px Montserrat;letter-spacing:.2em;opacity:.7;margin-top:4px">INTERIOR STYLE</div>
+<div style="display:flex;flex-wrap:wrap;gap:4px;font:500 6px Montserrat"><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Minimal</span><span style="background:#B89A68;color:#0B1518;padding:3px 6px">Modern</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Japandi</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Luxury</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Classic</span></div>
+<div style="margin-top:auto;border-top:1px solid rgba(243,240,233,.2);padding-top:7px;display:flex;justify-content:space-between;align-items:baseline"><span style="font:500 6px Montserrat;letter-spacing:.2em;opacity:.7">UPGRADE</span><span style="font:400 14px 'Cormorant Garamond',serif;color:#B89A68">+ Rp XX jt</span></div>
+<div style="background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px;text-align:center">SAVE CONFIGURATION</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Real-time material instance swap. Only approved assets. Selection saved to session and shown on the sales console.</div></sc-if></div>
+
+<div class="dv-opt" id="1l"><div class="dv-olabel"><a class="dv-oid" href="#1l">1l</a>Time of day &amp; weather</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(184,154,104,.08) 0 1px,transparent 1px 9px),linear-gradient(180deg,#2a2a2a,#3a2f22)"></div>
+<div style="position:absolute;right:18px;top:16px;text-align:right"><div style="font:400 30px/1 'Cormorant Garamond',serif">18:00</div><div style="font:500 6px Montserrat;letter-spacing:.25em;color:#B89A68;margin-top:4px">GOLDEN HOUR · SUNSET 18:02</div></div>
+<div style="position:absolute;left:40px;right:40px;bottom:22px;background:rgba(11,21,24,.88);border:1px solid rgba(243,240,233,.15);padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative;height:14px"><div style="position:absolute;left:0;right:0;top:6px;height:2px;background:linear-gradient(90deg,#526B78,#F3F0E9 40%,#B89A68 75%,#0B1518)"></div><div style="position:absolute;left:70%;top:0;width:14px;height:14px;border-radius:50%;background:#B89A68;border:2px solid #F3F0E9"></div></div>
+<div style="display:flex;justify-content:space-between;font:500 6.5px Montserrat;opacity:.8"><span>08:00</span><span>12:00</span><span>16:00</span><span style="color:#B89A68">18:00</span><span>20:00</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(243,240,233,.15);padding-top:8px"><div style="display:flex;gap:5px;font:500 6px Montserrat;letter-spacing:.15em"><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">MORNING</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">DAY</span><span style="background:#B89A68;color:#0B1518;padding:3px 6px">SUNSET</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">NIGHT</span></div><div style="display:flex;gap:8px;font:500 6px Montserrat;opacity:.75"><span>Sunny</span><span>Cloudy</span><span>Rain</span></div></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Scrubbable sun. Sun time from real coordinates. Weather is P2 — can ship greyed out.</div></sc-if></div>
+
+<div class="dv-opt" id="1m"><div class="dv-olabel"><a class="dv-oid" href="#1m">1m</a>Measure mode</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d"></div>
+<div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(11,21,24,.9);border:1px solid #B89A68;display:flex;gap:14px;align-items:center;padding:6px 12px;font:500 6.5px Montserrat;letter-spacing:.18em"><span style="color:#B89A68">MEASURE</span><span style="opacity:.75">Tap two points</span><span>LINE</span><span>AREA</span><span>CLEAR</span><span>✕</span></div>
+<div style="position:absolute;left:90px;top:190px;width:300px;border-top:1.5px dashed #B89A68"></div>
+<div style="position:absolute;left:84px;top:184px;width:12px;height:12px;border-radius:50%;background:#B89A68"></div>
+<div style="position:absolute;left:384px;top:184px;width:12px;height:12px;border-radius:50%;background:#B89A68"></div>
+<div style="position:absolute;left:210px;top:170px;background:#B89A68;color:#0B1518;font:600 9px Montserrat;padding:3px 8px">4.8 m</div>
+<div style="position:absolute;left:150px;top:70px;width:180px;height:80px;border:1px solid rgba(184,154,104,.8);background:rgba(184,154,104,.12);display:flex;align-items:center;justify-content:center;font:400 13px 'Cormorant Garamond',serif">4.8 × 5.2 m = 24.96 m²</div>
+<div style="position:absolute;left:18px;bottom:14px;font:500 6px Montserrat;letter-spacing:.15em;opacity:.7">✓ VERIFIED AGAINST ARCHITECTURAL DRAWING · ±2 CM</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Snap to walls/floor. Show "verified" badge only where CAD dimensions exist.</div></sc-if></div>
+</div>
+
+<div class="dv-grp">04 · COMPARE &amp; CONNECT<span style="flex:1;height:1px;background:rgba(184,154,104,.4)"></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1n"><div class="dv-olabel"><a class="dv-oid" href="#1n">1n</a>Compare units</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#F3F0E9;color:#0B1518;padding:18px 22px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+<div style="font:400 20px 'Cormorant Garamond',serif">Compare <span style="color:#8a6f45">units</span></div>
+<div style="display:grid;grid-template-columns:90px 1fr 1fr;gap:0;font:500 7.5px Montserrat">
+<div></div><div style="height:48px;background:repeating-linear-gradient(135deg,rgba(11,21,24,.08) 0 1px,transparent 1px 8px),#e2ddd2;margin:0 6px 6px 0;display:flex;align-items:flex-end;padding:4px;font:600 7px Montserrat;letter-spacing:.15em">UNIT A · TYPE A</div><div style="height:48px;background:repeating-linear-gradient(135deg,rgba(11,21,24,.08) 0 1px,transparent 1px 8px),#e2ddd2;margin:0 0 6px 0;display:flex;align-items:flex-end;padding:4px;font:600 7px Montserrat;letter-spacing:.15em">UNIT B · TYPE B</div>
+<div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);opacity:.6">Land</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15)">120 m²</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);color:#8a6f45">150 m²</div>
+<div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);opacity:.6">Building</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15)">90 m²</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);color:#8a6f45">120 m²</div>
+<div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);opacity:.6">Bed / Bath</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15)">3 / 2</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);color:#8a6f45">4 / 3</div>
+<div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);opacity:.6">Parking</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15)">1</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);color:#8a6f45">2</div>
+<div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15);opacity:.6">Price</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15)">Rp X.X B</div><div style="padding:5px 0;border-top:1px solid rgba(11,21,24,.15)">Rp X.X B</div>
+</div>
+<div style="display:grid;grid-template-columns:90px 1fr 1fr;gap:6px;margin-top:auto"><div></div><div style="background:#0B1518;color:#F3F0E9;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px;text-align:center">EXPLORE A</div><div style="background:#0B1518;color:#F3F0E9;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px;text-align:center">EXPLORE B</div></div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Higher value highlighted in gold. Could add overlaid floor plans as a second tab.</div></sc-if></div>
+
+<div class="dv-opt" id="1o"><div class="dv-olabel"><a class="dv-oid" href="#1o">1o</a>Lead capture — book site visit</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9;display:grid;grid-template-columns:200px 1fr">
+<div style="position:relative;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1a2629;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px">
+<div style="font:400 20px/1.05 'Cormorant Garamond',serif">Ready to experience it <span style="color:#B89A68;font-style:italic">in person?</span></div>
+<div style="border-top:1px solid rgba(243,240,233,.25);padding-top:6px;font:500 6px/1.9 Montserrat;opacity:.85"><span style="letter-spacing:.2em;color:#B89A68">YOUR SELECTION</span><br>Type B · Unit 2B-01<br>Oak floor · Modern kitchen<br>Viewed at sunset</div>
+</div>
+<div style="padding:18px 20px;display:flex;flex-direction:column;gap:7px">
+<div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">NAME *</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">WHATSAPP *</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px;font:500 7px Montserrat;opacity:.6">+62</div></div><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">EMAIL *</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div></div></div>
+<div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65;margin-top:3px">BUYING PURPOSE</div>
+<div style="display:flex;flex-wrap:wrap;gap:4px;font:500 6px Montserrat"><span style="background:#B89A68;color:#0B1518;padding:3px 6px">Own stay</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Investment</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Holiday home</span><span style="border:1px solid rgba(243,240,233,.35);padding:3px 6px">Business</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">VISIT DATE</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div></div><div style="display:flex;flex-direction:column;gap:5px"><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.65">BUDGET</div><div style="border-bottom:1px solid rgba(243,240,233,.4);height:12px"></div></div></div>
+<div style="margin-top:auto;background:#B89A68;color:#0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:8px;text-align:center">BOOK A SITE VISIT →</div>
+<div style="display:flex;justify-content:center;gap:12px;font:500 5.5px Montserrat;letter-spacing:.15em;opacity:.75"><span>REQUEST BROCHURE</span><span>WHATSAPP SALES</span><span>SAVE PROPERTY</span></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Session context (rooms, config, price viewed) attached to the lead and sent to CRM. Consent line needed under button.</div></sc-if></div>
+
+<div class="dv-opt" id="1p"><div class="dv-olabel"><a class="dv-oid" href="#1p">1p</a>Thank you / follow-up</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#F3F0E9;color:#0B1518;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center">
+<div style="font:500 9px Montserrat;letter-spacing:.35em">ANANTA</div>
+<div style="width:26px;height:1px;background:#B89A68"></div>
+<div style="font:400 30px 'Cormorant Garamond',serif">Thank <span style="color:#8a6f45;font-style:italic">you.</span></div>
+<div style="display:flex;gap:10px;align-items:center;border:1px solid rgba(11,21,24,.15);padding:8px 12px;text-align:left"><div style="width:30px;height:30px;border-radius:50%;background:#dcd6ca"></div><div style="font:500 7px/1.6 Montserrat">Your consultant, <b>[Name]</b><br><span style="opacity:.65">will contact you on WhatsApp within 24h</span></div><div style="width:40px;height:40px;background:repeating-linear-gradient(0deg,#0B1518 0 3px,transparent 3px 6px),repeating-linear-gradient(90deg,#0B1518 0 3px,transparent 3px 6px);opacity:.5;margin-left:10px"></div></div>
+<div style="font:500 6px Montserrat;letter-spacing:.15em;opacity:.6">SCAN TO KEEP YOUR CONFIGURATION ON YOUR PHONE</div>
+<div style="display:flex;gap:6px"><div style="background:#0B1518;color:#F3F0E9;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px 12px">CONTINUE EXPLORING</div><div style="border:1px solid #0B1518;font:600 6.5px Montserrat;letter-spacing:.2em;padding:7px 12px">BACK TO PROJECT</div></div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">QR hands the session from showroom screen to the buyer's phone (web version).</div></sc-if></div>
+</div>
+
+<div class="dv-grp">05 · SALES CONSOLE, GALLERY &amp; INTELLIGENCE<span style="flex:1;height:1px;background:rgba(184,154,104,.4)"></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1q"><div class="dv-olabel"><a class="dv-oid" href="#1q">1q</a>Sales console (tablet)</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#0B1518;color:#F3F0E9;display:grid;grid-template-columns:1.3fr 1fr">
+<div style="padding:14px;display:flex;flex-direction:column;gap:8px;border-right:1px solid rgba(243,240,233,.12)">
+<div style="display:flex;justify-content:space-between;font:500 6px Montserrat;letter-spacing:.2em"><span style="color:#B89A68">● LIVE ON LED WALL</span><span style="opacity:.7">SESSION 12:42</span></div>
+<div style="height:88px;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d;border:1px solid rgba(243,240,233,.2);position:relative"><span style="position:absolute;left:6px;bottom:5px;font:400 11px 'Cormorant Garamond',serif">Master Bedroom</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font:600 5.5px Montserrat;letter-spacing:.12em;text-align:center">
+<span style="background:#B89A68;color:#0B1518;padding:6px 0">ROOMS</span><span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">MATERIALS</span><span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">LIGHTING</span><span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">FLOOR PLAN</span>
+<span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">PRICE</span><span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">COMPARE</span><span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">GUIDED</span><span style="border:1px solid rgba(243,240,233,.3);padding:6px 0">CTA</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font:500 6px Montserrat"><span style="background:#1f2b2d;padding:8px 4px">Entrance</span><span style="background:#1f2b2d;padding:8px 4px">Living</span><span style="background:#1f2b2d;padding:8px 4px">Kitchen</span><span style="background:#1f2b2d;padding:8px 4px;outline:1px solid #B89A68">Master</span><span style="background:#1f2b2d;padding:8px 4px">Bed 02</span><span style="background:#1f2b2d;padding:8px 4px">Bath</span><span style="background:#1f2b2d;padding:8px 4px">Balcony</span><span style="background:#1f2b2d;padding:8px 4px">Pool</span></div>
+</div>
+<div style="padding:14px;display:flex;flex-direction:column;gap:7px">
+<div style="font:500 6px Montserrat;letter-spacing:.25em;opacity:.7">CUSTOMER SESSION</div>
+<div style="font:400 15px 'Cormorant Garamond',serif">Villa Type B · 180 m²</div>
+<div style="font:500 6.5px/2 Montserrat;border-top:1px solid rgba(243,240,233,.15);padding-top:5px"><div style="display:flex;justify-content:space-between"><span style="opacity:.6">Config</span><span>Premium interior</span></div><div style="display:flex;justify-content:space-between"><span style="opacity:.6">Price</span><span>Rp X.X B</span></div><div style="display:flex;justify-content:space-between"><span style="opacity:.6">Rooms seen</span><span>5 / 8</span></div><div style="display:flex;justify-content:space-between"><span style="opacity:.6">Interest signal</span><span style="color:#B89A68">HIGH</span></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font:500 6px Montserrat;border:1px solid rgba(243,240,233,.2);padding:5px 6px"><span>Show price on wall</span><span style="width:18px;height:9px;border-radius:5px;background:#B89A68"></span></div>
+<div style="font:500 6px Montserrat;opacity:.6">Notes…</div><div style="flex:1;border:1px solid rgba(243,240,233,.15)"></div>
+<div style="background:#B89A68;color:#0B1518;font:600 6px Montserrat;letter-spacing:.18em;padding:7px;text-align:center">SEND LEAD FORM TO SCREEN</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">WebSocket commands: OPEN_ROOM, CHANGE_MATERIAL, CHANGE_TIME… Customer sees only the polished view; notes stay private.</div></sc-if></div>
+
+<div class="dv-opt" id="1r"><div class="dv-olabel"><a class="dv-oid" href="#1r">1r</a>Immersive gallery — physical setup</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#F3F0E9;color:#0B1518">
+<div style="position:absolute;left:22px;top:16px;font:400 18px 'Cormorant Garamond',serif">Sales gallery <span style="color:#8a6f45">layout</span></div>
+<div style="position:absolute;left:30px;top:52px;width:270px;height:130px;background:#0B1518;color:#F3F0E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 7px Montserrat;letter-spacing:.25em;color:#B89A68">DISPLAY 1 · LED WALL 4×2</span><span style="font:400 13px 'Cormorant Garamond',serif">3D walkthrough</span></div>
+<div style="position:absolute;left:318px;top:52px;width:170px;height:60px;border:1.5px solid #0B1518;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font:600 6.5px Montserrat;letter-spacing:.2em">DISPLAY 4 · MASTERPLAN</span><span style="font:500 6px Montserrat;opacity:.6">location · POI</span></div>
+<div style="position:absolute;left:318px;top:122px;width:170px;height:60px;border:1.5px solid #0B1518;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font:600 6.5px Montserrat;letter-spacing:.2em">DISPLAY 3 · SPECS</span><span style="font:500 6px Montserrat;opacity:.6">price · availability</span></div>
+<div style="position:absolute;left:70px;top:206px;width:120px;height:50px;border:1.5px solid #0B1518;background:#e7e2d7;transform:skewX(-12deg);display:flex;align-items:center;justify-content:center"><span style="transform:skewX(12deg);font:600 6.5px Montserrat;letter-spacing:.15em;text-align:center">DISPLAY 2 · TOUCH TABLE<br><span style="font-weight:500;opacity:.6">floor plan + nav</span></span></div>
+<div style="position:absolute;left:250px;top:214px;width:64px;height:42px;border:1.5px solid #0B1518;border-radius:4px;display:flex;align-items:center;justify-content:center;font:600 6px Montserrat;text-align:center;letter-spacing:.1em">SALES<br>TABLET</div>
+<div style="position:absolute;left:330px;top:206px;width:158px;font:500 6.5px/1.8 Montserrat;border-left:2px solid #B89A68;padding-left:8px">Tablet → WebSocket → showroom server → UE5 app<br><span style="opacity:.65">Offline cache: scenes, specs, price snapshot. Leads queue &amp; sync.</span></div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">Kiosk boot straight into the app — no desktop. Display 4 optional for the pilot.</div></sc-if></div>
+
+<div class="dv-opt" id="1s"><div class="dv-olabel"><a class="dv-oid" href="#1s">1s</a>Analytics dashboard (marketing)</div>
+<div class="dv-card" style="width:520px;height:293px;position:relative;background:#F3F0E9;color:#0B1518;padding:16px 18px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 18px 'Cormorant Garamond',serif">Ananta Residences · <span style="color:#8a6f45">last 30 days</span></span><span style="font:500 6px Montserrat;letter-spacing:.2em;opacity:.6">EXPORT · FILTER</span></div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(11,21,24,.15);border-bottom:1px solid rgba(11,21,24,.15);padding:7px 0">
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">SESSIONS</div><div style="font:400 17px 'Cormorant Garamond',serif">1,284</div></div>
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">3D ENGAGEMENT</div><div style="font:400 17px 'Cormorant Garamond',serif">72%</div></div>
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">LEADS</div><div style="font:400 17px 'Cormorant Garamond',serif">186</div></div>
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">SITE VISITS</div><div style="font:400 17px 'Cormorant Garamond',serif">64</div></div>
+<div><div style="font:500 5.5px Montserrat;letter-spacing:.2em;opacity:.6">IMMERSIVE→INTENT</div><div style="font:400 17px 'Cormorant Garamond',serif;color:#8a6f45">14%</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;flex:1">
+<div style="display:flex;flex-direction:column;gap:4px;font:500 6px Montserrat">
+<div style="letter-spacing:.2em;opacity:.6;margin-bottom:2px">FUNNEL</div>
+<div style="display:flex;align-items:center;gap:6px"><span style="width:62px">Visitors</span><div style="height:8px;width:100%;background:#0B1518"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="width:62px">Enter 3D</span><div style="height:8px;width:70%;background:#0B1518"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="width:62px">Multi-room</span><div style="height:8px;width:50%;background:#35463D"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="width:62px">View price</span><div style="height:8px;width:30%;background:#526B78"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="width:62px">Request info</span><div style="height:8px;width:15%;background:#BBAA95"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="width:62px">Book visit</span><div style="height:8px;width:8%;background:#B89A68"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;font:500 6px Montserrat"><div style="letter-spacing:.2em;opacity:.6">ROOM HEATMAP · TYPE B</div><div style="flex:1;border:2px solid #0B1518;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr"><div style="background:rgba(184,154,104,.55);border:1px solid #0B1518"></div><div style="background:rgba(184,154,104,.85);border:1px solid #0B1518"></div><div style="background:rgba(184,154,104,.3);border:1px solid #0B1518"></div><div style="background:rgba(184,154,104,.12);border:1px solid #0B1518"></div></div><div style="opacity:.6">Most viewed: Master Bedroom</div></div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:520px">North star = Immersive-to-Intent. Figures are the PRD's sample numbers. Session drill-down + lead list sit one level below.</div></sc-if></div>
+
+<div class="dv-opt" id="1t"><div class="dv-olabel"><a class="dv-oid" href="#1t">1t</a>Mobile web walkthrough</div>
+<div style="display:flex;gap:14px">
+<div class="dv-card" style="width:150px;height:293px;position:relative;background:#0B1518;color:#F3F0E9;border-radius:18px">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(243,240,233,.06) 0 1px,transparent 1px 9px),#1f2b2d"></div>
+<div style="position:absolute;left:12px;right:12px;top:14px;display:flex;justify-content:space-between;font:500 6.5px Montserrat;letter-spacing:.25em"><span>ANANTA</span><span>☰</span></div>
+<div style="position:absolute;left:50%;top:40%;transform:translateX(-50%);font:500 6px Montserrat;letter-spacing:.15em;opacity:.55;text-align:center">DRAG TO LOOK<br>TAP FLOOR TO MOVE</div>
+<div style="position:absolute;left:0;right:0;bottom:0;background:rgba(11,21,24,.94);border-radius:12px 12px 0 0;padding:8px 10px 12px;display:flex;flex-direction:column;gap:6px">
+<div style="width:24px;height:2px;background:rgba(243,240,233,.4);align-self:center"></div>
+<div style="font:400 13px 'Cormorant Garamond',serif">Living Room</div>
+<div style="display:flex;gap:4px;font:500 5.5px Montserrat;overflow:hidden"><span style="background:#B89A68;color:#0B1518;padding:3px 5px">Living</span><span style="border:1px solid rgba(243,240,233,.3);padding:3px 5px">Kitchen</span><span style="border:1px solid rgba(243,240,233,.3);padding:3px 5px">Master</span></div>
+<div style="background:#B89A68;color:#0B1518;font:600 6px Montserrat;letter-spacing:.15em;padding:9px;text-align:center">WHATSAPP SALES</div>
+</div>
+</div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><div style="font:17px/1.2 Caveat;color:#526B78;max-width:150px">Lighter scope: rooms, details, materials, CTA. 44px targets.</div></sc-if></div>
+</div>
+
+<p class="dv-next">Try next: "pick <a class="dv-oid" href="#1h">1h</a> as the walkthrough HUD and push it hi-fi" · "3 alternatives for the floor plan screen <a class="dv-oid" href="#1f">1f</a>" · "wireframe the admin CMS + scene versioning"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Wireframes&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { showNotes: this.props.showNotes ?? true };
+  }
+}
+</script>
+</body>
+</html>

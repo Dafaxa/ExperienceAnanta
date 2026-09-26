@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><script src="./image-slot.js"></script><style>html,body{margin:0;height:100%;background:#d9d4c9;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#8a6f45}a:hover{color:#0B1518}input:focus,textarea:focus{outline:none;border-color:#B89A68 !important}</style></helmet>
+<div style="position:fixed;inset:0;background:#d9d4c9">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#F3F0E9;color:#0B1518;display:grid;grid-template-columns:300px 1fr">
+<dc-import name="CMSSidebar" active="{{ active }}" local="{{ local }}" on-pick="{{ pick }}" hint-size="300px,1080px"></dc-import>
+<div style="position:relative;padding:44px 64px;display:flex;flex-direction:column;gap:28px;min-width:0;min-height:0;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#8a6f45">{{ eyebrow }}</span><span style="font:300 60px/1 'Cormorant Garamond',serif">{{ title }}</span></div><span style="font:400 15px Montserrat;opacity:.6;max-width:560px;text-align:right">{{ sub }}</span></div>
+
+<sc-if value="{{ isSetup }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:580px 1fr;gap:48px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">BRAND MODE</span><div style="display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #0B1518"><sc-for list="{{ modes }}" as="m" hint-placeholder-count="3"><div onClick="{{ m.pick }}" style="cursor:pointer;padding:14px 8px;text-align:center;font:600 11px Montserrat;letter-spacing:.14em;background:{{ m.bg }};color:{{ m.fg }}">{{ m.label }}</div></sc-for></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">DEVELOPER NAME</span><input value="{{ dev }}" onChange="{{ setDev }}" style="background:#fff;border:1px solid rgba(11,21,24,.2);padding:13px 14px;font:400 16px Montserrat;color:#0B1518"></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">TAGLINE</span><input value="{{ tagline }}" onChange="{{ setTag }}" style="background:#fff;border:1px solid rgba(11,21,24,.2);padding:13px 14px;font:400 16px Montserrat;color:#0B1518"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">WELCOME HEADLINE</span><input value="{{ headline }}" onChange="{{ setHead }}" style="background:#fff;border:1px solid rgba(11,21,24,.2);padding:13px 14px;font:400 16px Montserrat;color:#0B1518"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">BASE COLOUR</span><div style="display:flex;gap:10px"><sc-for list="{{ prims }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" title="{{ c.name }}" style="cursor:pointer;width:52px;height:52px;background:{{ c.c }};outline:2px solid {{ c.ring }};outline-offset:3px"></div></sc-for></div><span style="font:400 13px Montserrat;opacity:.6">{{ primName }}</span></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">ACCENT</span><div style="display:flex;gap:10px"><sc-for list="{{ accs }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" title="{{ c.name }}" style="cursor:pointer;width:52px;height:52px;background:{{ c.c }};outline:2px solid {{ c.ring }};outline-offset:3px"></div></sc-for></div><span style="font:400 13px Montserrat;opacity:.6">{{ accName }}</span></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">HEADLINE TYPE</span><div style="display:flex;gap:8px"><sc-for list="{{ fonts }}" as="f" hint-placeholder-count="2"><div onClick="{{ f.pick }}" style="cursor:pointer;flex:1;padding:12px;border:1px solid {{ f.bc }};background:{{ f.bg }};font-family:{{ f.ff }};font-size:20px;font-weight:{{ f.fw }};text-align:center">{{ f.label }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">LANGUAGES</span><div style="display:flex;gap:8px"><sc-for list="{{ langs }}" as="l" hint-placeholder-count="2"><div onClick="{{ l.pick }}" style="cursor:pointer;flex:1;padding:14px;text-align:center;font:600 12px Montserrat;letter-spacing:.18em;background:{{ l.bg }};color:{{ l.fg }};border:1px solid #0B1518">{{ l.label }}</div></sc-for></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">LOGO</span><div style="height:84px;background:#fff;border:1px dashed rgba(11,21,24,.3)"><image-slot id="cms-dev-logo" shape="rect" fit="contain" placeholder="Drop developer logo (SVG / PNG)"></image-slot></div></div>
+<div onClick="{{ save }}" style="cursor:pointer;margin-top:auto;background:#0B1518;color:#F3F0E9;padding:20px;text-align:center;font:600 12px Montserrat;letter-spacing:.24em" style-hover="background:#B89A68;color:#0B1518">SAVE &amp; APPLY TO ALL DISPLAYS</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">LIVE PREVIEW · WELCOME SCREEN</span>
+<div style="position:relative;width:860px;height:484px;overflow:hidden;background:{{ primC }};color:#F3F0E9;box-shadow:0 20px 50px rgba(11,21,24,.2);transition:background .4s">
+<img src="img/villa_wide.jpg" style="position:absolute;right:0;top:0;width:540px;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,{{ primC }} 36%,transparent 78%)"></div>
+<div style="position:absolute;left:48px;top:40px;display:flex;flex-direction:column;gap:5px"><div style="font:400 22px/1 Montserrat;letter-spacing:.4em">{{ logoTxt }}</div><div style="font:500 7px/1 Montserrat;letter-spacing:.6em;padding-left:20px;display:{{ subLogoDisp }}">PROPERTY™</div></div>
+<div style="position:absolute;left:48px;top:150px;width:470px;display:flex;flex-direction:column;gap:18px">
+<div style="font:500 10px Montserrat;letter-spacing:.3em;color:{{ accC }}">PROPERTY EXPERIENCE</div>
+<div style="font-family:{{ headFF }};font-weight:{{ headFW }};font-size:48px;line-height:1">{{ headA }} <span style="font-style:italic;color:{{ accC }}">{{ headB }}</span></div>
+<div style="width:48px;height:1px;background:{{ accC }}"></div>
+<div style="display:flex;gap:10px"><div style="background:{{ accC }};color:{{ primC }};padding:14px 22px;font:600 10px Montserrat;letter-spacing:.24em">{{ enterTxt }} →</div><div style="display:{{ langDisp }};border:1px solid rgba(243,240,233,.5);padding:14px 14px;font:600 10px Montserrat;letter-spacing:.2em">EN · ID</div></div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:30px;display:flex;justify-content:space-between;border-top:1px solid rgba(243,240,233,.25);padding-top:14px;font:500 9px Montserrat;letter-spacing:.3em"><span>{{ taglineUp }}</span><span style="opacity:.75">{{ powered }}</span></div>
+</div>
+<span style="font:400 14px/1.6 Montserrat;opacity:.6">White-label hides every Ananta mark on customer screens. The CMS and sales console keep Ananta branding.</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:10px">
+<sc-for list="{{ wSteps }}" as="w" hint-placeholder-count="5"><div onClick="{{ w.pick }}" style="cursor:pointer;flex:1;display:flex;flex-direction:column;gap:10px"><div style="height:4px;background:{{ w.c }}"></div><span style="font:600 11px Montserrat;letter-spacing:.2em;color:{{ w.tc }}">{{ w.n }} · {{ w.label }}</span></div></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:720px 1fr;gap:56px;flex:1;min-height:0">
+<div style="display:flex;flex-direction:column;gap:22px">
+<sc-for list="{{ wFields }}" as="f" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">{{ f.label }}</span><input value="{{ f.val }}" onChange="{{ f.set }}" style="background:#fff;border:1px solid rgba(11,21,24,.2);padding:14px 16px;font:400 18px Montserrat;color:#0B1518"></div></sc-for>
+<sc-if value="{{ wHasChoice }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">{{ wChoiceLabel }}</span><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ wChoices }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" style="cursor:pointer;padding:13px 18px;font:500 15px Montserrat;background:{{ c.bg }};color:{{ c.fg }};border:1px solid #0B1518">{{ c.label }}</div></sc-for></div></div></sc-if>
+<sc-if value="{{ wHasSteppers }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px"><sc-for list="{{ wSteppers }}" as="st" hint-placeholder-count="2"><div style="display:flex;flex-direction:column;gap:10px"><span style="font:600 11px Montserrat;letter-spacing:.24em;opacity:.6">{{ st.label }}</span><div style="display:flex;align-items:center;gap:16px"><span onClick="{{ st.minus }}" style="cursor:pointer;width:48px;height:48px;border:1px solid #0B1518;display:flex;align-items:center;justify-content:center;font:400 22px Montserrat">−</span><span style="font:400 40px 'Cormorant Garamond',serif;min-width:60px;text-align:center">{{ st.val }}</span><span onClick="{{ st.plus }}" style="cursor:pointer;width:48px;height:48px;border:1px solid #0B1518;display:flex;align-items:center;justify-content:center;font:400 22px Montserrat">+</span></div></div></sc-for></div></sc-if>
+<sc-if value="{{ wIsReview }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;border-top:1px solid rgba(11,21,24,.2)"><sc-for list="{{ wSummary }}" as="r" hint-placeholder-count="6"><div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(11,21,24,.1);font:400 17px Montserrat"><span style="opacity:.6">{{ r.k }}</span><span>{{ r.v }}</span></div></sc-for></div></sc-if>
+<div style="margin-top:auto;display:flex;gap:12px"><div onClick="{{ wBack }}" style="cursor:pointer;border:1px solid #0B1518;padding:20px 30px;font:600 12px Montserrat;letter-spacing:.22em;opacity:{{ wBackOp }}">BACK</div><div onClick="{{ wNext }}" style="cursor:pointer;flex:1;background:#0B1518;color:#F3F0E9;padding:20px;text-align:center;font:600 12px Montserrat;letter-spacing:.22em" style-hover="background:#B89A68;color:#0B1518">{{ wNextLabel }}</div></div>
+</div>
+<div style="background:#0B1518;color:#F3F0E9;padding:36px;display:flex;flex-direction:column;gap:16px;min-height:0;overflow:hidden">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">STRUCTURE PREVIEW</span>
+<div style="font:400 15px/2 Montserrat"><div>{{ wDev }}</div><div style="padding-left:22px">└ {{ wProj }} <span style="opacity:.55">· {{ wType }}</span></div><div style="padding-left:44px">└ {{ wBld }}</div><div style="padding-left:66px;opacity:.75">└ {{ wFloors }} floors · {{ wTotal }} units</div></div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+<sc-for list="{{ wGrid }}" as="row" hint-placeholder-count="6"><div style="display:flex;gap:6px;align-items:center"><span style="width:44px;font:500 11px Montserrat;opacity:.5">{{ row.f }}</span><sc-for list="{{ row.units }}" as="u" hint-placeholder-count="4"><span style="padding:6px 8px;border:1px solid rgba(184,154,104,.5);font:500 11px ui-monospace,Menlo,monospace">{{ u.code }}</span></sc-for></div></sc-for>
+<span style="font:400 12px Montserrat;opacity:.5">{{ wMore }}</span>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:64px;top:44px;background:#0B1518;color:#F3F0E9;padding:16px 22px;font:600 12px Montserrat;letter-spacing:.16em;display:flex;gap:10px"><span style="color:#B89A68">✓</span>{{ toast }}</div></sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PRIMS = [['Obsidian','#0B1518'],['Forest','#1f2a24'],['Ocean','#1c2a33'],['Walnut','#2a211b']];
+const ACCS = [['Ananta gold','#B89A68'],['Warm stone','#BBAA95'],['Copper','#b87a55'],['Sage','#8fa58a']];
+const FONTS = [['Serif',"'Cormorant Garamond',serif",300],['Sans','Montserrat,sans-serif',300]];
+const TYPES = ['Villa','Apartment','Township','Commercial','Resort'];
+class Component extends DCLogic {
+  state = { scale:1, sec:'setup', mode:0, dev:'Ananta Property', tagline:'People · Places · A brighter tomorrow', headline:'Experience your future home.', prim:0, acc:0, font:0, en:true, id:true, toast:null,
+    step:0, w:{ dev:'Ananta Property', proj:'Ananta Cliff Villas', loc:'Nusa Dua, Bali', bld:'Villa Cluster B', prefix:'VB' }, wType:0, floors:3, perFloor:4 };
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300);
+    const q = new URLSearchParams(location.search).get('s'); if (q==='setup'||q==='wizard') this.setState({ sec:q }); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  toastMsg(m) { this.setState({ toast:m }); clearTimeout(this._t); this._t = setTimeout(()=>this.setState({ toast:null }), 2600); }
+  renderVals() {
+    const s = this.state, sel = (on) => ({ bg: on?'#0B1518':'transparent', fg: on?'#F3F0E9':'#0B1518' });
+    const words = s.headline.trim().split(' '), last = words.length > 2 ? words.slice(-2).join(' ') : words.slice(-1).join(' ');
+    const headA = words.slice(0, words.length - last.split(' ').length).join(' ');
+    const setW = (k) => (e) => this.setState({ w: Object.assign({}, this.state.w, {[k]: e.target.value}) });
+    const stepsL = ['Developer','Project','Building','Floors & units','Review'];
+    const fieldsBy = [[['DEVELOPER NAME','dev']],[['PROJECT NAME','proj'],['LOCATION','loc']],[['BUILDING / CLUSTER NAME','bld'],['UNIT CODE PREFIX','prefix']],[],[]];
+    const total = s.floors * s.perFloor;
+    const grid = []; for (let f = s.floors; f >= 1 && grid.length < 8; f--) grid.push({ f:'L' + f, units: Array.from({length: Math.min(s.perFloor, 8)}, (_,u) => ({ code: s.w.prefix + '-' + f + String(u+1).padStart(2,'0') })) });
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      active: s.sec, local: ['setup','wizard'], pick: (k)=>this.setState({ sec:k }),
+      isSetup: s.sec==='setup', isWizard: s.sec==='wizard',
+      eyebrow: s.sec==='setup' ? 'ANANTA RESIDENCES · ULUWATU' : 'NEW PROJECT',
+      title: s.sec==='setup' ? 'Brand & settings' : 'Create a project',
+      sub: s.sec==='setup' ? 'Controls how every customer screen looks: LED wall, touch table, web and mobile.' : 'Five steps from developer to unit list. Pricing, floor plans and scenes are added after creation.',
+      modes: ['ANANTA','CO-BRANDED','WHITE-LABEL'].map((label,i)=>Object.assign(sel(s.mode===i), { label, pick:()=>this.setState({ mode:i }) })),
+      dev: s.dev, tagline: s.tagline, headline: s.headline, setDev:(e)=>this.setState({ dev:e.target.value }), setTag:(e)=>this.setState({ tagline:e.target.value }), setHead:(e)=>this.setState({ headline:e.target.value }),
+      prims: PRIMS.map((c,i)=>({ name:c[0], c:c[1], ring: s.prim===i?'#B89A68':'transparent', pick:()=>this.setState({ prim:i }) })), primName: PRIMS[s.prim][0] + ' · ' + PRIMS[s.prim][1],
+      accs: ACCS.map((c,i)=>({ name:c[0], c:c[1], ring: s.acc===i?'#0B1518':'transparent', pick:()=>this.setState({ acc:i }) })), accName: ACCS[s.acc][0] + ' · ' + ACCS[s.acc][1],
+      fonts: FONTS.map((f,i)=>({ label: i===0?'Aa Serif':'Aa Sans', ff:f[1], fw:f[2], bc: s.font===i?'#B89A68':'rgba(11,21,24,.2)', bg: s.font===i?'rgba(184,154,104,.12)':'#fff', pick:()=>this.setState({ font:i }) })),
+      langs: [['ENGLISH','en'],['BAHASA','id']].map(([label,k])=>Object.assign(sel(s[k]), { label, pick:()=>{ if (s[k] && !(s.en && s.id)) return; this.setState({ [k]: !s[k] }); } })),
+      save: ()=>{ const c = JSON.parse(localStorage.getItem('ananta.cms')||'{}'); localStorage.setItem('ananta.cms', JSON.stringify(Object.assign(c, { brand: { headline: s.headline, tagline: s.tagline, dev: s.dev, mode: s.mode }, ts: Date.now() }))); this.toastMsg('Brand applied · 5 displays, web and mobile refresh within 30 s'); },
+      primC: PRIMS[s.prim][1], accC: ACCS[s.acc][1], headFF: FONTS[s.font][1], headFW: FONTS[s.font][2], headA, headB: last,
+      logoTxt: (s.mode===0 ? 'ANANTA' : s.dev.split(' ')[0].toUpperCase()), subLogoDisp: s.mode===0 ? 'block' : 'none',
+      enterTxt: s.en ? 'ENTER EXPERIENCE' : 'MULAI', langDisp: s.en && s.id ? 'block' : 'none',
+      taglineUp: s.tagline.toUpperCase(), powered: s.mode===0 ? 'ANANTA PROPERTY™' : s.mode===1 ? s.dev.toUpperCase() + ' × ANANTA PROPERTY' : '',
+      wSteps: stepsL.map((label,i)=>({ n:'0'+(i+1), label: label.toUpperCase(), c: i<=s.step?'#B89A68':'rgba(11,21,24,.12)', tc: i===s.step?'#0B1518':'rgba(11,21,24,.5)', pick:()=>this.setState({ step:i }) })),
+      wFields: fieldsBy[s.step].map(([label,k])=>({ label, val:s.w[k], set:setW(k) })),
+      wHasChoice: s.step===1, wChoiceLabel:'PROPERTY TYPE', wChoices: TYPES.map((label,i)=>Object.assign(sel(s.wType===i), { label, pick:()=>this.setState({ wType:i }) })),
+      wHasSteppers: s.step===3, wSteppers: [['FLOORS','floors',1,40],['UNITS PER FLOOR','perFloor',1,12]].map(([label,k,mn,mx])=>({ label, val:s[k], minus:()=>this.setState({ [k]: Math.max(mn, s[k]-1) }), plus:()=>this.setState({ [k]: Math.min(mx, s[k]+1) }) })),
+      wIsReview: s.step===4, wSummary: [['Developer',s.w.dev],['Project',s.w.proj],['Type',TYPES[s.wType]],['Location',s.w.loc],['Building',s.w.bld],['Units',s.floors + ' floors × ' + s.perFloor + ' = ' + total]].map(r=>({k:r[0], v:r[1]})),
+      wBack: ()=>this.setState({ step: Math.max(0, s.step-1) }), wBackOp: s.step===0 ? .35 : 1,
+      wNextLabel: s.step===4 ? 'CREATE PROJECT · ' + total + ' UNITS' : 'NEXT →',
+      wNext: ()=>{ if (s.step<4) this.setState({ step:s.step+1 }); else { this.toastMsg(s.w.proj + ' created as draft · add pricing and floor plans next'); this.setState({ step:0 }); } },
+      wDev: s.w.dev, wProj: s.w.proj, wType: TYPES[s.wType], wBld: s.w.bld, wFloors: s.floors, wTotal: total, wGrid: grid,
+      wMore: s.floors > 8 || s.perFloor > 8 ? 'Showing the top 8 floors / first 8 units' : '',
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;height:100%;background:#050a0b;overflow:hidden;font-family:Montserrat,sans-serif}a{color:#B89A68}a:hover{color:#F3F0E9}</style></helmet>
+<div style="position:fixed;inset:0;background:#050a0b">
+<div style="position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:{{ stageTransform }};overflow:hidden;background:#0B1518;color:#F3F0E9;display:grid;grid-template-columns:700px 1fr">
+<div style="position:relative;overflow:hidden">
+<img src="img/showroom.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,21,24,.95) 8%,rgba(11,21,24,.1) 50%,rgba(11,21,24,.6))"></div>
+<div style="position:absolute;left:56px;top:56px;display:flex;flex-direction:column;gap:6px"><div style="font:400 28px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 9px/1 Montserrat;letter-spacing:.62em;padding-left:30px">PROPERTY™</div></div>
+<div style="position:absolute;left:56px;right:56px;bottom:56px;display:flex;flex-direction:column;gap:18px">
+<div style="font:500 13px Montserrat;letter-spacing:.34em;color:#B89A68">PROPERTY EXPERIENCE CENTER™</div>
+<div style="font:300 72px/1 'Cormorant Garamond',serif">Immersive<br><span style="font-style:italic;color:#B89A68">sales gallery</span></div>
+<div style="font:300 18px/1.6 Montserrat;opacity:.85">One walkthrough, four displays and a consultant tablet, running offline-first inside the marketing office.</div>
+</div>
+</div>
+<div style="padding:56px 72px 48px 64px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 40px 'Cormorant Garamond',serif">Gallery layout</span><span style="font:500 13px Montserrat;opacity:.6">Tap a display</span></div>
+<div style="display:grid;grid-template-columns:640px 1fr;gap:40px">
+<div style="position:relative;height:440px;background:#F3F0E9;color:#0B1518">
+<div style="position:absolute;inset:14px;border:3px solid #0B1518"></div>
+<div style="position:absolute;left:14px;bottom:14px;width:90px;height:3px;background:#F3F0E9"></div>
+<div style="position:absolute;left:26px;bottom:24px;font:600 10px Montserrat;letter-spacing:.2em;opacity:.6">ENTRY</div>
+<sc-for list="{{ zones }}" as="z" hint-placeholder-count="5"><div onClick="{{ z.pick }}" style="position:absolute;left:{{ z.l }};top:{{ z.t }};width:{{ z.w }};height:{{ z.h }};cursor:pointer;background:{{ z.bg }};color:{{ z.fg }};border:2px solid #0B1518;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;transition:background .25s" style-hover="background:#B89A68;color:#0B1518"><span style="font:600 11px Montserrat;letter-spacing:.2em">{{ z.code }}</span><span style="font:400 17px 'Cormorant Garamond',serif">{{ z.name }}</span></div></sc-for>
+<div style="position:absolute;left:250px;top:250px;width:150px;height:70px;border:1.5px dashed rgba(11,21,24,.4);border-radius:40px;display:flex;align-items:center;justify-content:center;font:500 11px Montserrat;letter-spacing:.14em;opacity:.6">LOUNGE</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<span style="font:500 12px Montserrat;letter-spacing:.3em;color:#B89A68">{{ z.code }}</span>
+<span style="font:300 46px/1 'Cormorant Garamond',serif">{{ z.name }}</span>
+<span style="font:300 16px/1.6 Montserrat;opacity:.85">{{ z.role }}</span>
+<div style="display:flex;flex-direction:column;border-top:1px solid rgba(243,240,233,.18)">
+<sc-for list="{{ z.specs }}" as="sp" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(243,240,233,.08);font:400 15px Montserrat"><span style="opacity:.6">{{ sp.k }}</span><span>{{ sp.v }}</span></div></sc-for>
+</div>
+<sc-if value="{{ z.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ z.img }}" style="width:100%;height:150px;object-fit:cover"></sc-if>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid rgba(243,240,233,.12);padding-top:26px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 32px 'Cormorant Garamond',serif">System</span>
+<div onClick="{{ toggle }}" style="cursor:pointer;display:flex;gap:12px;align-items:center;border:1px solid rgba(243,240,233,.3);padding:12px 18px;font:600 12px Montserrat;letter-spacing:.2em"><span style="width:10px;height:10px;border-radius:50%;background:{{ netColor }}"></span>{{ netLabel }}</div></div>
+<div style="display:flex;align-items:center;gap:0">
+<sc-for list="{{ chain }}" as="c" hint-placeholder-count="5"><div style="display:flex;align-items:center"><div style="border:1px solid {{ c.bc }};padding:16px 18px;display:flex;flex-direction:column;gap:4px;min-width:150px"><span style="font:600 11px Montserrat;letter-spacing:.2em">{{ c.name }}</span><span style="font:400 12px Montserrat;opacity:.6">{{ c.sub }}</span></div><span style="width:36px;height:1px;background:{{ c.lc }};display:{{ c.arrow }}"></span></div></sc-for>
+</div>
+<div style="display:flex;gap:40px;font:400 15px Montserrat;opacity:.85"><span>Local cache: scenes, specs, floor plans, price snapshot</span><span style="color:{{ queueColor }}">{{ queueTxt }}</span></div>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const Z = [
+  { code:'DISPLAY 01', name:'LED wall 4×2', l:'120px', t:'32px', w:'400px', h:'64px', role:'The customer-facing 3D walkthrough. Launches straight into the experience at boot, no desktop visible.', specs:[['Resolution','7680 × 2160'],['Content','UE5 walkthrough'],['Controlled by','Touch table + tablet']], img:null },
+  { code:'DISPLAY 02', name:'Touch table', l:'200px', t:'150px', w:'240px', h:'90px', role:'Floor plan and room navigation. Tapping a room moves the camera on the LED wall.', specs:[['Size','65" horizontal'],['Content','Floor plan ↔ 3D sync'],['Input','Multi-touch']], img:'img/touchtable.jpg' },
+  { code:'DISPLAY 03', name:'Specs screen', l:'540px', t:'120px', w:'70px', h:'150px', role:'Live specifications, availability and price when the consultant chooses to show it.', specs:[['Size','55" portrait'],['Content','Unit data from CMS'],['Updates','Real time']], img:null },
+  { code:'DISPLAY 04', name:'Masterplan', l:'30px', t:'120px', w:'70px', h:'150px', role:'Location and masterplan layer with points of interest. Optional for single-building pilots.', specs:[['Size','55" portrait'],['Content','Masterplan · POI'],['Phase','3']], img:null },
+  { code:'TABLET', name:'Sales console', l:'450px', t:'320px', w:'110px', h:'70px', role:'The consultant controls rooms, materials, lighting and what appears on each screen. Notes stay private.', specs:[['Device','12.9" tablet'],['Link','WebSocket'],['App','Sales Console']], img:'img/vr.jpg' }
+];
+class Component extends DCLogic {
+  state = { scale:1, sel:0, online:true, queued:0 };
+  componentDidMount() { this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(0.1, Math.min(window.innerWidth/1920, window.innerHeight/1080)) }); }; this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300); if (window.ResizeObserver) { this._ro = new ResizeObserver(this.onResize); this._ro.observe(document.documentElement); }
+    this.iv = setInterval(() => { if (!this.state.online) this.setState(s => ({ queued: s.queued + 1 })); }, 2500); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearInterval(this.iv); }
+  renderVals() {
+    const s = this.state, z = Z[s.sel], on = s.online;
+    const chain = [['SALES TABLET','Console app'],['WEBSOCKET','Local network'],['SHOWROOM SERVER','Cache + queue'],['UE5 APP','Walkthrough'],['CLOUD API','CMS · CRM']];
+    return {
+      stageTransform: 'translate(-50%,-50%) scale(' + s.scale + ')',
+      zones: Z.map((x,i)=>({ code:x.code, name:x.name, l:x.l, t:x.t, w:x.w, h:x.h, pick:()=>this.setState({sel:i}), bg: i===s.sel?'#0B1518':'transparent', fg: i===s.sel?'#F3F0E9':'#0B1518' })),
+      z: { code:z.code, name:z.name, role:z.role, specs:z.specs.map(p=>({k:p[0], v:p[1]})), hasImg: !!z.img, img:z.img },
+      toggle: ()=>this.setState({ online: !on, queued: on ? 0 : s.queued }),
+      netColor: on ? '#8fbf9a' : '#e39a7b', netLabel: on ? 'ONLINE · TAP TO SIMULATE OUTAGE' : 'OFFLINE · TAP TO RECONNECT',
+      chain: chain.map((c,i)=>({ name:c[0], sub:c[1], bc: i===4 && !on ? '#e39a7b' : 'rgba(243,240,233,.35)', lc: i===3 && !on ? '#e39a7b' : '#B89A68', arrow: i<4 ? 'block' : 'none' })),
+      queueTxt: on ? (s.queued ? s.queued + ' queued events synced' : 'All leads synced') : s.queued + ' leads & events queued locally', queueColor: on ? '#8fbf9a' : '#e39a7b'
+    };
+  }
+}
+</script>
+</body>
+</html>

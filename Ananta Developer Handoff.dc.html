@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;background:#e6e1d6;font-family:Montserrat,sans-serif;color:#0B1518}a{color:#8a6f45}a:hover{color:#0B1518}code{font:400 14px ui-monospace,Menlo,monospace;background:rgba(11,21,24,.06);padding:1px 5px}</style></helmet>
+<div style="max-width:1000px;margin:40px auto;background:#F3F0E9;padding:64px clamp(24px,6vw,80px);display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:6px"><div style="font:400 22px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 8px/1 Montserrat;letter-spacing:.62em;padding-left:24px">PROPERTY™</div></div><div style="font:500 11px/1.8 Montserrat;letter-spacing:.24em;text-align:right;opacity:.65">DEVELOPER HANDOFF · V1<br>PROPERTY EXPERIENCE™</div></div>
+<div style="display:flex;flex-direction:column;gap:14px"><div style="font:300 56px/1 'Cormorant Garamond',serif">From prototype to <span style="font-style:italic;color:#8a6f45">production.</span></div><div style="font:400 16px/1.7 Montserrat;opacity:.8;text-wrap:pretty">These HTML prototypes define the screens, states and interactions. Production builds the 3D in Unreal Engine 5, the web apps in Next.js, and the backend in NestJS with PostgreSQL, as specified in the technical PRD. Property data stays separate from the 3D layer: price, availability and content changes must never require an Unreal rebuild.</div></div>
+
+<sc-for list="{{ sections }}" as="sec" hint-placeholder-count="5">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:16px;align-items:baseline;border-bottom:2px solid #0B1518;padding-bottom:10px"><span style="font:400 28px 'Cormorant Garamond',serif;color:#8a6f45">{{ sec.n }}</span><span style="font:600 14px Montserrat;letter-spacing:.24em">{{ sec.title }}</span></div>
+<sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:24px;padding:10px 0;border-bottom:1px solid rgba(11,21,24,.1)"><span style="font:500 15px/1.5 Montserrat">{{ r.a }}</span><span style="font:400 15px/1.6 Montserrat;opacity:.85;text-wrap:pretty">{{ r.b }}</span></div></sc-for>
+</div>
+</sc-for>
+
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid rgba(11,21,24,.15);padding-top:18px;font:500 10px Montserrat;letter-spacing:.3em;opacity:.55"><span>PEOPLE · PLACES · A BRIGHTER TOMORROW</span><span>SEPTEMBER 2026</span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const S = [
+  ['SCREEN MAP', [
+    ['Immersive Prototype','Customer flow on the LED wall (1920×1080): Welcome → Projects → Overview → Masterplan → Unit explorer → Floor plan → Loading → 3D tour → Compare → Price → Lead → Thank you, plus idle timeout. Production: UE5 showroom build + Next.js web tier.'],
+    ['Sales Console','Tablet (1366×1024). Sends commands to the showroom server over WebSocket; mirrors customer state.'],
+    ['Mobile Web','390 wide. Opened from the QR with ?room= & ?floor= params. Production: Next.js + lightweight web 3D.'],
+    ['Admin CMS + 5 CMS files','Shared sidebar (CMSSidebar). Units, pricing, floor plans, scenes, leads, brand, wizard, hotspots, materials, tour, POI, media, forms, routing, translations, phrases, displays, roles, audit.'],
+    ['Analytics · Showroom Setup','Marketing dashboard and gallery system view.']]],
+  ['REAL-TIME CONTROL PROTOCOL', [
+    ['Prototype transport','BroadcastChannel "ananta-showroom" in the same browser. Production: WebSocket via the local showroom server.'],
+    ['Commands (console → wall)','{type:"cmd", cmd:"OPEN_ROOM", room} · CHANGE_MATERIAL {key, k} · CHANGE_TIME {hour} · GUIDED {on} · OVERLAY {name: FLOOR PLAN | PRICE | COMPARE | MASTERPLAN | WINDOW VIEW | LEAD FORM | CLEAR}'],
+    ['State (wall → console)','{type:"state", screen, room, cfg:{floor, wall, kitchen, style}, hour, weather, guided, panel, seen[8], unit} on every change plus a 2 s heartbeat. Console shows “linked” if a heartbeat arrived in the last 5 s.'],
+    ['CMS → experience','Prototype writes localStorage "ananta.cms" {units[], pricing{promo, fee, kpr, dpMin, promoName}, brand{headline, tagline, dev, mode}}. Production: CMS API + cache invalidation to displays.']]],
+  ['DATA MODEL', [
+    ['Hierarchy','Developer → Project → Building → Floor → Unit → Room → Hotspot / Object'],
+    ['Room','id, unit_id, name (EN/ID), type, area, dims, floor_plan_region {x,y,w,h}, camera_anchor (CAM-*), scene_anchor {x,y,z}, caption (EN/ID), view_type'],
+    ['Hotspot','id, room_id, type (INFO | PRODUCT | VIEW | NAVIGATE | CTA), position {x,y,z}, title, description, media_url, target_room_id'],
+    ['Configuration option','unit_id, category (FLOOR | WALL | KITCHEN | STYLE), name, material/asset id, price_modifier, is_default, unit scope'],
+    ['Pricing rule','base price per unit, promotions {name, discount, start, end, active}, booking fee, DP min %, instalment tenors, KPR rate, visibility per channel'],
+    ['Session & lead','session {id, unit, device, duration, rooms_viewed, config, price_viewed, cta}; lead {name, whatsapp, email, purpose, visit_date, consent_contact, consent_activity, session_id, assigned_agent, status}']]],
+  ['EVENTS TO TRACK', [
+    ['Engagement','SESSION_STARTED · PROJECT_SELECTED · UNIT_SELECTED · FLOORPLAN_OPENED · 3D_ENTERED · ROOM_ENTERED · HOTSPOT_CLICKED'],
+    ['Configuration','MATERIAL_CHANGED · TIME_CHANGED · WEATHER_CHANGED · MEASURE_STARTED · VIEW_OPENED · GUIDED_STARTED · ASK_QUERY (text, matched actions)'],
+    ['Commercial','PRICE_VIEWED · COMPARISON_STARTED · CTA_CLICKED · LEAD_SUBMITTED · SITE_VISIT_BOOKED · SESSION_TIMEOUT']]],
+  ['BEHAVIOUR RULES', [
+    ['Idle timeout','90 s without input → 20 s countdown → session cleared and back to Welcome. Suppressed while a guided tour is playing. Configurable per showroom.'],
+    ['Ask Ananta','Only calls approved tools (navigate_to_room, change_material, change_lighting, get_price, compare_units, book_site_visit). Never generates geometry. Phrase list managed in CMS.'],
+    ['Consent','Contact consent required; activity-sharing consent optional and separate. Session data attaches to the CRM lead only when shared.'],
+    ['Offline','Showroom caches scenes, specs, floor plans and a price snapshot. Leads and events queue locally and sync on reconnect.'],
+    ['Localisation','Every customer string exists in EN and ID. Missing ID strings fall back to EN and are flagged in the CMS.']]]
+];
+class Component extends DCLogic {
+  renderVals() { return { sections: S.map((s,i)=>({ n:'0'+(i+1), title:s[0], rows:s[1].map(r=>({ a:r[0], b:r[1] })) })) }; }
+}
+</script>
+</body>
+</html>

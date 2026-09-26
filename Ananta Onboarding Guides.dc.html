@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400;500;600&display=swap"><style>html,body{margin:0;background:#0B1518;font-family:Montserrat,sans-serif;color:#F3F0E9}a{color:#B89A68;text-decoration:none}a:hover{color:#F3F0E9}</style></helmet>
+<div style="min-height:100vh;padding:56px clamp(24px,5vw,80px);box-sizing:border-box;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:6px"><div style="font:400 24px/1 Montserrat;letter-spacing:.42em">ANANTA</div><div style="font:500 8px/1 Montserrat;letter-spacing:.62em;padding-left:26px">PROPERTY™</div></div><div style="display:flex;border:1px solid rgba(243,240,233,.3)"><sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3"><div onClick="{{ t.pick }}" style="cursor:pointer;padding:14px 20px;font:600 11px Montserrat;letter-spacing:.2em;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:14px;max-width:820px"><span style="font:500 12px Montserrat;letter-spacing:.3em;color:#B89A68">FIRST LOGIN · {{ role.up }}</span><span style="font:300 clamp(44px,5vw,72px)/1 'Cormorant Garamond',serif">{{ role.head }} <span style="font-style:italic;color:#B89A68">{{ role.headB }}</span></span><span style="font:300 17px/1.7 Montserrat;opacity:.85;text-wrap:pretty">{{ role.intro }}</span></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:48px;align-items:start">
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+<div onClick="{{ s.toggle }}" style="cursor:pointer;display:grid;grid-template-columns:56px minmax(0,1fr) 40px;gap:20px;padding:22px 0;border-top:1px solid rgba(243,240,233,.15);opacity:{{ s.op }}">
+<span style="font:400 34px/1 'Cormorant Garamond',serif;color:#B89A68">{{ s.n }}</span>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font:500 18px Montserrat">{{ s.t }}</span><span style="font:300 15px/1.6 Montserrat;opacity:.8;text-wrap:pretty">{{ s.d }}</span><a href="{{ s.href }}" target="_blank" style="font:600 11px Montserrat;letter-spacing:.2em">{{ s.link }} ↗</a></div>
+<span style="width:26px;height:26px;border:1px solid #B89A68;background:{{ s.bg }};color:#0B1518;display:flex;align-items:center;justify-content:center;font:700 13px Montserrat">{{ s.mark }}</span>
+</div>
+</sc-for>
+</div>
+<div style="background:rgba(243,240,233,.04);border:1px solid rgba(243,240,233,.12);padding:28px;display:flex;flex-direction:column;gap:16px">
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68">PROGRESS</span>
+<span style="font:300 64px/1 'Cormorant Garamond',serif">{{ done }} / {{ total }}</span>
+<div style="height:4px;background:rgba(243,240,233,.12)"><div style="height:4px;width:{{ pct }};background:#B89A68;transition:width .3s"></div></div>
+<span style="font:600 11px Montserrat;letter-spacing:.26em;color:#B89A68;margin-top:10px">YOUR ACCESS</span>
+<sc-for list="{{ access }}" as="a" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;font:400 14px Montserrat;padding:6px 0;border-bottom:1px solid rgba(243,240,233,.08)"><span>{{ a.k }}</span><span style="color:{{ a.c }}">{{ a.v }}</span></div></sc-for>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const R = [
+  { label:'SALES AGENT', head:'Welcome to the', headB:'showroom.', intro:'You guide visitors from the tablet while they explore on the LED wall. Five things to try before your first walk-in.', access:[['Sales console','Edit'],['Leads','View own'],['Units & pricing','View'],['Content','None']],
+    steps:[['Open both screens','Launch the customer screen and the sales console side by side. The console header turns green when they are linked.','Immersive Prototype','Ananta Immersive Prototype.dc.html'],['Move a room from the tablet','Rooms tab → Master Bedroom. The LED wall follows.','Sales Console','Ananta Sales Console.dc.html'],['Change a finish and the light','Materials → Marble, Lighting → Sunset.','Sales Console','Ananta Sales Console.dc.html'],['Rehearse the demo script','Run the eight steps in under five minutes.','Demo Script','Ananta Demo Script.dc.html'],['Submit a test lead','Screens → Lead form, then complete it on the wall. Check it appears in Leads.','Admin CMS · Leads','Ananta Admin CMS.dc.html?s=leads']] },
+  { label:'MARKETING MANAGER', head:'Your property,', headB:'your content.', intro:'You own what buyers see: brand, prices, rooms, finishes and language. Everything publishes without a rebuild.', access:[['Brand & content','Edit'],['Units & pricing','Edit'],['Scenes','Publish'],['Analytics','Edit']],
+    steps:[['Set the brand','Choose Ananta, co-branded or white-label and check the preview.','Brand & settings','Ananta CMS Setup.dc.html?s=setup'],['Publish a price change','Edit a unit price, publish, and watch the customer screen update.','Units & pricing','Ananta Admin CMS.dc.html?s=units'],['Add a hotspot','Place a Product hotspot in the living room.','Hotspots','Ananta CMS Content.dc.html?s=hotspots'],['Fill missing translations','Filter “Missing only” and complete the Bahasa strings.','Translations','Ananta CMS Language.dc.html?s=translations'],['Read the funnel','Check Immersive-to-Intent for the last 30 days.','Analytics','Ananta Analytics.dc.html']] },
+  { label:'3D ARTIST', head:'From drawing to', headB:'scene.', intro:'You turn drawings into walkable scenes and keep every build versioned. Property data lives in the CMS, not in Unreal.', access:[['Floor plans','Edit'],['Scenes','Edit · no publish'],['Media','Edit'],['Pricing','None']],
+    steps:[['Import a floor plan','Upload a drawing and let recognition finish.','Floor plans','Ananta Admin CMS.dc.html?s=plans'],['Tag rooms to anchors','Select each room and confirm its camera anchor and type.','Floor plans','Ananta Admin CMS.dc.html?s=plans'],['Upload renders','Tag each render by room and time of day.','Media library','Ananta CMS Content.dc.html?s=media'],['Submit a scene for review','Move your draft to Review. A manager approves and sets it live.','Scenes & versions','Ananta Admin CMS.dc.html?s=scenes'],['Check the displays','Confirm every display has cached the new version.','Displays','Ananta CMS Operations.dc.html?s=displays']] }
+];
+class Component extends DCLogic {
+  state = { role:0, done:{} };
+  renderVals() {
+    const s = this.state, r = R[s.role], d = s.done[s.role] || [];
+    return {
+      tabs: R.map((x,i)=>({ label:x.label, pick:()=>this.setState({ role:i }), bg: i===s.role?'#B89A68':'transparent', fg: i===s.role?'#0B1518':'#F3F0E9' })),
+      role: { up:r.label, head:r.head, headB:r.headB, intro:r.intro },
+      steps: r.steps.map((x,i)=>{ const on = d.includes(i); return { n:'0'+(i+1), t:x[0], d:x[1], link:x[2], href:x[3], op: on?.55:1, bg: on?'#B89A68':'transparent', mark: on?'✓':'',
+        toggle:(e)=>{ if (e.target.tagName==='A') return; const nd = on ? d.filter(y=>y!==i) : d.concat([i]); this.setState({ done: Object.assign({}, s.done, {[s.role]: nd}) }); } }; }),
+      done: d.length, total: r.steps.length, pct: (d.length/r.steps.length*100)+'%',
+      access: r.access.map(a=>({ k:a[0], v:a[1], c: a[1]==='None' ? 'rgba(243,240,233,.4)' : '#B89A68' }))
+    };
+  }
+}
+</script>
+</body>
+</html>
