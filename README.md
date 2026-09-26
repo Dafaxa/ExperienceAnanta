@@ -10,8 +10,9 @@ npx serve .
 
 Always open the pages through a server. Opening a file by double-clicking it breaks the page imports.
 
-- The `.dc.html` pages load React from unpkg.com, so they need internet access. Fonts come from Google Fonts.
+- React is served from `vendor/` (same files and integrity hashes as unpkg), so the pages run without a CDN; unpkg.com is only a fallback. Fonts still come from Google Fonts.
+- Prices, promos and the headline published from the CMS are stored in the browser. Use **Reset demo data** in the Hub footer before each client meeting.
 - Sync between the sales console, the CMS and the customer screen only works between tabs in the same browser.
-- Keep `support.js`, `image-slot.js`, `deck-stage.js`, `CMSSidebar.dc.html` and `img/`. The pages depend on them.
+- Keep `support.js`, `image-slot.js`, `deck-stage.js`, `CMSSidebar.dc.html`, `vendor/` and `img/`. The pages depend on them.
 - `src/` and `uploads/` hold the original renders. No page uses them directly.
 - `design-handoff/` holds the Claude Design export notes and chat transcript.

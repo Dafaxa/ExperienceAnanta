@@ -28,7 +28,7 @@
 
 <sc-if value="{{ isTour }}" hint-placeholder-val="{{ false }}">
 <div style="position:absolute;inset:0;animation:anFade .5s cubic-bezier(.2,.7,.2,1)">
-<sc-for list="{{ layers }}" as="L" hint-placeholder-count="1"><div style="position:absolute;inset:0;opacity:{{ L.op }};transition:opacity .7s"><sc-if value="{{ L.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ L.img }}" style="width:100%;height:100%;object-fit:cover;object-position:{{ pos }};transition:object-position .4s"></sc-if><sc-if value="{{ L.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:#1a2629;display:flex;align-items:center;justify-content:center;font:500 10px Montserrat;letter-spacing:.3em;opacity:.5">{{ L.ph }}</div></sc-if></div></sc-for>
+<sc-for list="{{ layers }}" as="L" hint-placeholder-count="1"><div style="position:absolute;inset:0;opacity:{{ L.op }};transition:opacity .7s"><sc-if value="{{ L.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ L.img }}" style="width:100%;height:100%;object-fit:cover;object-position:{{ pos }};transition:object-position .4s"></sc-if><sc-if value="{{ L.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;overflow:hidden;background:#0B1518"><img src="{{ L.blur }}" alt="" style="position:absolute;left:-60px;top:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(40px) brightness(.34) saturate(.75)"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(11,21,24,0) 0%,rgba(11,21,24,.75) 80%)"></div><div style="position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#F3F0E9;pointer-events:none"><span style="width:44px;height:1px;background:#B89A68"></span><span style="font:500 9px Montserrat;letter-spacing:.42em;color:#B89A68;padding-left:.42em">{{ L.soon }}</span><span style="font:italic 300 34px/1 'Cormorant Garamond',serif">{{ L.rname }}</span><span style="font:400 10px Montserrat;letter-spacing:.18em;opacity:.65">{{ L.sub }}</span></div></div></sc-if></div></sc-for>
 <div onPointerDown="{{ pd }}" onPointerMove="{{ pm }}" onPointerUp="{{ pu }}" style="position:absolute;inset:0;touch-action:none"></div>
 <div style="position:absolute;left:0;right:0;top:0;height:160px;background:linear-gradient(180deg,rgba(11,21,24,.85),transparent);pointer-events:none"></div>
 <div style="position:absolute;left:20px;right:20px;top:58px;display:flex;justify-content:space-between;align-items:center"><div onClick="{{ goHome }}" style="cursor:pointer;width:44px;height:44px;border-radius:50%;background:rgba(11,21,24,.6);display:flex;align-items:center;justify-content:center;font:500 18px Montserrat">←</div><span style="font:500 11px Montserrat;letter-spacing:.26em">2B-01 · VIRTUAL TOUR</span><div onClick="{{ toggleSheet }}" style="cursor:pointer;width:44px;height:44px;border-radius:50%;background:rgba(11,21,24,.6);display:flex;align-items:center;justify-content:center;font:500 18px 'Cormorant Garamond',serif">i</div></div>
@@ -54,10 +54,10 @@
 <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
 <div style="font:300 40px/1.02 'Cormorant Garamond',serif">Visit <span style="font-style:italic;color:#B89A68">in person.</span></div>
 <div style="font:400 13px/1.6 Montserrat;opacity:.75">2B-01 · Oak floor · viewed 4 of 8 rooms</div>
-<div style="display:flex;flex-direction:column;gap:8px"><label style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.7">FULL NAME</label><input value="{{ name }}" onChange="{{ setName }}" style="background:transparent;border:0;border-bottom:1px solid rgba(243,240,233,.4);color:#F3F0E9;font:400 18px Montserrat;padding:10px 0;min-height:24px"></div>
+<div style="display:flex;flex-direction:column;gap:8px"><label style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.7">FULL NAME</label><input value="{{ name }}" onChange="{{ setName }}" style="background:transparent;border:0;border-bottom:1px solid {{ nameBc }};color:#F3F0E9;font:400 18px Montserrat;padding:10px 0;min-height:24px"></div>
 <div style="display:flex;flex-direction:column;gap:8px"><label style="font:600 10px Montserrat;letter-spacing:.24em;opacity:.7">WHATSAPP</label><input value="{{ wa }}" onChange="{{ setWa }}" placeholder="+62 812 …" style="background:transparent;border:0;border-bottom:1px solid {{ waBc }};color:#F3F0E9;font:400 18px Montserrat;padding:10px 0;min-height:24px"></div>
-<div onClick="{{ toggleC }}" style="cursor:pointer;display:flex;gap:12px;align-items:flex-start;font:400 13px/1.5 Montserrat;min-height:44px"><span style="width:20px;height:20px;flex:none;border:1px solid #B89A68;background:{{ cBg }};color:#0B1518;display:flex;align-items:center;justify-content:center;font:700 12px Montserrat">{{ cMark }}</span>I agree Ananta Property may contact me via WhatsApp about this property.</div>
-<div onClick="{{ submit }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;min-height:56px;display:flex;align-items:center;justify-content:center;font:600 13px Montserrat;letter-spacing:.22em;opacity:{{ subOp }}">SEND TO CONSULTANT</div>
+<div onClick="{{ toggleC }}" style="cursor:pointer;display:flex;gap:12px;align-items:flex-start;font:400 13px/1.5 Montserrat;min-height:44px"><span style="width:20px;height:20px;flex:none;border:1px solid {{ cBc }};background:{{ cBg }};color:#0B1518;display:flex;align-items:center;justify-content:center;font:700 12px Montserrat">{{ cMark }}</span>I agree Ananta Property may contact me via WhatsApp about this property.</div>
+<div style="font:400 12px/1.5 Montserrat;color:#e39a7b;min-height:18px">{{ formHint }}</div><div onClick="{{ submit }}" style="cursor:pointer;margin-top:auto;background:#B89A68;color:#0B1518;min-height:56px;display:flex;align-items:center;justify-content:center;font:600 13px Montserrat;letter-spacing:.22em;opacity:{{ subOp }}">SEND TO CONSULTANT</div>
 </sc-if>
 <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
 <div style="margin:auto 0;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center"><div style="width:48px;height:1px;background:#B89A68"></div><div style="font:300 54px/1 'Cormorant Garamond',serif">Thank <span style="font-style:italic;color:#B89A68">you.</span></div><div style="font:400 14px/1.6 Montserrat;opacity:.8">Ayu will message you on WhatsApp within 24 hours.</div><div onClick="{{ goTour }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);min-height:52px;padding:0 24px;display:flex;align-items:center;font:600 12px Montserrat;letter-spacing:.22em">CONTINUE TOUR</div></div>
@@ -80,7 +80,7 @@ class Component extends DCLogic {
       stageTransform: 'scale(' + s.scale + ')',
       isHome: s.screen==='home', isTour: s.screen==='tour', isLead: s.screen==='lead',
       goTour: ()=>this.setState({ screen:'tour', done:false }), goHome: ()=>this.setState({ screen:'home' }), goLead: ()=>this.setState({ screen:'lead', prev:s.screen }), goBack: ()=>this.setState({ screen:s.prev }),
-      layers: ROOMS.map((x,i)=>({ op: i===s.room?1:0, hasImg:!!x[2], noImg:!x[2], img:x[2], ph: x[0].toUpperCase() + ' · RENDER' })),
+      layers: ROOMS.map((x,i)=>({ op: i===s.room?1:0, hasImg:!!x[2], noImg:!x[2], img:x[2], soon:'RENDER COMING SOON', rname:x[0], sub:x[1]+' m²', blur: i===6||i===3 ? 'img/living2.jpg' : 'img/living.jpg' })),
       pos: s.look + '% 50%', hintOp: s.dragged ? 0 : 1,
       pd: (e)=>{ this.d = { x:e.clientX, l:s.look }; }, pm: (e)=>{ if (!this.d) return; this.setState({ look: Math.max(0, Math.min(100, this.d.l - (e.clientX-this.d.x)/3)), dragged:true }); }, pu: ()=>{ this.d = null; },
       toggleSheet: ()=>this.setState({ sheet: !s.sheet }), sheetOpen: s.sheet,
@@ -88,9 +88,11 @@ class Component extends DCLogic {
       chips: ROOMS.map((x,i)=>({ name:x[0], pick:()=>this.setState({ room:i, look:50 }), bg: i===s.room?'#B89A68':'transparent', fg: i===s.room?'#0B1518':'#F3F0E9', bc: i===s.room?'#B89A68':'rgba(243,240,233,.3)' })),
       floors: FLOORS.map((f,i)=>({ n:f[0], c:f[1], pick:()=>this.setState({floor:i}), bc: i===s.floor?'#B89A68':'rgba(243,240,233,.2)' })),
       name: s.name, wa: s.wa, setName: (e)=>this.setState({ name:e.target.value }), setWa: (e)=>this.setState({ wa:e.target.value }),
-      waBc: s.wa && !/^\+?[0-9 ]{9,16}$/.test(s.wa.trim()) ? '#e39a7b' : 'rgba(243,240,233,.4)',
+      waBc: (s.wa || s.tried) && !/^\+?[0-9 ]{9,16}$/.test(s.wa.trim()) ? '#e39a7b' : 'rgba(243,240,233,.4)',
+      nameBc: s.tried && s.name.trim().length<2 ? '#e39a7b' : 'rgba(243,240,233,.4)', cBc: s.tried && !s.c ? '#e39a7b' : '#B89A68',
+      formHint: s.tried && !ok ? 'Please complete your name, a valid WhatsApp number and consent.' : '',
       toggleC: ()=>this.setState({ c: !s.c }), cBg: s.c?'#B89A68':'transparent', cMark: s.c?'✓':'',
-      subOp: ok ? 1 : .45, submit: ()=>{ if (ok) this.setState({ done:true }); },
+      subOp: ok ? 1 : .45, submit: ()=>{ if (ok) this.setState({ done:true, tried:false }); else this.setState({ tried:true }); },
       done: s.done, notDone: !s.done
     };
   }

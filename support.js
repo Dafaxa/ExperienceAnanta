@@ -1840,10 +1840,17 @@
     if (w.React && w.ReactDOM) return Promise.resolve();
     const react = cdnScriptFor(REACT_URL, REACT_SRI);
     const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
-    return Promise.all([
+    const fromCdn = () => Promise.all([
       loadScript(react.src, react.integrity),
       loadScript(reactDom.src, reactDom.integrity)
     ]).then(() => void 0);
+    // Local override: prefer the self-hosted copies in ./vendor (same files and
+    // SRI hashes as unpkg) so the demo runs without the CDN; fall back to unpkg.
+    if (w.__resources && w.__resources[REACT_URL]) return fromCdn();
+    return Promise.all([
+      loadScript("vendor/react.production.min.js", REACT_SRI),
+      loadScript("vendor/react-dom.production.min.js", REACT_DOM_SRI)
+    ]).then(() => void 0, fromCdn);
   }
   function init() {
     const runtime = createRuntime(document);

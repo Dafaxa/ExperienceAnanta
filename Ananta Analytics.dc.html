@@ -57,7 +57,7 @@
 <div style="display:flex;flex-direction:column;gap:10px">
 <sc-for list="{{ d.timeline }}" as="e" hint-placeholder-count="7"><div style="display:grid;grid-template-columns:60px 1fr;gap:14px;font:400 14px Montserrat;align-items:baseline"><span style="font:500 12px ui-monospace,Menlo,monospace;opacity:.55">{{ e.t }}</span><span>{{ e.txt }}</span></div></sc-for>
 </div>
-<div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:18px;text-align:center;font:600 12px Montserrat;letter-spacing:.22em">EXPORT</div><div style="cursor:pointer;background:#B89A68;color:#0B1518;padding:18px;text-align:center;font:600 12px Montserrat;letter-spacing:.22em">OPEN IN CRM →</div></div>
+<div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px"><div onClick="{{ exportSession }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);padding:18px;text-align:center;font:600 12px Montserrat;letter-spacing:.22em">EXPORT CSV</div><div onClick="{{ openCrm }}" style="cursor:pointer;background:#B89A68;color:#0B1518;padding:18px;text-align:center;font:600 12px Montserrat;letter-spacing:.22em">OPEN IN CRM →</div></div>
 </div>
 </sc-if>
 </div>
@@ -96,6 +96,10 @@ class Component extends DCLogic {
       configs: [['Oak floor','46%'],['Marble floor','31%'],['Modern style','38%'],['Japandi style','27%'],['Premium kitchen','22%'],['Sunset lighting','58%']].map(c=>({label:c[0], p:c[1]})),
       sessions: SESS.map((r,i)=>({ id:r[0], unit:r[1], dur:dur(r[2]), rooms:r[3]+' / 8', price:r[4]?'Viewed':'—', cta:r[5], signal:r[6], sc: r[6]==='HIGH'?'#8a6f45':r[6]==='MEDIUM'?'#0B1518':'rgba(11,21,24,.5)', bg: s.open===i?'rgba(184,154,104,.14)':'transparent', open:()=>this.setState({open:i}) })),
       hasDrawer: !!o, close: ()=>this.setState({open:null}),
+      exportSession: ()=>{ if (!o) return; const q = v => '"' + String(v).replace(/"/g,'""') + '"';
+        const rows = [['Session','Unit','Duration','Rooms seen','Viewed price','CTA','Signal'].map(q).join(','), [o[0],o[1],dur(o[2]),o[3]+'/8',o[4]?'Yes':'No',o[5],o[6]].map(q).join(','), '', ['Time','Event'].map(q).join(',')].concat(o[7].map(e=>[e[0],e[1]].map(q).join(',')));
+        const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([rows.join('\n')], {type:'text/csv'})); a.download = 'ananta-' + o[0].toLowerCase() + '.csv'; document.body.appendChild(a); a.click(); a.remove(); },
+      openCrm: ()=>{ window.open('Ananta Admin CMS.dc.html?s=leads', '_blank'); },
       d: o ? { id:o[0], unit:o[1], dur:dur(o[2]), rooms:o[3]+' / 8', signal:o[6], timeline:o[7].map(e=>({t:e[0], txt:e[1]})) } : { timeline:[] }
     };
   }

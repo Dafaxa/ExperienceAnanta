@@ -25,7 +25,7 @@
 <div style="display:grid;grid-template-columns:830px 1fr;height:940px">
 <div style="padding:26px 30px 26px 36px;display:flex;flex-direction:column;gap:18px;border-right:1px solid rgba(243,240,233,.1)">
 <div style="position:relative;height:430px;overflow:hidden;background:#1a2629;border:1px solid rgba(243,240,233,.15)">
-<sc-for list="{{ previews }}" as="p" hint-placeholder-count="1"><div style="position:absolute;inset:0;opacity:{{ p.op }};transition:opacity .7s"><sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ p.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 12px Montserrat;letter-spacing:.3em;opacity:.4">{{ p.ph }}</div></sc-if></div></sc-for>
+<sc-for list="{{ previews }}" as="p" hint-placeholder-count="1"><div style="position:absolute;inset:0;opacity:{{ p.op }};transition:opacity .7s"><sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ p.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;overflow:hidden;background:#0B1518"><img src="{{ p.blur }}" alt="" style="position:absolute;left:-60px;top:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(40px) brightness(.34) saturate(.75)"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(11,21,24,0) 0%,rgba(11,21,24,.75) 80%)"></div><div style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#F3F0E9;pointer-events:none"><span style="width:44px;height:1px;background:#B89A68"></span><span style="font:500 10px Montserrat;letter-spacing:.42em;color:#B89A68;padding-left:.42em">{{ p.soon }}</span><span style="font:italic 300 40px/1 'Cormorant Garamond',serif">{{ p.rname }}</span><span style="font:400 11px Montserrat;letter-spacing:.18em;opacity:.65">{{ p.sub }}</span></div></div></sc-if></div></sc-for>
 <div style="position:absolute;inset:0;background:{{ tint }};opacity:{{ tintOp }};mix-blend-mode:multiply;transition:all 1s"></div>
 <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,21,24,.85),transparent 45%)"></div>
 <div style="position:absolute;left:18px;top:16px;background:rgba(11,21,24,.8);padding:8px 12px;font:600 10px Montserrat;letter-spacing:.24em">CUSTOMER VIEW · LED WALL 4×2</div>
@@ -66,7 +66,7 @@
 </sc-if>
 </div>
 <div style="padding:26px 36px 26px 30px;display:flex;flex-direction:column;gap:16px;min-height:0">
-<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 11px Montserrat;letter-spacing:.26em;opacity:.65">CUSTOMER SESSION</span><span style="font:500 11px Montserrat;letter-spacing:.14em;opacity:.55">Walk-in · 10:42</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 11px Montserrat;letter-spacing:.26em;opacity:.65">CUSTOMER SESSION</span><span style="font:500 11px Montserrat;letter-spacing:.14em;opacity:.55">Walk-in · {{ startTime }}</span></div>
 <div style="font:400 30px/1 'Cormorant Garamond',serif">Ananta Residences · 2B-01</div>
 <div style="display:flex;flex-direction:column;font:400 14px Montserrat;border-top:1px solid rgba(243,240,233,.15)">
 <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(243,240,233,.08)"><span style="opacity:.6">Configuration</span><span>{{ cfgTxt }}</span></div>
@@ -93,7 +93,7 @@ const PRESETS = [['Morning',8],['Midday',12],['Golden',16.5],['Sunset',18],['Nig
 const PUSHES = [['FLOOR PLAN','Display 2 + LED overlay'],['PRICE','Breakdown & payment plan'],['COMPARE','2B-01 vs 3A-02'],['MASTERPLAN','Display 4'],['WINDOW VIEW','Current room'],['CLEAR','Back to walkthrough']];
 class Component extends DCLogic {
   state = { scale:1, room:1, seen:[true,true,false,false,false,false,false,false], tab:0, mat:{FLOOR:0,KITCHEN:0,STYLE:0}, hour:17, guided:false, showPrice:false, overlay:null, notes:'', live:true, t0:Date.now()-762000, now:Date.now(),
-    log:[{t:'10:42:05',cmd:'SESSION_STARTED',arg:'walk-in'},{t:'10:43:10',cmd:'OPEN_ROOM',arg:'ENTRANCE'},{t:'10:44:02',cmd:'OPEN_ROOM',arg:'LIVING'}], actions:3 };
+    log:[[-190,'OPEN_ROOM','LIVING'],[-242,'OPEN_ROOM','ENTRANCE'],[-762,'SESSION_STARTED','walk-in']].map(x=>({t:new Date(Date.now()+x[0]*1000).toTimeString().slice(0,8),cmd:x[1],arg:x[2]})), actions:3 };
   componentDidMount() {
     this.onResize = () => { if (!window.innerWidth || !window.innerHeight) return; this.setState({ scale: Math.max(0.1, Math.min(window.innerWidth/1420, window.innerHeight/1080)) }); };
     this.onResize(); window.addEventListener('resize', this.onResize); requestAnimationFrame(this.onResize); setTimeout(this.onResize, 300); if (window.ResizeObserver) { this._ro = new ResizeObserver(this.onResize); this._ro.observe(document.documentElement); }
@@ -123,13 +123,14 @@ class Component extends DCLogic {
       timer: String(Math.floor(el/60)).padStart(2,'0') + ':' + String(el%60).padStart(2,'0'),
       liveColor: !s.live ? '#e39a7b' : this.linked() ? '#8fbf9a' : '#B89A68', liveLabel: !s.live ? 'OFFLINE · QUEUING' : this.linked() ? 'LINKED · ' + String(s.custScreen||'').toUpperCase() : 'CUSTOMER SCREEN NOT OPEN', notLinked: s.live && !this.linked(), liveBtn: s.live ? 'SIMULATE OFFLINE' : 'RECONNECT',
       toggleLive: () => { this.setState({ live: !s.live }); this.cmd(s.live ? 'CONNECTION_LOST' : 'SYNC', s.live ? 'local cache active' : 'queued events sent'); },
-      previews: ROOMS.map((r,i)=>({ op: i===s.room?1:0, hasImg: !!r[2], noImg: !r[2], img: r[2], ph: r[0].toUpperCase() + ' · RENDER' })),
+      previews: ROOMS.map((r,i)=>({ op: i===s.room?1:0, hasImg: !!r[2], noImg: !r[2], img: r[2], soon:'RENDER COMING SOON', rname:r[0], sub:r[1]+' m²', blur: i===6||i===3 ? 'img/living2.jpg' : 'img/living.jpg' })),
       tint, tintOp, roomNo: 'ROOM 0' + (s.room+1), roomName: ROOMS[s.room][0], roomMeta: ROOMS[s.room][1] + ' m² · ' + clock + ' · ' + MATS.STYLE[s.mat.STYLE][0],
       hasOverlay: !!s.overlay, overlay: s.overlay, guided: s.guided,
       tabs: tabs.map((label,i)=>({ label, pick:()=>this.setState({tab:i}), bc: i===s.tab?'#B89A68':'transparent', color: i===s.tab?'#B89A68':'rgba(243,240,233,.7)' })),
       tabRooms: s.tab===0, tabMaterials: s.tab===1, tabLight: s.tab===2, tabGuided: s.tab===3, tabScreens: s.tab===4,
       rooms: ROOMS.map((r,i)=>({ n:'0'+(i+1), name:r[0], area:r[1], seen: s.seen[i] ? 'seen' : 'not yet', pick:()=>this.openRoom(i), bg: i===s.room?'rgba(184,154,104,.16)':'rgba(243,240,233,.03)', bc: i===s.room?'#B89A68':'rgba(243,240,233,.12)' })),
       matGroups: Object.keys(MATS).map(k=>({ label:k, opts: MATS[k].map((o,i)=>Object.assign(sel(s.mat[k]===i), { label:o[0], c:o[1], bg: s.mat[k]===i?'rgba(184,154,104,.16)':'transparent', pick:()=>{ this.setState({ mat:Object.assign({}, s.mat, {[k]:i}) }); this.send({ cmd:'CHANGE_MATERIAL', key: k==='FLOOR'?'floor':k==='KITCHEN'?'kitchen':'style', k: (k==='FLOOR'?['oak','marble','stone','terrazzo']:k==='KITCHEN'?['standard','modern','premium','luxury']:['modern','minimal','japandi','luxury'])[i] }); this.cmd('CHANGE_MATERIAL', k + '=' + o[0].toUpperCase()); } })) })),
+      startTime: new Date(s.t0).toTimeString().slice(0,5),
       clock, hour: s.hour, setHour: (e)=>{ const v = parseFloat(e.target.value); this.setState({ hour: v }); this.send({ cmd:'CHANGE_TIME', hour: v }); },
       presets: PRESETS.map(p=>Object.assign(sel(Math.abs(s.hour-p[1])<.01), { label:p[0].toUpperCase(), pick:()=>{ this.setState({hour:p[1]}); this.send({ cmd:'CHANGE_TIME', hour: p[1] }); this.cmd('CHANGE_TIME', p[0].toUpperCase()); } })),
       guidedBtn: s.guided ? '❚❚ STOP GUIDED TOUR' : '▶ START GUIDED TOUR', toggleGuided: ()=>{ this.setState({ guided: !s.guided }); this.send({ cmd:'GUIDED', on: !s.guided }); this.cmd(s.guided ? 'STOP_GUIDED_TOUR' : 'START_GUIDED_TOUR', ''); },

@@ -64,6 +64,8 @@
   .card-arrow { color: var(--gold); }
   .card-desc { font: 300 14px/1.6 var(--sans); opacity: .8; text-wrap: pretty; }
 
+  .reset { font: inherit; letter-spacing: inherit; color: var(--gold); background: none; border: 1px solid rgba(184,154,104,.5); padding: 8px 14px; cursor: pointer; }
+  .reset:hover { background: rgba(184,154,104,.12); }
   .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--rule); padding-top: 24px; font: 500 11px var(--sans); letter-spacing: .3em; opacity: .6; }
 
   @media (max-width: 480px) {
@@ -93,7 +95,7 @@
 
   <main class="body">
     <div id="groups" class="groups"></div>
-    <footer class="foot"><span>ANANTA PROPERTY™</span><span>INDONESIA · SOUTHEAST ASIA · GLOBAL</span></footer>
+    <footer class="foot"><span>ANANTA PROPERTY™</span><button type="button" class="reset" id="reset">Reset demo data</button><span>INDONESIA · SOUTHEAST ASIA · GLOBAL</span></footer>
   </main>
 </div>
 
@@ -123,6 +125,14 @@
     if (text != null) n.textContent = text;
     return n;
   }
+
+  // Clears prices, promos and headline published from the CMS (stored in this browser)
+  const reset = document.getElementById('reset');
+  reset.addEventListener('click', () => {
+    try { Object.keys(localStorage).filter(k => k.startsWith('ananta.')).forEach(k => localStorage.removeItem(k)); } catch (e) {}
+    reset.textContent = 'Demo data cleared · reload open screens';
+    setTimeout(() => { reset.textContent = 'Reset demo data'; }, 4000);
+  });
 
   const root = document.getElementById('groups');
 

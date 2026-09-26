@@ -248,7 +248,7 @@
 <sc-for list="{{ sceneLayers }}" as="L" hint-placeholder-count="1">
 <div style="position:absolute;inset:0;opacity:{{ L.op }};transition:opacity 1.2s cubic-bezier(.4,0,.2,1);pointer-events:{{ L.pe }}">
 <sc-if value="{{ L.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ L.img }}" draggable="false" style="width:100%;height:100%;object-fit:cover;user-select:none"></sc-if>
-<sc-if value="{{ L.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:#1a2629"><image-slot id="{{ L.slot }}" shape="rect" placeholder="{{ L.ph }}"></image-slot></div></sc-if>
+<sc-if value="{{ L.noImg }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;overflow:hidden;background:#0B1518"><img src="{{ L.blur }}" alt="" style="position:absolute;left:-60px;top:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(40px) brightness(.34) saturate(.75)"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(11,21,24,0) 0%,rgba(11,21,24,.75) 80%)"></div><div style="position:absolute;left:50%;top:24%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:#F3F0E9;pointer-events:none"><span style="width:44px;height:1px;background:#B89A68"></span><span style="font:500 13px Montserrat;letter-spacing:.42em;color:#B89A68;padding-left:.42em">{{ L.soon }}</span><span style="font:italic 300 60px/1 'Cormorant Garamond',serif;opacity:{{ L.nameOp }};transition:opacity .6s">{{ L.rname }}</span><span style="font:400 14px Montserrat;letter-spacing:.18em;opacity:{{ L.subOp }};transition:opacity .6s">{{ L.sub }}</span></div></div></sc-if>
 </div>
 </sc-for>
 <div style="position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(0deg,{{ floorC }} 0%,{{ floorC }} 55%,transparent 100%);mix-blend-mode:color;opacity:{{ floorOp }};transition:all .8s;pointer-events:none"></div>
@@ -278,7 +278,7 @@
 <div style="position:absolute;left:56px;top:236px;width:330px;background:rgba(11,21,24,.62);border:1px solid rgba(243,240,233,.12);padding:8px;display:flex;flex-direction:column;gap:4px">
 <sc-for list="{{ railRooms }}" as="r" hint-placeholder-count="8">
 <div onClick="{{ r.go }}" style="cursor:pointer;display:flex;gap:14px;align-items:center;padding:6px;border:1px solid {{ r.bc }};background:{{ r.bg }};transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:rgba(243,240,233,.07)">
-<div style="width:84px;height:52px;flex:none;background:#223034;overflow:hidden;position:relative"><sc-if value="{{ r.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ r.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ r.noImg }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 11px Montserrat;letter-spacing:.2em;opacity:.45">IMAGE</span></sc-if></div>
+<div style="width:84px;height:52px;flex:none;background:#223034;overflow:hidden;position:relative"><sc-if value="{{ r.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ r.img }}" style="width:100%;height:100%;object-fit:cover"></sc-if><sc-if value="{{ r.noImg }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1d2b2f,#0f1b1e);border:1px solid rgba(184,154,104,.25);font:500 9px Montserrat;letter-spacing:.24em;color:#B89A68">SOON</span></sc-if></div>
 <div style="display:flex;flex-direction:column;gap:3px"><span style="font:500 15px Montserrat;color:{{ r.color }}">{{ r.name }}</span><span style="font:400 14px Montserrat;opacity:.55">{{ r.area }} m²</span></div>
 <span style="margin-left:auto;margin-right:6px;width:7px;height:7px;border-radius:50%;background:{{ r.seen }}"></span>
 </div>
@@ -502,7 +502,7 @@
 <div style="width:64px;height:1px;background:#B89A68"></div>
 <div style="font:300 132px/1 'Cormorant Garamond',serif">{{ t.thxA }} <span style="font-style:italic;color:#8a6f45">{{ t.thxB }}</span></div>
 <div style="display:flex;gap:40px;align-items:center;border:1px solid rgba(11,21,24,.15);padding:30px 36px;text-align:left;background:#fbf9f4">
-<div style="display:flex;gap:22px;align-items:center"><div style="width:88px;height:88px;border-radius:50%;overflow:hidden;background:#dcd6ca"><image-slot id="consultant-photo" shape="circle" placeholder="Photo"></image-slot></div><div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.6;text-transform:uppercase">{{ t.consultant }}</span><span style="font:400 36px/1 'Cormorant Garamond',serif">Ayu Pratiwi</span><span style="font:400 16px/1.5 Montserrat;opacity:.75">{{ t.willContact }} {{ visitTxt }}</span></div></div>
+<div style="display:flex;gap:22px;align-items:center"><div style="width:88px;height:88px;border-radius:50%;overflow:hidden;background:#dcd6ca"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#0B1518;color:#B89A68;font:400 34px 'Cormorant Garamond',serif;letter-spacing:.06em">AP</div></div><div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><span style="font:500 14px Montserrat;letter-spacing:.26em;opacity:.6;text-transform:uppercase">{{ t.consultant }}</span><span style="font:400 36px/1 'Cormorant Garamond',serif">Ayu Pratiwi</span><span style="font:400 16px/1.5 Montserrat;opacity:.75">{{ t.willContact }} {{ visitTxt }}</span></div></div>
 <div style="width:1px;align-self:stretch;background:rgba(11,21,24,.12)"></div>
 <div style="display:flex;gap:18px;align-items:center"><div onClick="{{ openMobile }}" title="Open on phone" style="cursor:pointer;display:grid;grid-template-columns:repeat(21,6px);grid-auto-rows:6px;padding:10px;background:#fff;border:1px solid rgba(11,21,24,.1)"><sc-for list="{{ qr }}" as="q" hint-placeholder-count="0"><div style="background:{{ q.c }}"></div></sc-for></div><span style="font:500 15px/1.6 Montserrat;max-width:190px;opacity:.7">{{ t.scan }}</span></div>
 </div>
@@ -842,7 +842,7 @@ class Component extends DCLogic {
       stop:(e)=>e.stopPropagation(),
       sceneCursor: panel==='measure' ? 'crosshair' : 'grab',
       sceneTransform: 'scale(' + (s.arrive ? 1.26 : 1.16) + ') translateX(' + (-s.lookX*6) + '%)', sceneFilter: g.filt + styleF,
-      sceneLayers: ROOMS.map((r,i)=>({ op: i===s.room?1:0, pe: i===s.room?'auto':'none', hasImg: !!r.img, noImg: !r.img, img:r.img, slot:'room-'+r.k, ph: (L==='en'?'Drop ':'Letakkan ') + r.name[L] + (L==='en'?' render':' render') })),
+      sceneLayers: ROOMS.map((r,i)=>({ op: i===s.room?1:0, pe: i===s.room?'auto':'none', hasImg: !!r.img, noImg: !r.img, img:r.img, soon: L==='en'?'RENDER COMING SOON':'RENDER SEGERA HADIR', rname: r.name[L], sub: r.dims + ' · ' + r.area + ' m²', nameOp: s.guided ? 0 : 1, subOp: s.guided ? 0 : .65, blur: IMGR((r.k==='bath'||r.k==='kitchen') ? 'living2' : 'living') })),
       floorC: fl.c, floorOp: s.before || fl.k==='oak' ? 0 : .5, wallC: wl.c, wallOp: s.before || wl.k==='white' ? 0 : .5,
       grade: g, rainOp: s.weather===2 ? .5 : 0,
       hotspots: (s.guided || panel==='measure' || panel==='view') ? [] : R.hs.map(h=>({ x:'calc(' + h.x + '% + ' + hsShift + 'px)', y:h.y+'%', glyph: h.info ? 'i' : h.view ? '▢' : '→', label: h.info ? R.name[L] : h.view ? t.windowView : ROOMS[h.go].name[L],
@@ -889,7 +889,7 @@ class Component extends DCLogic {
       c1Bg: s.c1?'#B89A68':'transparent', c1Mark: s.c1?'✓':'', c2Bg: s.c2?'#B89A68':'transparent', c2Mark: s.c2?'✓':'',
       toggleC1:()=>this.setState({c1:!s.c1}), toggleC2:()=>this.setState({c2:!s.c2}),
       submitLead:()=>{ if (nm && wa && email && s.c1) { this.setState({ visitTxt: dates[s.date].toLocaleDateString(loc,{weekday:'long', day:'numeric', month:'long'}) + '.' }); this.go('success'); } else this.setState({tried:true}); },
-      toastBrochure:()=>this.showToast(t.brochureSent), toastWa:()=>this.showToast(t.waSent), visitTxt: s.visitTxt, qr,
+      toastBrochure:()=>this.showToast(t.brochureSent), toastWa:()=>this.showToast(t.waSent), visitTxt: s.visitTxt || (dates[s.date].toLocaleDateString(loc,{weekday:'long', day:'numeric', month:'long'}) + '.'), qr,
       continueExploring:()=>this.go('tour'), resetAll:()=>this.resetAll(),
       ask: s.ask, onAsk:(e)=>this.setState({ask:e.target.value}), askKey:(e)=>{ if (e.key==='Enter' && s.ask.trim()) this.askRun(s.ask.trim()); }, askGo:()=>{ if (s.ask.trim()) this.askRun(s.ask.trim()); }, micGo:()=>this.listen(),
       micBg: s.listening ? '#B89A68' : 'transparent', micFg: s.listening ? '#0B1518' : '#B89A68', askPh: L==='en' ? 'Ask Ananta — “Show me the largest bedroom at sunset”' : 'Tanya Ananta — “Tunjukkan kamar terbesar saat senja”',

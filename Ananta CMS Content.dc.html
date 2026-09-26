@@ -90,7 +90,7 @@
 <div style="position:relative;width:820px;height:600px;overflow:hidden;background:#1a2629">
 <img src="img/masterplan.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85">
 <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:#B89A68;border:3px solid #F3F0E9;box-shadow:0 0 0 12px rgba(184,154,104,.3)"></div>
-<sc-for list="{{ poiPins }}" as="p" hint-placeholder-count="6"><div onClick="{{ p.pick }}" style="position:absolute;left:{{ p.x }};top:{{ p.y }};transform:translate(-50%,-50%);cursor:pointer;display:flex;gap:8px;align-items:center"><span style="width:18px;height:18px;border-radius:50%;background:{{ p.bg }};border:2px solid #F3F0E9"></span><span style="background:rgba(11,21,24,.8);color:#F3F0E9;padding:5px 8px;font:500 11px Montserrat;white-space:nowrap">{{ p.name }} · {{ p.t }}</span></div></sc-for>
+<sc-for list="{{ poiPins }}" as="p" hint-placeholder-count="6"><div onClick="{{ p.pick }}" style="position:absolute;left:{{ p.x }};top:{{ p.y }};transform:translate(-50%,-50%);cursor:pointer;display:flex;gap:8px;align-items:center"><span style="width:18px;height:18px;border-radius:50%;background:{{ p.bg }};border:2px solid {{ p.ring }};transition:border-color .2s"></span><span style="background:{{ p.lbg }};color:{{ p.lfg }};transition:background .2s,color .2s;padding:5px 8px;font:500 11px Montserrat;white-space:nowrap">{{ p.name }} · {{ p.t }}</span></div></sc-for>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px">
 <div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:6px"><sc-for list="{{ poiCats }}" as="c" hint-placeholder-count="5"><div onClick="{{ c.pick }}" style="cursor:pointer;padding:9px 12px;font:500 12px Montserrat;background:{{ c.bg }};color:{{ c.fg }};border:1px solid #0B1518">{{ c.label }}</div></sc-for></div><div onClick="{{ addPoi }}" style="cursor:pointer;padding:9px 12px;font:600 11px Montserrat;letter-spacing:.16em;border:1px dashed #0B1518">+ ADD</div></div>
@@ -190,10 +190,10 @@ class Component extends DCLogic {
       tourCount: incl.length, tourTotal: Math.floor(tot/60) + 'm ' + String(tot%60).padStart(2,'0') + 's',
       ts: { name:ROOMS[tsel.i][1], en:tsel.en, id:tsel.id, hasImg: !!ROOMS[tsel.i][2], img:ROOMS[tsel.i][2] },
       setEn: (e)=>this.setStop(order.indexOf(tsel), { en:e.target.value }), setId: (e)=>this.setStop(order.indexOf(tsel), { id:e.target.value }),
-      poiPins: pois.map(({p})=>({ x:p.x+'%', y:p.y+'%', name:p.name, t:p.t, bg:POICOL[p.cat], pick:()=>{} })),
+      poiPins: pois.map(({p,i})=>({ x:p.x+'%', y:p.y+'%', name:p.name, t:p.t, bg:POICOL[p.cat], ring: i===s.posel?'#B89A68':'#F3F0E9', lbg: i===s.posel?'#B89A68':'rgba(11,21,24,.8)', lfg: i===s.posel?'#0B1518':'#F3F0E9', pick:()=>this.setState({ posel: s.posel===i ? null : i }) })),
       poiCats: ['ALL'].concat(POICATS).slice(0,6).map((c,i)=>Object.assign(sel(s.pcat===i-1), { label:c.charAt(0)+c.slice(1).toLowerCase(), pick:()=>this.setState({ pcat:i-1 }) })),
       addPoi: ()=>this.setState({ pois: s.pois.concat([{ name:'New place', t:'10 min', cat: Math.max(0,s.pcat), x: 20+Math.round(Math.random()*60), y: 20+Math.round(Math.random()*60) }]) }),
-      pois: pois.map(({p,i})=>({ name:p.name, t:p.t, cat:POICATS[p.cat], bg:POICOL[p.cat], rowBg:'transparent',
+      pois: pois.map(({p,i})=>({ name:p.name, t:p.t, cat:POICATS[p.cat], bg:POICOL[p.cat], rowBg: i===s.posel?'rgba(184,154,104,.16)':'transparent',
         setName:(e)=>{ const P = s.pois.slice(); P[i] = Object.assign({}, p, { name:e.target.value }); this.setState({ pois:P }); }, setT:(e)=>{ const P = s.pois.slice(); P[i] = Object.assign({}, p, { t:e.target.value }); this.setState({ pois:P }); },
         cycle:()=>{ const P = s.pois.slice(); P[i] = Object.assign({}, p, { cat:(p.cat+1)%POICATS.length }); this.setState({ pois:P }); }, del:()=>this.setState({ pois: s.pois.filter((_,j)=>j!==i) }) })),
       mediaFilters: ['All','Renders','Video','360'].map((label,i)=>Object.assign(sel(s.mf===i), { label, pick:()=>this.setState({ mf:i }) })),
