@@ -1,0 +1,7 @@
+# image-slot drop persistence sidecar (per-viewer local state)
+.image-slots.state.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
