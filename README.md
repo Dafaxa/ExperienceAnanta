@@ -10,7 +10,7 @@ npx serve .
 
 Always open the pages through a server. Opening a file by double-clicking it breaks the page imports.
 
-- React is served from `vendor/` (same files and integrity hashes as unpkg), so the pages run without a CDN; unpkg.com is only a fallback. Fonts still come from Google Fonts.
+- React is served from `vendor/` (same files and integrity hashes as unpkg), so the pages run without a CDN; unpkg.com is only a fallback. Fonts (Cormorant Garamond, Montserrat, Caveat) are self-hosted from `vendor/fonts/` too, so the whole demo runs with no calls to Google at all.
 - Prices, promos and the headline published from the CMS are stored in the browser. Use **Reset demo data** in the Hub footer before each client meeting.
 - Sync between the sales console, the CMS and the customer screen only works between tabs in the same browser.
 - Keep `support.js`, `image-slot.js`, `deck-stage.js`, `CMSSidebar.dc.html`, `vendor/` and `img/`. The pages depend on them.

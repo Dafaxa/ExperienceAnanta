@@ -1,0 +1,36 @@
+/*
+ * Self-hosted subset of the Google Fonts used across the Ananta prototype:
+ * Cormorant Garamond (300/400/500 + italic 400), Montserrat (300/400/500/600)
+ * and Caveat (400/600, wireframes only). Each is a single variable-font file
+ * covering its weight range, latin subset only (matches what the pages use).
+ * Keeps the demo working on a showroom network with no route to
+ * fonts.googleapis.com / fonts.gstatic.com.
+ */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url('cormorant-garamond.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('cormorant-garamond-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url('montserrat.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('caveat.woff2') format('woff2');
+}
