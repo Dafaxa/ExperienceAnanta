@@ -103,8 +103,11 @@
 <div style="position:absolute;left:56px;top:40px;display:flex;gap:14px;align-items:center;background:rgba(11,21,24,.8);border:1px solid rgba(243,240,233,.2);padding:14px 22px;font:600 14px Montserrat;letter-spacing:.24em">
 <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="5"><span style="color:{{ c.color }}">{{ c.label }}</span><span style="opacity:.4">{{ c.sep }}</span></sc-for>
 </div>
+<div style="position:absolute;left:56px;top:98px;display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ mpFilters }}" as="f" hint-placeholder-count="6"><div onClick="{{ f.pick }}" style="cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1px solid {{ f.bc }};padding:8px 16px;font:600 11px Montserrat;letter-spacing:.2em;transition:background .3s ease,color .3s ease,border-color .3s ease">{{ f.label }}</div></sc-for>
+</div>
 <sc-for list="{{ clusters }}" as="c" hint-placeholder-count="6">
-<div onClick="{{ c.pick }}" style="position:absolute;left:{{ c.x }};top:{{ c.y }};transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font:400 26px 'Cormorant Garamond',serif;background:{{ c.bg }};color:{{ c.fg }};border:1.5px solid #B89A68;box-shadow:0 0 0 10px {{ c.ring }}">{{ c.n }}</div>
+<div onClick="{{ c.pick }}" style="position:absolute;left:{{ c.x }};top:{{ c.y }};transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font:400 26px 'Cormorant Garamond',serif;background:{{ c.bg }};color:{{ c.fg }};border:1.5px solid #B89A68;box-shadow:0 0 0 10px {{ c.ring }};opacity:{{ c.op }};pointer-events:{{ c.pe }};transition:opacity .3s ease">{{ c.n }}</div>
 </sc-for>
 <div style="position:absolute;left:{{ mpCard.x }};top:{{ mpCard.y }};transform:translate(44px,-50%);transition:left .6s cubic-bezier(.2,.7,.2,1),top .6s cubic-bezier(.2,.7,.2,1);width:360px;background:rgba(11,21,24,.94);border:1px solid rgba(184,154,104,.6);padding:26px 28px;display:flex;flex-direction:column;gap:12px">
 <div style="font:500 14px Montserrat;letter-spacing:.3em;color:#B89A68">{{ mpCard.kind }}</div>
@@ -116,7 +119,7 @@
 <div style="font:500 14px Montserrat;letter-spacing:.34em;color:#B89A68">{{ proj.loc }}</div>
 <div style="font:300 64px/1 'Cormorant Garamond',serif">Master<span style="font-style:italic;color:#B89A68">plan</span></div>
 <div style="display:flex;flex-direction:column;margin-top:10px">
-<sc-for list="{{ clusters }}" as="c" hint-placeholder-count="6"><div onClick="{{ c.pick }}" style="cursor:pointer;display:flex;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);color:{{ c.listColor }}"><span style="font:400 24px 'Cormorant Garamond',serif;color:#B89A68;width:30px">0{{ c.n }}</span><span style="font:500 15px Montserrat;letter-spacing:.14em;text-transform:uppercase">{{ c.name }}</span></div></sc-for>
+<sc-for list="{{ clusters }}" as="c" hint-placeholder-count="6"><div onClick="{{ c.pick }}" style="cursor:pointer;display:flex;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid rgba(243,240,233,.1);color:{{ c.listColor }};opacity:{{ c.op }};pointer-events:{{ c.pe }};transition:opacity .3s ease"><span style="font:400 24px 'Cormorant Garamond',serif;color:#B89A68;width:30px">0{{ c.n }}</span><span style="font:500 15px Montserrat;letter-spacing:.14em;text-transform:uppercase">{{ c.name }}</span></div></sc-for>
 </div>
 <div style="margin-top:auto;display:flex;gap:10px;font:600 14px Montserrat;letter-spacing:.2em">
 <div onClick="{{ goUnits }}" style="cursor:pointer;flex:1;text-align:center;background:#B89A68;color:#0B1518;padding:22px;text-transform:uppercase;letter-spacing:.26em;font-size:13px">{{ t.exploreUnits }} →</div>
@@ -307,6 +310,7 @@
 <div style="display:flex;align-items:center;gap:10px;background:rgba(11,21,24,.9);border:1px solid rgba(184,154,104,.6);padding:8px 8px 8px 22px"><span style="font:400 22px 'Cormorant Garamond',serif;color:#B89A68">✦</span><input value="{{ ask }}" onChange="{{ onAsk }}" onKeyDown="{{ askKey }}" placeholder="{{ askPh }}" style="flex:1;background:transparent;border:0;color:#F3F0E9;font:400 17px Montserrat;padding:12px 4px"><div onClick="{{ micGo }}" style="cursor:pointer;width:48px;height:48px;border-radius:50%;border:1px solid #B89A68;background:{{ micBg }};color:{{ micFg }};display:flex;align-items:center;justify-content:center;font:500 18px Montserrat">●</div><div onClick="{{ askGo }}" style="cursor:pointer;height:48px;padding:0 20px;background:#B89A68;color:#0B1518;display:flex;align-items:center;font:600 15px Montserrat;letter-spacing:.2em">→</div></div>
 </div>
 <div style="position:absolute;left:50%;bottom:200px;transform:translateX(-50%);display:none;gap:18px;align-items:center;font:500 14px Montserrat;letter-spacing:.3em;color:rgba(243,240,233,.8)"><span onClick="{{ prevRoom }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);width:40px;height:40px;display:flex;align-items:center;justify-content:center;letter-spacing:0">←</span>{{ t.drag }}<span onClick="{{ nextRoom }}" style="cursor:pointer;border:1px solid rgba(243,240,233,.4);width:40px;height:40px;display:flex;align-items:center;justify-content:center;letter-spacing:0">→</span></div>
+<a href="{{ waTourHref }}" target="_blank" rel="noopener" style="position:absolute;right:340px;bottom:56px;cursor:pointer;width:72px;height:72px;display:flex;align-items:center;justify-content:center;background:rgba(11,21,24,.85);border:1px solid rgba(184,154,104,.5);color:#B89A68;font:600 15px Montserrat;letter-spacing:.05em;text-decoration:none;transition:border-color .3s ease,background .3s ease" style-hover="border-color:#B89A68;background:rgba(184,154,104,.12)" title="{{ t.waSales }}">WA</a>
 <div onClick="{{ goLead }}" style="position:absolute;right:48px;bottom:56px;cursor:pointer;background:#B89A68;color:#0B1518;padding:24px 36px;font:600 14px Montserrat;letter-spacing:.26em;text-transform:uppercase;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease" style-hover="background:#cbb083">{{ t.book }} →</div>
 </sc-if>
 
@@ -574,7 +578,7 @@ const T = {
 Object.assign(T.en, {
   floorPlan:'Floor plan', enterRoom:'Enter room', tapRoom:'Tap a room to preview it, then step inside.', property:'PROPERTY', facing:'west-facing, sunset view', parking:'Parking', price:'Price',
   enter3d:'Enter 3D walkthrough', preparing:'PREPARING YOUR WALKTHROUGH', roomsPoi:'8 rooms · 20 points of interest', startAt:'Starting at the entrance foyer', loadingTip:'DRAG TO LOOK · A / D TO MOVE BETWEEN ROOMS',
-  vtA:'Virtual', vtB:'Tour', tapPlan:'Tap plan to jump', exit:'EXIT TOUR', youAreIn:'YOU ARE IN', drag:'DRAG TO LOOK AROUND', book:'Book site visit', room:'ROOM',
+  vtA:'Virtual', vtB:'Tour', tapPlan:'Tap plan to jump', exit:'EXIT TOUR', youAreIn:'YOU ARE IN', drag:'DRAG TO LOOK AROUND', book:'Book site visit', waSales:'WhatsApp sales', room:'ROOM',
   windowView:'View from window', configure:'Configure', customise:'Customise', before:'Before', after:'After', upgrade:'Upgrade', saveConfig:'Save configuration',
   timeOfDay:'TIME OF DAY', sunsetAt:'Sunset today at 18:12', weather:'WEATHER', measure:'Measure', clear:'Clear', verified:'VERIFIED AGAINST ARCHITECTURAL DRAWING · ±2 CM',
   viewFrom:'VIEW FROM', backRoom:'Back to room', simulation:'Simulated view · Floor 2 · 8.4 m', guidedTour:'GUIDED TOUR', skip:'Skip', takeControl:'Take control',
@@ -590,7 +594,7 @@ Object.assign(T.en, {
 Object.assign(T.id, {
   floorPlan:'Denah', enterRoom:'Masuk ruangan', tapRoom:'Ketuk ruangan untuk pratinjau, lalu masuk ke dalamnya.', property:'PROPERTI', facing:'menghadap barat, pemandangan senja', parking:'Parkir', price:'Harga',
   enter3d:'Masuk tur 3D', preparing:'MENYIAPKAN TUR ANDA', roomsPoi:'8 ruangan · 20 titik informasi', startAt:'Dimulai dari foyer masuk', loadingTip:'GESER UNTUK MELIHAT · A / D UNTUK PINDAH RUANGAN',
-  vtA:'Tur', vtB:'Virtual', tapPlan:'Ketuk denah untuk pindah', exit:'KELUAR TUR', youAreIn:'ANDA BERADA DI', drag:'GESER UNTUK MELIHAT', book:'Jadwalkan kunjungan', room:'RUANG',
+  vtA:'Tur', vtB:'Virtual', tapPlan:'Ketuk denah untuk pindah', exit:'KELUAR TUR', youAreIn:'ANDA BERADA DI', drag:'GESER UNTUK MELIHAT', book:'Jadwalkan kunjungan', waSales:'WhatsApp sales', room:'RUANG',
   windowView:'Lihat dari jendela', configure:'Kustomisasi', customise:'Kustomisasi', before:'Sebelum', after:'Sesudah', upgrade:'Tambahan', saveConfig:'Simpan konfigurasi',
   timeOfDay:'WAKTU', sunsetAt:'Matahari terbenam pukul 18.12', weather:'CUACA', measure:'Ukur', clear:'Hapus', verified:'TERVERIFIKASI DENGAN GAMBAR ARSITEKTUR · ±2 CM',
   viewFrom:'PEMANDANGAN DARI', backRoom:'Kembali ke ruangan', simulation:'Simulasi pemandangan · Lantai 2 · 8,4 m', guidedTour:'TUR TERPANDU', skip:'Lewati', takeControl:'Ambil kendali',
@@ -657,18 +661,21 @@ const UNITS = [
   { code:'1A-03', beds:1, baths:1, indoor:68, terr:14, park:1, price:2.95, status:'sold', x:439, y:654 }
 ];
 const UNIT_DESC = { en:'A refined residence with expansive living space and panoramic ocean views, designed for modern tropical living.', id:'Hunian elegan dengan ruang keluarga luas dan pemandangan laut panorama, dirancang untuk gaya hidup tropis modern.' };
+// Placeholder sales WhatsApp number — replace with the real consultant/sales line before going live.
+const WA_SALES_NUMBER = '628111234567';
+function waLink(text) { return 'https://wa.me/' + WA_SALES_NUMBER + '?text=' + encodeURIComponent(text); }
 const CLUSTERS = [
-  { n:1, x:'36%', y:'42%', name:{en:'Villa Cluster A',id:'Klaster Villa A'}, kind:{en:'VILLAS',id:'VILLA'}, info:{en:'12 villas · 5 available · 3–4 bedrooms',id:'12 villa · 5 tersedia · 3–4 kamar'} },
-  { n:2, x:'52%', y:'30%', name:{en:'Clubhouse',id:'Clubhouse'}, kind:{en:'FACILITY',id:'FASILITAS'}, info:{en:'Restaurant, lap pool, co-working lounge',id:'Restoran, kolam renang, lounge co-working'} },
-  { n:3, x:'72%', y:'56%', name:{en:'Wellness Village',id:'Desa Wellness'}, kind:{en:'FACILITY',id:'FASILITAS'}, info:{en:'Spa, yoga pavilion, hot pools',id:'Spa, paviliun yoga, kolam air panas'} },
-  { n:4, x:'22%', y:'72%', name:{en:'Terrace Residences',id:'Hunian Teras'}, kind:{en:'RESIDENCES',id:'HUNIAN'}, info:{en:'28 homes · 11 available · 2–3 bedrooms',id:'28 unit · 11 tersedia · 2–3 kamar'} },
-  { n:5, x:'84%', y:'24%', name:{en:'Rice Terrace Park',id:'Taman Sawah'}, kind:{en:'LANDSCAPE',id:'LANSKAP'}, info:{en:'4 ha of preserved terraces and trails',id:'4 ha sawah dan jalur yang dilestarikan'} },
-  { n:6, x:'46%', y:'80%', name:{en:'Arrival & Retail',id:'Area Kedatangan'}, kind:{en:'COMMERCIAL',id:'KOMERSIAL'}, info:{en:'Gallery, café, market hall',id:'Galeri, kafe, pasar'} }
+  { n:1, x:'36%', y:'42%', kid:'villas', name:{en:'Villa Cluster A',id:'Klaster Villa A'}, kind:{en:'VILLAS',id:'VILLA'}, info:{en:'12 villas · 5 available · 3–4 bedrooms',id:'12 villa · 5 tersedia · 3–4 kamar'} },
+  { n:2, x:'52%', y:'30%', kid:'facility', name:{en:'Clubhouse',id:'Clubhouse'}, kind:{en:'FACILITY',id:'FASILITAS'}, info:{en:'Restaurant, lap pool, co-working lounge',id:'Restoran, kolam renang, lounge co-working'} },
+  { n:3, x:'72%', y:'56%', kid:'facility', name:{en:'Wellness Village',id:'Desa Wellness'}, kind:{en:'FACILITY',id:'FASILITAS'}, info:{en:'Spa, yoga pavilion, hot pools',id:'Spa, paviliun yoga, kolam air panas'} },
+  { n:4, x:'22%', y:'72%', kid:'residences', name:{en:'Terrace Residences',id:'Hunian Teras'}, kind:{en:'RESIDENCES',id:'HUNIAN'}, info:{en:'28 homes · 11 available · 2–3 bedrooms',id:'28 unit · 11 tersedia · 2–3 kamar'} },
+  { n:5, x:'84%', y:'24%', kid:'landscape', name:{en:'Rice Terrace Park',id:'Taman Sawah'}, kind:{en:'LANDSCAPE',id:'LANSKAP'}, info:{en:'4 ha of preserved terraces and trails',id:'4 ha sawah dan jalur yang dilestarikan'} },
+  { n:6, x:'46%', y:'80%', kid:'commercial', name:{en:'Arrival & Retail',id:'Area Kedatangan'}, kind:{en:'COMMERCIAL',id:'KOMERSIAL'}, info:{en:'Gallery, café, market hall',id:'Galeri, kafe, pasar'} }
 ];
 const SCREENS = ['welcome','projects','overview','masterplan','units','floorplan','loading','tour','compare','price','lead','success'];
 
 class Component extends DCLogic {
-  defaults() { return { screen:'welcome', proj:0, ovTab:0, cluster:0, unit:2, unitFilter:0, planSel:null, doll:false, load:0, room:0, arrive:false, lookX:0, panel:null, guided:false, gPaused:false, gT:0,
+  defaults() { return { screen:'welcome', proj:0, ovTab:0, cluster:0, mpFilter:'all', unit:2, unitFilter:0, planSel:null, doll:false, load:0, room:0, arrive:false, lookX:0, panel:null, guided:false, gPaused:false, gT:0,
     cfg:{floor:'oak',wall:'white',kitchen:'standard',style:'modern'}, cfgTab:0, before:false, hour:17, weather:0, view:0, mPts:[], seen:[true,false,false,false,false,false,false,false],
     ask:'', askReply:null, listening:false, cmpB:1, planType:1, dpPct:30, tenor:24, f:{name:'',wa:'',email:''}, purpose:0, date:1, c1:false, c2:true, tried:false, idle:false, idleLeft:20, toast:null, visitTxt:'' }; }
   state = Object.assign({ lang:'en', fade:1, scale:1 }, this.defaults());
@@ -717,6 +724,26 @@ class Component extends DCLogic {
   askRun(q) {
     const s = this.state, L = s.lang, t = T[L], x = ' ' + q.toLowerCase() + ' ', has = (...w) => w.some(k => x.includes(k));
     const out = [], st = {}; let screen = null;
+    // Unit intelligence: two unit codes mentioned -> compare them directly.
+    const qNorm = q.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    const codeHits = UNITS.map((u,i)=>({u,i})).filter(({u})=>qNorm.includes(u.code.replace('-','')));
+    if (codeHits.length >= 2) {
+      st.unit = codeHits[0].i; st.cmpB = codeHits[1].i; screen = 'compare';
+      out.push((L==='en'?'Comparing ':'Membandingkan ') + codeHits[0].u.code + ' ' + (L==='en'?'and':'dan') + ' ' + codeHits[1].u.code);
+    } else {
+      // Unit intelligence: "3 bedroom unit" / "3 kamar" -> filter Unit Explorer and list matches.
+      const numWords = {one:1,two:2,three:3,four:4,satu:1,dua:2,tiga:3,empat:4,1:1,2:2,3:3,4:4};
+      const bedMatch = x.match(/\b(one|two|three|four|satu|dua|tiga|empat|[1-4])[\s-]*(?:bed(?:room)?s?|br|kamar(?:\s*tidur)?)\b/);
+      if (bedMatch && has('unit','residence','type','tipe','which','mana','yang punya','punya')) {
+        const n = numWords[bedMatch[1]];
+        const matches = UNITS.filter(u=>u.beds===n);
+        st.unitFilter = n; screen = 'units';
+        if (matches.length) st.unit = UNITS.indexOf(matches[0]);
+        out.push((L==='en'?'Filtering units to ':'Memfilter unit untuk ') + n + ' ' + (n===1?t.bedWord:t.bedsWord));
+        if (matches.length) out.push(matches.map(u=>u.code + ' \u00b7 ' + this.statusInfo(u.status,L).label + ' \u00b7 ' + this.fmtB(u.price)).join('  |  '));
+        else out.push(L==='en'?'No units with that many bedrooms right now.':'Belum ada unit dengan jumlah kamar itu.');
+      }
+    }
     const roomKeys = [['entrance','foyer','masuk','pintu'],['living','keluarga','ruang tamu','lounge'],['dining','makan'],['kitchen','dapur'],['master','largest bedroom','biggest bedroom','terbesar','kamar utama','main bedroom'],['bedroom 2','second bedroom','kamar 2','kamar tidur 2','kamar kedua','guest'],['bath','mandi','toilet'],['terrace','pool','kolam','teras','balcony','balkon']];
     let room = null; roomKeys.forEach((ks,i) => { if (room===null && has(...ks)) room = i; });
     if (room !== null) { st.room = room; out.push((L==='en'?'Moving to ':'Menuju ') + ROOMS[room].name[L]); }
@@ -735,7 +762,7 @@ class Component extends DCLogic {
     if (has('measure','ukur','how big','berapa luas','size')) { const r = st.room!=null ? st.room : s.room; out.push(ROOMS[r].name[L] + ': ' + ROOMS[r].area + ' m² · ' + ROOMS[r].dims); }
     if (has('guided','show me around','tur terpandu','keliling')) { st.guided = true; st.gPaused = false; st.gT = 0; st.panel = null; out.push(t.guidedTour.charAt(0) + t.guidedTour.slice(1).toLowerCase()); }
     if (has('price','harga','cost','berapa','how much','cicilan','instal')) { screen = 'price'; out.push(L==='en'?'Opening price and payment plan':'Membuka harga dan skema pembayaran'); }
-    if (has('compare','bandingkan','difference','beda','perbedaan')) { screen = 'compare'; out.push(L==='en'?'Opening unit comparison':'Membuka perbandingan unit'); }
+    if (codeHits.length < 2 && has('compare','bandingkan','difference','beda','perbedaan')) { screen = 'compare'; out.push(L==='en'?'Opening unit comparison':'Membuka perbandingan unit'); }
     if (has('book','visit','kunjung','jadwal','appointment')) { screen = 'lead'; out.push(L==='en'?'Opening site visit booking':'Membuka jadwal kunjungan'); }
     if (!out.length) out.push(L==='en'?'I can move between rooms, change finishes and lighting, show views, prices and comparisons. Try one of the suggestions.':'Saya bisa pindah ruangan, mengganti material dan cahaya, menampilkan pemandangan, harga, dan perbandingan. Coba salah satu saran.');
     if (st.room != null && st.room !== s.room) { const r = st.room; delete st.room; this.goRoom(r); }
@@ -816,6 +843,9 @@ class Component extends DCLogic {
     return {
       clusters, mpCard: { x: parseFloat(cl.x)/100*1400+'px', y: cl.y, name: cl.name[L], kind: cl.kind[L], info: cl.info[L] },
       unitTypeTxt: this.unitType(u,L), unitTypeUp: this.unitType(u,L).toUpperCase(), projName: PROJECTS[s.proj].name, projNameUp: PROJECTS[s.proj].name.toUpperCase(),
+      waTourHref: waLink((L==='en'
+        ? `Hi Ananta, I'm exploring ${PROJECTS[s.proj].name} – unit ${u.code} (${this.unitType(u,L)}), currently viewing the ${R.name.en}. Can we talk?`
+        : `Halo Ananta, saya sedang menjelajahi ${PROJECTS[s.proj].name} – unit ${u.code} (${this.unitType(u,L)}), sedang melihat ${R.name.id}. Bisa kita bicara?`)),
       unit: Object.assign(v.unit, { park:u.park, priceTxt:this.fmtB(u.price) }),
       set2d:()=>this.setState({doll:false}), setDoll:()=>this.setState({doll:true}),
       p2dBg: s.doll?'transparent':'#0B1518', p2dFg: s.doll?'#0B1518':'#F3F0E9', pDollBg: s.doll?'#0B1518':'transparent', pDollFg: s.doll?'#F3F0E9':'#0B1518',
@@ -884,7 +914,7 @@ class Component extends DCLogic {
       ask: s.ask, onAsk:(e)=>this.setState({ask:e.target.value}), askKey:(e)=>{ if (e.key==='Enter' && s.ask.trim()) this.askRun(s.ask.trim()); }, askGo:()=>{ if (s.ask.trim()) this.askRun(s.ask.trim()); }, micGo:()=>this.listen(),
       micBg: s.listening ? '#B89A68' : 'transparent', micFg: s.listening ? '#0B1518' : '#B89A68', askPh: L==='en' ? 'Ask Ananta — “Show me the largest bedroom at sunset”' : 'Tanya Ananta — “Tunjukkan kamar terbesar saat senja”',
       hasReply: !!s.askReply, askReply: s.askReply || { q:'', lines:[] }, askLines: (s.askReply ? s.askReply.lines : []).map(txt=>({txt})), hasSugg: !s.askReply && !s.ask,
-      suggestions: (L==='en' ? ['Show me the largest bedroom','Make the floor marble','Terrace at sunset','How much is this unit?'] : ['Tunjukkan kamar terbesar','Ganti lantai jadi marmer','Teras saat senja','Berapa harga unit ini?']).map(q=>({ q, pick:()=>this.askRun(q) })),
+      suggestions: (L==='en' ? ['Show me the largest bedroom','Make the floor marble','Terrace at sunset','How much is this unit?','Which unit has 3 bedrooms?'] : ['Tunjukkan kamar terbesar','Ganti lantai jadi marmer','Teras saat senja','Berapa harga unit ini?','Unit mana yang punya 3 kamar?']).map(q=>({ q, pick:()=>this.askRun(q) })),
       openMobile:()=>window.open('Ananta Mobile Web.dc.html?room=' + s.room + '&floor=' + ['oak','marble','stone','terrazzo'].indexOf(s.cfg.floor), '_blank'),
       navOpen: !!s.navOpen, toggleNav: ()=>this.setState({ navOpen: !s.navOpen }),
       navScreens: ['Welcome','Projects','Overview','Masterplan','Unit explorer','Floor plan','Loading','3D tour','Compare','Price','Lead form','Thank you'].map((label,i)=>({ label: (i<9?'0':'') + (i+1) + '  ' + label, go:()=>{ this.setState({navOpen:false}); if (SCREENS[i]==='tour') this.goRoom(this.state.room); this.go(SCREENS[i]); } })),
@@ -938,7 +968,8 @@ class Component extends DCLogic {
       ovTabs: t.tabs.map((label,i)=>({ label, pick:()=>this.setState({ovTab:i}), bc: i===s.ovTab?'#B89A68':'transparent', color: i===s.ovTab?'#B89A68':'rgba(243,240,233,.7)' })),
       ovItems: ovItems.map(a=>({a:a[0], b:a[1]})),
       crumbs: t.crumbs.map((label,i)=>({ label: label.toUpperCase(), sep: i<4?'›':'', color: i===1?'#B89A68':'rgba(243,240,233,.6)' })),
-      clusters: CLUSTERS.map((c,i)=>({ n:c.n, x:c.x, y:c.y, name:c.name[L], pick:()=>this.setState({cluster:i}), bg: i===s.cluster?'#B89A68':'rgba(11,21,24,.85)', fg: i===s.cluster?'#0B1518':'#F3F0E9', ring: i===s.cluster?'rgba(184,154,104,.3)':'rgba(11,21,24,.25)', listColor: i===s.cluster?'#F3F0E9':'rgba(243,240,233,.6)' })),
+      clusters: CLUSTERS.map((c,i)=>{ const on = s.mpFilter==='all' || c.kid===s.mpFilter; return { n:c.n, x:c.x, y:c.y, name:c.name[L], pick:()=>this.setState({cluster:i}), bg: i===s.cluster?'#B89A68':'rgba(11,21,24,.85)', fg: i===s.cluster?'#0B1518':'#F3F0E9', ring: i===s.cluster?'rgba(184,154,104,.3)':'rgba(11,21,24,.25)', listColor: i===s.cluster?'#F3F0E9':'rgba(243,240,233,.6)', op: on?1:.22, pe: on?'auto':'none' }; }),
+      mpFilters: ['all','residences','villas','facility','landscape','commercial'].map(kid => { const c0 = CLUSTERS.find(c=>c.kid===kid); const label = kid==='all' ? t.all : c0.kind[L]; const on = s.mpFilter===kid; return { key:kid, label, pick:()=>this.setState({mpFilter:kid}), bg: on?'#B89A68':'transparent', fg: on?'#0B1518':'#F3F0E9', bc: on?'#B89A68':'rgba(243,240,233,.3)' }; }),
       mpCard: { x: 'calc(' + cl.x + ' * 1400 / 1920)', y: cl.y, name: cl.name[L], kind: cl.kind[L], info: cl.info[L] },
       unitHits: UNITS.map((x,i)=>({ x:(x.x*1140/1060)+'px', y:(x.y*970/843)+'px', pick:()=>this.setState({unit:i}), bc: i===s.unit?'#B89A68':'transparent', glow: i===s.unit?'rgba(184,154,104,.55)':'transparent' })),
       unitFilters: [t.all,'1','2','3','4'].map((label,i)=>({ label: i===0?label: label + ' ' + (i===1?t.bedWord:t.bedsWord), pick:()=>this.setState({unitFilter:i}), bg: i===s.unitFilter?'#B89A68':'transparent', fg: i===s.unitFilter?'#0B1518':'#F3F0E9', bc: i===s.unitFilter?'#B89A68':'rgba(243,240,233,.25)' })),
