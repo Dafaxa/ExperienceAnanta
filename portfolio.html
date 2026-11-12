@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ananta Experience Portfolio</title>
+<meta name="description" content="Interactive 3D property experiences by Ananta Property.">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+  :root {
+    --obsidian: #0B1518;
+    --ivory: #F3F0E9;
+    --gold: #B89A68;
+    --slot: #1a2629;
+    --rule: rgba(243,240,233,.15);
+    --card-border: rgba(243,240,233,.12);
+    --card-bg: rgba(243,240,233,.02);
+    --gutter: clamp(24px,5vw,80px);
+    --serif: 'Cormorant Garamond', serif;
+    --sans: Montserrat, sans-serif;
+  }
+  html, body { margin: 0; background: var(--obsidian); color: var(--ivory); font-family: var(--sans); }
+  a { color: var(--ivory); text-decoration: none; }
+  a:hover { color: var(--gold); }
+  .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* Hero */
+  .hero { position: relative; min-height: 400px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 48px var(--gutter); }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,21,24,.95) 20%, rgba(11,21,24,.35) 75%), linear-gradient(0deg, #0B1518 0%, transparent 40%); }
+  .hero-top { position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+  .logo { display: flex; flex-direction: column; gap: 6px; }
+  .logo-word { font: 400 28px/1 var(--sans); letter-spacing: .42em; }
+  .logo-sub { font: 500 9px/1 var(--sans); letter-spacing: .62em; padding-left: 30px; }
+  .nav { display: flex; gap: 28px; font: 500 11px var(--sans); letter-spacing: .3em; }
+  .nav a[aria-current] { color: var(--gold); }
+  .hero-copy { position: relative; display: flex; flex-direction: column; gap: 18px; max-width: 760px; margin-top: 60px; }
+  .eyebrow { font: 500 12px var(--sans); letter-spacing: .34em; color: var(--gold); }
+  .headline { margin: 0; font: 300 clamp(44px,6vw,84px)/.98 var(--serif); }
+  .headline em { font-style: italic; color: var(--gold); }
+  .lede { margin: 0; font: 300 18px/1.6 var(--sans); opacity: .85; max-width: 600px; text-wrap: pretty; }
+
+  /* Filters */
+  .body { padding: 8px var(--gutter) 72px; display: flex; flex-direction: column; gap: 32px; }
+  .bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { font: 600 11px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--ivory); background: none; border: 1px solid rgba(243,240,233,.3); padding: 10px 16px; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+  .chip:hover { border-color: var(--gold); }
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--obsidian); }
+  .count { font: 500 12px var(--sans); letter-spacing: .2em; opacity: .6; }
+
+  /* Cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+  .card { display: flex; flex-direction: column; border: 1px solid var(--card-border); background: var(--card-bg); transition: border-color .2s ease, transform .2s ease; }
+  a.card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  a.card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--slot); }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+  a.card:hover .card-media img { transform: scale(1.03); }
+  .tags { position: absolute; left: 14px; top: 14px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { background: rgba(11,21,24,.82); padding: 6px 10px; font: 600 10px var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--ivory); }
+  .tag.gold { background: var(--gold); color: var(--obsidian); }
+  .tag.sample { background: rgba(227,154,123,.92); color: var(--obsidian); }
+  .card-body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card-loc { font: 500 11px var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+  .card-name { margin: 0; font: 400 32px/1.05 var(--serif); }
+  .card-desc { margin: 0; font: 300 14px/1.6 var(--sans); opacity: .8; text-wrap: pretty; }
+  .facts { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--rule); }
+  .fact { display: flex; flex-direction: column; gap: 4px; }
+  .fact b { font: 400 20px/1 var(--serif); font-weight: 400; }
+  .fact span { font: 500 10px var(--sans); letter-spacing: .22em; text-transform: uppercase; opacity: .6; }
+  .card-cta { margin-top: auto; padding-top: 16px; font: 600 12px var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--gold); }
+  .card-cta.muted { color: var(--ivory); opacity: .45; }
+  .empty { padding: 48px 0; text-align: center; font: 300 16px var(--sans); opacity: .7; }
+
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--rule); padding-top: 24px; font: 500 11px var(--sans); letter-spacing: .3em; opacity: .6; }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .nav { gap: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <img class="hero-img" src="img/sky.jpg" alt="">
+    <div class="hero-shade"></div>
+    <div class="hero-top">
+      <div class="logo" aria-label="Ananta Property">
+        <div class="logo-word">ANANTA</div>
+        <div class="logo-sub">PROPERTY™</div>
+      </div>
+      <nav class="nav" aria-label="Main">
+        <a href="portfolio.html" aria-current="page">PORTFOLIO</a>
+        <a href="index.html">PLATFORM</a>
+      </nav>
+    </div>
+    <div class="hero-copy">
+      <div class="eyebrow">PROPERTY EXPERIENCE™ · PORTFOLIO</div>
+      <h1 class="headline">Walk through it <em>before it’s built.</em></h1>
+      <p class="lede">Interactive 3D experiences for residences, villas and masterplans. Choose a project to explore its homes, floor plans and views.</p>
+    </div>
+  </header>
+
+  <main class="body">
+    <div class="bar">
+      <div class="chips" id="chips" role="group" aria-label="Filter by type"></div>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>No projects in this category yet.</div>
+    <footer class="foot"><span>ANANTA PROPERTY™</span><span>INDONESIA · SOUTHEAST ASIA · GLOBAL</span></footer>
+  </main>
+</div>
+
+<script>
+  // Portfolio entries. To add a project, copy one object and fill it in:
+  //   name, location, type (used for the filter chips), status ('Now selling' | 'Coming soon' | 'Sold out'),
+  //   image (path in img/ or a full URL), desc (one or two sentences),
+  //   facts (up to 3 [value, label] pairs), href (the experience link; leave '' if not live yet),
+  //   sample: true marks placeholder entries until the real data is in.
+  const PORTFOLIO = [
+    { name: 'Ananta Residences', location: 'Uluwatu, Bali', type: 'Residences', status: 'Now selling',
+      image: 'img/villa_wide.jpg', desc: 'Cliffside residences above the Indian Ocean, every home facing the sunset.',
+      facts: [['24', 'Homes'], ['68–350 m²', 'Size'], ['Rp 2.95 bn', 'From']],
+      href: 'Ananta Immersive Prototype.dc.html', sample: true },
+    { name: 'Ananta Sky Suites', location: 'SCBD, Jakarta', type: 'Apartments', status: 'Coming soon',
+      image: 'img/sky.jpg', desc: 'High-rise suites in the city centre with skyline views from every living room.',
+      facts: [['Rp 3.60 bn', 'From']],
+      href: '', sample: true },
+    { name: 'Ananta Grand Masterplan', location: 'Ubud, Bali', type: 'Masterplan', status: 'Coming soon',
+      image: 'img/masterplan.jpg', desc: 'Villa clusters, a clubhouse and a wellness village set among rice terraces.',
+      facts: [['Rp 6.20 bn', 'From']],
+      href: '', sample: true }
+  ];
+
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  const types = ['All', ...new Set(PORTFOLIO.map(p => p.type))];
+  let active = 'All';
+  try { const t = new URLSearchParams(location.search).get('type'); if (t && types.includes(t)) active = t; } catch (e) {}
+
+  const chips = document.getElementById('chips');
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('count');
+  const empty = document.getElementById('empty');
+
+  function card(p) {
+    const live = !!p.href;
+    const c = el(live ? 'a' : 'div', 'card');
+    if (live) { c.href = encodeURI(p.href); }
+
+    const media = el('div', 'card-media');
+    const img = el('img');
+    img.src = p.image; img.alt = p.name; img.loading = 'lazy';
+    const tags = el('div', 'tags');
+    tags.append(el('span', 'tag' + (p.status === 'Now selling' ? ' gold' : ''), p.status));
+    if (p.sample) tags.append(el('span', 'tag sample', 'Sample'));
+    media.append(img, tags);
+
+    const body = el('div', 'card-body');
+    body.append(el('div', 'card-loc', p.location + ' · ' + p.type), el('h2', 'card-name', p.name), el('p', 'card-desc', p.desc));
+    if (p.facts && p.facts.length) {
+      const facts = el('div', 'facts');
+      p.facts.slice(0, 3).forEach(([v, l]) => { const f = el('div', 'fact'); f.append(el('b', null, v), el('span', null, l)); facts.append(f); });
+      body.append(facts);
+    }
+    body.append(el('div', 'card-cta' + (live ? '' : ' muted'), live ? 'Explore in 3D →' : 'Experience coming soon'));
+
+    c.append(media, body);
+    return c;
+  }
+
+  function render() {
+    chips.replaceChildren(...types.map(t => {
+      const b = el('button', 'chip', t);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', String(t === active));
+      b.addEventListener('click', () => { active = t; render(); });
+      return b;
+    }));
+    const list = PORTFOLIO.filter(p => active === 'All' || p.type === active);
+    grid.replaceChildren(...list.map(card));
+    empty.hidden = list.length > 0;
+    count.textContent = list.length + (list.length === 1 ? ' PROJECT' : ' PROJECTS');
+  }
+  render();
+</script>
+</body>
+</html>
